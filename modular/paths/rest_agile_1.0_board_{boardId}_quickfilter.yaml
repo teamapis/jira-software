@@ -1,0 +1,94 @@
+get:
+  tags:
+    - Board
+  summary: Get all quick filters
+  description: Returns all quick filters from a board, for a given board ID.
+  operationId: getAllQuickFilters
+  parameters:
+    - name: boardId
+      in: path
+      description: The ID of the board that contains the requested quick filters.
+      required: true
+      schema:
+        type: integer
+        format: int64
+    - name: startAt
+      in: query
+      description: >-
+        The starting index of the returned quick filters. Base index: 0. See the
+        'Pagination' section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int64
+    - name: maxResults
+      in: query
+      description: >-
+        The maximum number of sprints to return per page. See the 'Pagination'
+        section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int32
+  responses:
+    '200':
+      description: >-
+        Returns the requested quick filters, at the specified page of the
+        results. Quick filters will be ordered first by position.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              maxResults:
+                type: integer
+                format: int32
+              startAt:
+                type: integer
+                format: int64
+              total:
+                type: integer
+                format: int64
+              isLast:
+                type: boolean
+              values:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                    boardId:
+                      type: integer
+                      format: int64
+                    name:
+                      type: string
+                    jql:
+                      type: string
+                    description:
+                      type: string
+                    position:
+                      type: integer
+                      format: int32
+                  additionalProperties: false
+            additionalProperties: false
+          example: >-
+            {"maxResults":2,"startAt":1,"total":5,"isLast":false,"values":[{"id":1,"boardId":1,"name":"Bugs","jql":"issueType
+            = bug","description":"Issues of type
+            bug","position":0},{"id":2,"boardId":1,"name":"Tasks","jql":"issueType
+            = task","description":"Issues of type task","position":0}]}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: >-
+        Returned if board does not exist or the user does not have permission to
+        view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope.admin:jira-software
+        - read:jql:jira
+  x-atlassian-connect-scope: READ

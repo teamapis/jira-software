@@ -1,0 +1,154 @@
+get:
+  operationId: getDeploymentGatingStatusByKey
+  summary: Get deployment gating status by key
+  tags:
+    - Deployments
+  description: >
+    Retrieve the  Deployment gating status for the given `pipelineId +
+    environmentId + deploymentSequenceNumber` combination. Only apps that define
+    the `jiraDeploymentInfoProvider` module can access this resource. This
+    resource requires the 'READ' scope.
+  parameters:
+    - name: pipelineId
+      in: path
+      description: |
+        The ID of the Deployment's pipeline.
+      required: true
+      schema:
+        type: string
+        maxLength: 255
+    - name: environmentId
+      in: path
+      description: |
+        The ID of the Deployment's environment.
+      required: true
+      schema:
+        type: string
+        maxLength: 255
+    - name: deploymentSequenceNumber
+      in: path
+      description: |
+        The Deployment's deploymentSequenceNumber.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: |
+        The current gating status for the given Deployment
+      content:
+        application/json:
+          schema:
+            title: SubmitDeploymentsResponse
+            description: |
+              The current gating status for the given Deployment.
+            properties:
+              deploymentSequenceNumber:
+                description: |
+                  This is the identifier for the Deployment.
+                type: integer
+                format: int64
+                example: 100
+              pipelineId:
+                description: |
+                  The ID of the Deployment's pipeline.
+                type: string
+                maxLength: 255
+                example: e9c906a7-451f-4fa6-ae1a-c389e2e2d87c
+              environmentId:
+                description: |
+                  The ID of the Deployment's environment.
+                type: string
+                example: 8ec94d72-a4fc-4ac0-b31d-c5a595f373ba
+              updatedTimestamp:
+                description: |
+                  Time the deployment gating status was updated.
+                type: string
+                format: date-time
+                example: '2020-08-25T06:04:50.239Z'
+              gatingStatus:
+                description: |
+                  The gating status
+                type: string
+                enum:
+                  - allowed
+                  - prevented
+                  - awaiting
+                  - invalid
+                example: allowed
+              details:
+                type: array
+                items:
+                  description: |
+                    Details related to the gating status
+                  required:
+                    - type
+                    - issueKey
+                    - issueLink
+                  properties:
+                    type:
+                      description: |
+                        The type of the gating status details.
+                      type: string
+                      enum:
+                        - issue
+                      example: issue
+                    issueKey:
+                      title: IssueKey
+                      description: |
+                        An issue key that references an issue in Jira.
+                      type: string
+                      pattern: ^\w{1,255}-\d{1,255}$
+                      example: ABC-123
+                    issueLink:
+                      description: >
+                        A full HTTPS link to the Jira issue for the change
+                        request gating this Deployment. This field is provided
+                        if the details type is issue.
+                      type: string
+                      format: uri
+                      maxLength: 2000
+                      example: >-
+                        https://your-domain.atlassian.net/servicedesk/customer/portal/1/ZAINA-123
+    '401':
+      description: |
+        Missing a JWT token, or token is invalid.
+    '403':
+      description: >
+        The JWT token used does not correspond to an app that defines the
+        `jiraDeploymentInfoProvider` module,
+    '404':
+      description: |
+        No data found for the given deployment ID.
+    '429':
+      description: |
+        API rate limit has been exceeded.
+    '503':
+      description: |
+        Service is unavailable due to maintenance or other reasons.
+    default:
+      description: |
+        An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+  x-atlassian-connect-scope: INACCESSIBLE

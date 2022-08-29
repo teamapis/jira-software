@@ -1,0 +1,702 @@
+post:
+  operationId: submitBuilds
+  summary: Submit build data
+  tags:
+    - Builds
+  description: >
+    Update / insert builds data.
+
+
+    Builds are identified by the combination of `pipelineId` and `buildNumber`,
+    and existing build data for the same
+
+    build will be replaced if it exists and the `updateSequenceNumber` of the
+    existing data is less than the
+
+    incoming data.
+
+
+    Submissions are performed asynchronously. Submitted data will eventually be
+    available in Jira; most updates are
+
+    available within a short period of time, but may take some time during peak
+    load and/or maintenance times.
+
+    The `getBuildByKey` operation can be used to confirm that data has been
+    stored successfully (if needed).
+
+
+    In the case of multiple builds being submitted in one request, each is
+    validated individually prior to
+
+    submission. Details of which build failed submission (if any) are available
+    in the response object.
+
+
+    Only Connect apps that define the `jiraBuildInfoProvider` module, and
+    on-premise integrations, can access this resource.
+
+    This resource requires the 'WRITE' scope for Connect apps.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          title: SubmitBuildsRequest
+          description: The payload used to submit (update / insert) build data.
+          type: object
+          required:
+            - builds
+          properties:
+            properties:
+              title: Properties
+              description: >
+                Properties assigned to build data that can then be used for
+                delete / query operations.
+
+
+                Examples might be an account or user ID that can then be used to
+                clean up data if an account is removed from
+
+                the Provider system.
+
+
+                Note that these properties will never be returned with build
+                data. They are not intended for use as
+
+                metadata to associate with a build. Internally they are stored
+                as a hash so that personal information etc.
+
+                is never stored within Jira.
+
+
+                Properties are supplied as key/value pairs, a maximum of 5
+                properties can be supplied, and keys must not
+
+                contain ':' or start with '_'.
+              type: object
+              additionalProperties:
+                type: string
+                maxLength: 255
+              maxProperties: 5
+              example:
+                accountId: account-234
+                projectId: project-123
+            builds:
+              description: >
+                A list of builds to submit to Jira.
+
+
+                Each build may be associated with one or more Jira issue keys,
+                and will be associated with any properties
+
+                included in this request.
+              type: array
+              items:
+                title: BuildData
+                description: |
+                  Data related to a single build
+                required:
+                  - pipelineId
+                  - buildNumber
+                  - displayName
+                  - url
+                  - state
+                  - lastUpdated
+                  - updateSequenceNumber
+                  - issueKeys
+                properties:
+                  schemaVersion:
+                    description: >
+                      The schema version used for this data.
+
+
+                      Placeholder to support potential schema changes in the
+                      future.
+                    type: string
+                    enum:
+                      - '1.0'
+                    default: '1.0'
+                    example: '1.0'
+                  pipelineId:
+                    description: >
+                      An ID that relates a sequence of builds. Depending on your
+                      use case this might be a project ID, pipeline ID,
+
+                      plan key etc. - whatever logical unit you use to group a
+                      sequence of builds.
+
+
+                      The combination of `pipelineId` and `buildNumber` must
+                      uniquely identify a build you have provided.
+                    type: string
+                    maxLength: 255
+                    example: my-build-plan
+                  buildNumber:
+                    description: >
+                      Identifies a build within the sequence of builds
+                      identified by the build `pipelineId`.
+
+
+                      Used to identify the 'most recent' build in that sequence
+                      of builds.
+
+
+                      The combination of `pipelineId` and `buildNumber` must
+                      uniquely identify a build you have provided.
+                    type: integer
+                    format: int64
+                    example: 16
+                  updateSequenceNumber:
+                    description: >
+                      A number used to apply an order to the updates to the
+                      build, as identified by `pipelineId` and `buildNumber`,
+
+                      in the case of out-of-order receipt of update requests.
+
+
+                      It must be a monotonically increasing number. For example,
+                      epoch time could be one way to generate the
+
+                      `updateSequenceNumber`.
+
+
+                      Updates for a build that is received with an
+                      `updateSqeuenceNumber` less than or equal to what is
+                      currently
+
+                      stored will be ignored.
+                    type: integer
+                    format: int64
+                    example: 1523494301448
+                  displayName:
+                    description: |
+                      The human-readable name for the build.
+
+                      Will be shown in the UI.
+                    type: string
+                    maxLength: 255
+                    example: 'My Project build #16'
+                  description:
+                    description: |
+                      An optional description to attach to this build.
+
+                      This may be anything that makes sense in your system.
+                    type: string
+                    maxLength: 255
+                    example: 'My Project build #16: Failed'
+                  label:
+                    description: >
+                      A human-readable string that to provide information about
+                      the build.
+                    type: string
+                    maxLength: 255
+                  url:
+                    description: |
+                      The URL to this build in your system.
+                    type: string
+                    maxLength: 2000
+                    format: URL
+                  state:
+                    title: BuildState
+                    description: >
+                      The state of a build.
+
+
+                      * `pending` - The build is queued, or some manual action
+                      is required.
+
+                      * `in_progress` - The build is currently running.
+
+                      * `successful` - The build completed successfully.
+
+                      * `failed` - The build failed.
+
+                      * `cancelled` - The build has been cancelled or stopped.
+
+                      * `unknown` - The build is in an unknown state.
+                    type: string
+                    enum:
+                      - pending
+                      - in_progress
+                      - successful
+                      - failed
+                      - cancelled
+                      - unknown
+                    example: failed
+                  lastUpdated:
+                    description: >
+                      The last-updated timestamp to present to the user as a
+                      summary of the state of the build.
+                    type: string
+                    format: date-time
+                    example: '2018-01-20T23:27:25.000Z'
+                  issueKeys:
+                    description: >
+                      The Jira issue keys to associate the build information
+                      with.
+
+
+                      You are free to associate issue keys in any way you like.
+                      However, we recommend that you use the name
+
+                      of the branch the build was executed on, and extract issue
+                      keys from that name using a simple regex. This has
+
+                      the advantage that it provides an intuitive association of
+                      builds to issue keys.
+                    type: array
+                    items:
+                      title: IssueKey
+                      description: |
+                        An issue key that references an issue in Jira.
+                      type: string
+                      pattern: ^\w{1,255}-\d{1,255}$
+                      example: ISSUE-123
+                    minItems: 1
+                    maxItems: 100
+                  testInfo:
+                    title: TestInfo
+                    description: |
+                      Information about tests that were executed during a build.
+                    type: object
+                    required:
+                      - totalNumber
+                      - numberPassed
+                      - numberFailed
+                    properties:
+                      totalNumber:
+                        description: |
+                          The total number of tests considered during a build.
+                        type: integer
+                        format: int64
+                        example: 150
+                      numberPassed:
+                        description: |
+                          The number of tests that passed during a build.
+                        type: integer
+                        format: int64
+                        example: 145
+                      numberFailed:
+                        description: |
+                          The number of tests that failed during a build.
+                        type: integer
+                        format: int64
+                        example: 5
+                      numberSkipped:
+                        description: |
+                          The number of tests that were skipped during a build.
+                        type: integer
+                        format: int64
+                        default: 0
+                        example: 0
+                  references:
+                    description: >
+                      Optional information that links a build to a commit,
+                      branch etc.
+                    type: array
+                    items:
+                      title: BuildReferences
+                      description: >
+                        Information that links a build to a commit, branch etc.
+
+
+                        Used to provide a richer user experience by enabling us
+                        to associate builds from your system with e.g.
+
+                        branches / commits / tags etc. supplied by another app
+                        in the Jira UI.
+                      type: object
+                      properties:
+                        commit:
+                          title: BuildCommitReference
+                          description: |
+                            Details about the commit the build was run against.
+                          type: object
+                          required:
+                            - id
+                            - repositoryUri
+                          properties:
+                            id:
+                              description: >
+                                The ID of the commit. E.g. for a Git repository
+                                this would be the SHA1 hash.
+                              type: string
+                              maxLength: 255
+                              example: 08cd9c26b2b8d7cf6e6af6b49da8895d065c259f
+                            repositoryUri:
+                              description: >
+                                An identifier for the repository containing the
+                                commit.
+
+
+                                In most cases this should be the URL of the
+                                repository in the SCM provider.
+
+
+                                For cases where the build was executed against a
+                                local repository etc. this should be some
+                                identifier that is
+
+                                unique to that repository.
+                              type: string
+                              maxLength: 2000
+                              example: https://bitbucket.org/atlassian/biij-vendor-api
+                        ref:
+                          title: BuildRefReference
+                          description: |
+                            Details about the ref the build was run on.
+                          type: object
+                          required:
+                            - name
+                            - uri
+                          properties:
+                            name:
+                              description: |
+                                The name of the ref the build ran on
+                              type: string
+                              maxLength: 255
+                              example: feature/ISSUE-123-some-work
+                            uri:
+                              description: >
+                                An identifer for the ref.
+
+
+                                In most cases this should be the URL of the
+                                tag/branch etc. in the SCM provider.
+
+
+                                For cases where the build was executed against a
+                                local repository etc. this should be something
+                                that uniquely
+
+                                identifies the ref.
+                              type: string
+                              maxLength: 2000
+                              example: >-
+                                https://bitbucket.org/atlassian/biij-vendor-api/refs/feature/ISSUE-123-some-work
+                    minItems: 1
+                    maxItems: 5
+              minItems: 1
+            providerMetadata:
+              title: ProviderMetadata
+              description: >
+                Information about the provider. This is useful for auditing,
+                logging, debugging,
+
+                and other internal uses. It is not considered private
+                information. Hence, it may not contain personally
+
+                identifiable information.
+              type: object
+              properties:
+                product:
+                  type: string
+                  description: An optional name of the source of the builds data.
+                  example: Bamboo 6.10.2
+    description: |
+      Builds data to submit.
+    required: true
+  responses:
+    '202':
+      description: >
+        Submission accepted. Each submitted build that is of a valid format will
+        be eventually available in Jira.
+
+
+        Details of which builds were submitted and which failed submission (due
+        to data format problems etc.)
+
+        are available in the response object.
+      content:
+        application/json:
+          schema:
+            title: SubmitBuildsResponse
+            description: |
+              The result of a successful `submitBuilds` request.
+            type: object
+            properties:
+              acceptedBuilds:
+                description: >
+                  The keys of builds that have been accepted for submission. A
+                  build key is a composite key that consists of
+
+                  `pipelineId` and `buildNumber`.
+
+
+                  A build may be rejected if it was only associated with unknown
+                  issue keys, or if the submitted data for that
+
+                  build does not match the required schema.
+
+
+                  Note that a build that isn't updated due to it's
+                  `updateSequenceNumber` being out of order is not
+
+                  considered a failed submission.
+                type: array
+                items:
+                  title: BuildKey
+                  description: |
+                    Fields that uniquely reference a build.
+                  required:
+                    - pipelineId
+                    - buildNumber
+                  type: object
+                  properties:
+                    pipelineId:
+                      description: >
+                        An ID that relates a sequence of builds. Depending on
+                        your system this might be a project ID, pipeline ID,
+
+                        plan key etc. - whatever logical unit you use to group a
+                        sequence of builds.
+
+
+                        The combination of `pipelineId` and `buildNumber` must
+                        uniquely identify the build.
+                      type: string
+                      maxLength: 255
+                      example: my-build-plan
+                    buildNumber:
+                      description: >
+                        Identifies a build within the sequence of builds
+                        identified by the build `pipelineId`.
+
+
+                        Used to identify the 'most recent' build in that
+                        sequence of builds.
+
+
+                        The combination of `pipelineId` and `buildNumber` must
+                        uniquely identify the build.
+                      type: integer
+                      format: int64
+                      example: 16
+              rejectedBuilds:
+                description: >
+                  Details of builds that have not been accepted for submission.
+
+
+                  A build may be rejected if it was only associated with unknown
+                  issue keys, or if the submitted data for the
+
+                  build does not match the required schema.
+                type: array
+                items:
+                  title: RejectedBuild
+                  description: >
+                    A build that has not been accepted for submission, usually
+                    due to a problem with the request data.
+
+
+                    The object is comprised of the key of the rejected build and
+                    the corresponding error messages.
+                  type: object
+                  required:
+                    - key
+                    - errors
+                  properties:
+                    key:
+                      title: BuildKey
+                      description: |
+                        Fields that uniquely reference a build.
+                      required:
+                        - pipelineId
+                        - buildNumber
+                      type: object
+                      properties:
+                        pipelineId:
+                          description: >
+                            An ID that relates a sequence of builds. Depending
+                            on your system this might be a project ID, pipeline
+                            ID,
+
+                            plan key etc. - whatever logical unit you use to
+                            group a sequence of builds.
+
+
+                            The combination of `pipelineId` and `buildNumber`
+                            must uniquely identify the build.
+                          type: string
+                          maxLength: 255
+                          example: my-build-plan
+                        buildNumber:
+                          description: >
+                            Identifies a build within the sequence of builds
+                            identified by the build `pipelineId`.
+
+
+                            Used to identify the 'most recent' build in that
+                            sequence of builds.
+
+
+                            The combination of `pipelineId` and `buildNumber`
+                            must uniquely identify the build.
+                          type: integer
+                          format: int64
+                          example: 16
+                    errors:
+                      description: The error messages for the rejected build
+                      type: array
+                      items:
+                        title: ErrorMessage
+                        description: A message supplied in the case of an error.
+                        type: object
+                        required:
+                          - message
+                        properties:
+                          message:
+                            type: string
+                            description: A human-readable message describing the error.
+                          errorTraceId:
+                            type: string
+                            description: >-
+                              An optional trace ID that can be used by Jira
+                              developers to locate the source of the error.
+              unknownIssueKeys:
+                description: >
+                  Issue keys that are not known on this Jira instance (if any).
+
+
+                  These may be invalid keys (e.g. `UTF-8` is sometimes
+                  incorrectly identified as a Jira issue key), or they
+
+                  may be for projects that no longer exist.
+
+
+                  If a build has been associated with issue keys other than
+                  those in this array it will still be stored against
+
+                  those valid keys. If a build was only associated with issue
+                  keys deemed to be invalid it won't be persisted.
+                type: array
+                items:
+                  title: IssueKey
+                  description: |
+                    An issue key that references an issue in Jira.
+                  type: string
+                  pattern: ^\w{1,255}-\d{1,255}$
+                  example: ISSUE-123
+    '400':
+      description: >
+        Request has incorrect format.
+
+
+        Note that in the case of an individual build having an invalid format
+        (rather than the request as a whole)
+
+        the response for the request will be a 202 and details of the invalid
+        build will be contained in the
+
+        response object.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+    '401':
+      description: |
+        Missing a JWT token, or token is invalid.
+    '403':
+      description: >
+        The JWT token used does not correspond to an app that defines the
+        `jiraBuildInfoProvider` module,
+
+        or the app does not define the 'WRITE' scope.
+    '413':
+      description: |
+        Data is too large. Submit fewer builds in each payload.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+    '429':
+      description: |
+        API rate limit has been exceeded.
+    '503':
+      description: |
+        Service is unavailable due to maintenance or other reasons.
+    default:
+      description: |
+        An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+  x-atlassian-connect-scope: INACCESSIBLE
+parameters:
+  - name: Authorization
+    in: header
+    description: >
+      All requests must be signed with either a Connect JWT token or OAuth token
+      for an on-premise integration that corresponds to an app installed in
+      Jira.
+
+
+      If the Connect JWT token corresponds to an app that does not define
+      `jiraBuildInfoProvider` module it will be rejected with a 403.
+
+
+      See https://developer.atlassian.com/blog/2015/01/understanding-jwt/ for
+      more details about Connect JWT tokens.
+
+      See
+      https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/
+      for details about on-premise integrations.
+    required: true
+    schema:
+      type: string
+      pattern: JWT \S+

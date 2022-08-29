@@ -1,0 +1,950 @@
+post:
+  operationId: submitDeployments
+  summary: Submit deployment data
+  tags:
+    - Deployments
+  description: >
+    Update / insert deployment data.
+
+
+    Deployments are identified by the combination of `pipelineId`,
+    `environmentId` and `deploymentSequenceNumber`, and existing deployment data
+    for the same deployment will be replaced if it exists and the
+    `updateSequenceNumber` of existing data is less than the incoming data.
+
+
+    Submissions are processed asynchronously. Submitted data will eventually be
+    available in Jira. Most updates are available within a short period of time,
+    but may take some time during peak load and/or maintenance times. The
+    `getDeploymentByKey` operation can be used to confirm that data has been
+    stored successfully (if needed).
+
+
+    In the case of multiple deployments being submitted in one request, each is
+    validated individually prior to submission. Details of which deployments
+    failed submission (if any) are available in the response object.
+
+
+    Only Connect apps that define the `jiraDeploymentInfoProvider` module, and
+    on-premise integrations, can access this resource.
+
+    This resource requires the 'WRITE' scope for Connect apps.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          title: SubmitDeploymentRequest
+          description: The payload used to submit (update / insert) deployment data.
+          required:
+            - deployments
+          properties:
+            properties:
+              title: Properties
+              description: >
+                Properties assigned to deployment data that can then be used for
+                delete / query operations.
+
+
+                Examples might be an account or user ID that can then be used to
+                clean up data if an account is removed from the Provider system.
+
+
+                Properties are supplied as key/value pairs, and a maximum of 5
+                properties can be supplied, keys cannot contain ':' or start
+                with '_'.
+              type: object
+              additionalProperties:
+                type: string
+                maxLength: 255
+              maxProperties: 5
+              example:
+                accountId: account-234
+                projectId: project-123
+            deployments:
+              description: >
+                A list of deployments to submit to Jira.
+
+
+                Each deployment may be associated with one or more Jira issue
+                keys, and will be associated with any properties included in
+                this request.
+              type: array
+              items:
+                title: DeploymentData
+                description: >
+                  Data related to a specific deployment in a specific
+                  environment that the deployment is present in.
+
+                  Must specify one of `issueKeys` or `associations`.
+                required:
+                  - deploymentSequenceNumber
+                  - updateSequenceNumber
+                  - displayName
+                  - url
+                  - description
+                  - lastUpdated
+                  - state
+                  - pipeline
+                  - environment
+                properties:
+                  deploymentSequenceNumber:
+                    description: >
+                      This is the identifier for the deployment. It must be
+                      unique for the specified pipeline and environment. It must
+                      be a monotonically increasing number, as this is used to
+                      sequence the deployments.
+                    type: integer
+                    format: int64
+                    example: 100
+                  updateSequenceNumber:
+                    description: >
+                      A number used to apply an order to the updates to the
+                      deployment, as identified by the deploymentSequenceNumber,
+                      in the case of out-of-order receipt of update requests. It
+                      must be a monotonically increasing number. For example,
+                      epoch time could be one way to generate the
+                      updateSequenceNumber.
+                    type: integer
+                    format: int64
+                    example: 1
+                  issueKeys:
+                    deprecated: true
+                    description: >
+                      Deprecated. The Jira issue keys to associate the
+                      Deployment information with.
+
+                      Should replace this field with the "associations" field to
+                      associate Deployment information with issueKeys or other
+                      types of associations.
+                    type: array
+                    items:
+                      title: IssueKey
+                      description: |
+                        An issue key that references an issue in Jira.
+                      type: string
+                      pattern: ^\w{1,255}-\d{1,255}$
+                      example: ABC-123
+                    minItems: 1
+                    maxItems: 100
+                  associations:
+                    description: >
+                      The entities to associate the Deployment information with.
+
+                      It must contain at least one of IssueIdOrKeysAssociation
+                      or ServiceIdOrKeysAssociation.
+                    type: array
+                    items:
+                      oneOf:
+                        - description: |
+                            An association type referencing issues in Jira.
+                          type: object
+                          required:
+                            - associationType
+                            - values
+                          properties:
+                            associationType:
+                              description: |
+                                Defines the asssociation type.
+                              type: string
+                              enum:
+                                - issueKeys
+                                - issueIdOrKeys
+                              example: issueIdOrKeys
+                            values:
+                              description: >
+                                The Jira issue keys to associate the Deployment
+                                information with.
+
+
+                                The number of values counted across all
+                                associationTypes (issueKeys,
+
+                                issueIdOrKeys and serviceIdOrKeys) must not
+                                exceed a limit of 500.
+                              type: array
+                              items:
+                                description: >
+                                  An issue key or ID that references an issue in
+                                  Jira.
+                                type: string
+                                pattern: (\w{1,255}-\d{1,255}|\d{1,255})
+                                example: ABC-123
+                              minItems: 1
+                              maxItems: 500
+                          example:
+                            associationType: issueIdOrKeys
+                            values:
+                              - ABC-123
+                              - ABC-456
+                        - description: |
+                            An association type referencing service id or keys.
+                          type: object
+                          required:
+                            - associationType
+                            - values
+                          properties:
+                            associationType:
+                              description: |
+                                Defines the asssociation type.
+                              type: string
+                              enum:
+                                - serviceIdOrKeys
+                              example: serviceIdOrKeys
+                            values:
+                              description: >
+                                The service id or keys to associate the
+                                Deployment information with.
+
+
+                                The number of values counted across all
+                                associationTypes (issueKeys,
+
+                                issueIdOrKeys and serviceIdOrKeys) must not
+                                exceed a limit of 500.
+                              type: array
+                              items:
+                                description: |
+                                  A service id or service key.
+                                type: string
+                                maxLength: 255
+                                example: some-service-key
+                              minItems: 1
+                              maxItems: 500
+                          example:
+                            associationType: serviceIdOrKeys
+                            values:
+                              - some-service-key
+                      anyOf:
+                        - description: |
+                            An association type referencing issues in Jira.
+                          type: object
+                          required:
+                            - associationType
+                            - values
+                          properties:
+                            associationType:
+                              description: |
+                                Defines the asssociation type.
+                              type: string
+                              enum:
+                                - issueKeys
+                                - issueIdOrKeys
+                              example: issueIdOrKeys
+                            values:
+                              description: >
+                                The Jira issue keys to associate the Deployment
+                                information with.
+
+
+                                The number of values counted across all
+                                associationTypes (issueKeys,
+
+                                issueIdOrKeys and serviceIdOrKeys) must not
+                                exceed a limit of 500.
+                              type: array
+                              items:
+                                description: >
+                                  An issue key or ID that references an issue in
+                                  Jira.
+                                type: string
+                                pattern: (\w{1,255}-\d{1,255}|\d{1,255})
+                                example: ABC-123
+                              minItems: 1
+                              maxItems: 500
+                          example:
+                            associationType: issueIdOrKeys
+                            values:
+                              - ABC-123
+                              - ABC-456
+                        - description: |
+                            An association type referencing service id or keys.
+                          type: object
+                          required:
+                            - associationType
+                            - values
+                          properties:
+                            associationType:
+                              description: |
+                                Defines the asssociation type.
+                              type: string
+                              enum:
+                                - serviceIdOrKeys
+                              example: serviceIdOrKeys
+                            values:
+                              description: >
+                                The service id or keys to associate the
+                                Deployment information with.
+
+
+                                The number of values counted across all
+                                associationTypes (issueKeys,
+
+                                issueIdOrKeys and serviceIdOrKeys) must not
+                                exceed a limit of 500.
+                              type: array
+                              items:
+                                description: |
+                                  A service id or service key.
+                                type: string
+                                maxLength: 255
+                                example: some-service-key
+                              minItems: 1
+                              maxItems: 500
+                          example:
+                            associationType: serviceIdOrKeys
+                            values:
+                              - some-service-key
+                        - description: >
+                            An association type referencing another DevOps
+                            entity. Initially only commit entities are supported
+                            for this type of association.
+                          type: object
+                          required:
+                            - associationType
+                            - values
+                          properties:
+                            associationType:
+                              description: >
+                                Defines the association type. Currently
+                                supported entities can be found in this field's
+                                value enums list.
+                              type: string
+                              maxLength: 255
+                              enum:
+                                - commit
+                            values:
+                              description: >
+                                The entity keys that represent the entities to
+                                be associated.
+
+                                The number of values counted across all
+                                associationTypes (issueKeys, issueIdOrKeys,
+                                serviceIdOrKeys, supported ATIs and entity
+                                associations) must not exceed a limit of 500.
+                              type: array
+                              items:
+                                anyOf:
+                                  - description: >
+                                      Identifies an individual commit in a
+                                      repository.
+                                    type: object
+                                    required:
+                                      - commitHash
+                                      - repositoryId
+                                    properties:
+                                      commitHash:
+                                        description: |
+                                          The hash for the Commit.
+                                        type: string
+                                        maxLength: 255
+                                        example: b00152456cf4
+                                      repositoryId:
+                                        description: >
+                                          The ID of the Repository that the Commit
+                                          belongs to.
+                                        type: string
+                                        maxLength: 255
+                                        example: de7fbebffabe
+                              minItems: 1
+                              maxItems: 500
+                    minItems: 1
+                    maxItems: 3
+                  displayName:
+                    description: >
+                      The human-readable name for the deployment. Will be shown
+                      in the UI.
+                    type: string
+                    maxLength: 255
+                    example: Deployment number 16 of Data Depot
+                  url:
+                    description: >
+                      A URL users can use to link to this deployment, in this
+                      environment.
+                    type: string
+                    format: uri
+                    maxLength: 2000
+                    example: http://mydeployer.com/project1/1111-222-333/prod-east
+                  description:
+                    description: |
+                      A short description of the deployment
+                    type: string
+                    maxLength: 255
+                    example: The bits are being transferred
+                  lastUpdated:
+                    description: >
+                      The last-updated timestamp to present to the user as a
+                      summary of the state of the deployment.
+                    type: string
+                    format: date-time
+                    example: '2018-01-20T23:27:25.000Z'
+                  label:
+                    description: >
+                      An (optional) additional label that may be displayed with
+                      deployment information. Can be used to display version
+                      information etc. for the deployment.
+                    type: string
+                    maxLength: 255
+                    example: Release 2018-01-20_08-47-bc2421a
+                  state:
+                    description: |
+                      The state of the deployment
+                    type: string
+                    enum:
+                      - unknown
+                      - pending
+                      - in_progress
+                      - cancelled
+                      - failed
+                      - rolled_back
+                      - successful
+                    example: in_progress
+                  pipeline:
+                    title: Pipeline
+                    description: >
+                      This object models the Continuous Delivery (CD) Pipeline
+                      concept, an automated process (usually comprised of
+                      multiple stages)
+
+
+                      for getting software from version control right through to
+                      the production environment.
+                    required:
+                      - id
+                      - displayName
+                      - url
+                    properties:
+                      id:
+                        description: >
+                          The identifier of this pipeline, must be unique for
+                          the provider.
+                        type: string
+                        maxLength: 255
+                        example: e9c906a7-451f-4fa6-ae1a-c389e2e2d87c
+                      displayName:
+                        description: |
+                          The name of the pipeline to present to the user.
+                        type: string
+                        maxLength: 255
+                        example: Data Depot Deployment
+                      url:
+                        description: >
+                          A URL users can use to link to this deployment
+                          pipeline.
+                        type: string
+                        format: uri
+                        maxLength: 2000
+                        example: http://mydeployer.com/project1
+                  environment:
+                    title: Environment
+                    description: |
+                      The environment that the deployment is present in.
+                    required:
+                      - id
+                      - displayName
+                      - type
+                    properties:
+                      id:
+                        description: >
+                          The identifier of this environment, must be unique for
+                          the provider so that it can be shared across
+                          pipelines.
+                        type: string
+                        maxLength: 255
+                        example: 8ec94d72-a4fc-4ac0-b31d-c5a595f373ba
+                      displayName:
+                        description: |
+                          The name of the environment to present to the user.
+                        type: string
+                        maxLength: 255
+                        example: US East
+                      type:
+                        description: |
+                          The type of the environment.
+                        type: string
+                        enum:
+                          - unmapped
+                          - development
+                          - testing
+                          - staging
+                          - production
+                        example: production
+                  commands:
+                    title: Commands
+                    description: |
+                      A list of commands to be actioned for this Deployment
+                    type: array
+                    items:
+                      title: Command
+                      description: |
+                        A command to be actioned for this Deployment
+                        - command
+                      properties:
+                        command:
+                          description: |
+                            The command name.
+                          type: string
+                          example: initiate_deployment_gating
+                  schemaVersion:
+                    description: >
+                      The DeploymentData schema version used for this deployment
+                      data.
+
+
+                      Placeholder to support potential schema changes in the
+                      future.
+                    type: string
+                    enum:
+                      - '1.0'
+                    default: '1.0'
+                    example: '1.0'
+              minItems: 1
+            providerMetadata:
+              title: ProviderMetadata
+              description: >
+                Information about the provider. This is useful for auditing,
+                logging, debugging,
+
+                and other internal uses. It is not considered private
+                information. Hence, it may not contain personally
+
+                identifiable information.
+              type: object
+              properties:
+                product:
+                  type: string
+                  description: An optional name of the source of the deployments data.
+                  example: Bamboo 6.10.2
+    description: |
+      Deployment data to submit.
+    required: true
+  responses:
+    '202':
+      description: >
+        Submission accepted. Each submitted deployment that is of a valid format
+        will eventually be available in Jira.
+
+
+        Details of which deployments were submitted and which failed submission
+        (due to data format problems etc.) are available in the response object.
+      content:
+        application/json:
+          schema:
+            title: SubmitDeploymentsResponse
+            description: |
+              The result of a successful submitDeployments request.
+            properties:
+              acceptedDeployments:
+                description: >
+                  The keys of deployments that have been accepted for
+                  submission. A deployment key is a composite key that consists
+                  of `pipelineId`, `environmentId` and
+                  `deploymentSequenceNumber`.
+
+
+                  A deployment may be rejected if it was only associated with
+                  unknown issue keys.
+
+
+                  Note that a deployment that isn't updated due to it's
+                  updateSequenceNumber being out of order is not considered a
+                  failed submission.
+                type: array
+                items:
+                  title: DeploymentKey
+                  description: |
+                    Fields that uniquely reference a deployment.
+                  required:
+                    - pipelineId
+                    - environmentId
+                    - deploymentSequenceNumber
+                  properties:
+                    pipelineId:
+                      description: >
+                        The identifier of a pipeline, must be unique for the
+                        provider.
+                      type: string
+                      maxLength: 255
+                      example: e9c906a7-451f-4fa6-ae1a-c389e2e2d87c
+                    environmentId:
+                      description: >
+                        The identifier of an environment, must be unique for the
+                        provider so that it can be shared across pipelines.
+                      type: string
+                      maxLength: 255
+                      example: 8ec94d72-a4fc-4ac0-b31d-c5a595f373ba
+                    deploymentSequenceNumber:
+                      description: >
+                        This is the identifier for the deployment. It must be
+                        unique for the specified pipeline and environment. It
+                        must be a monotonically increasing number, as this is
+                        used to sequence the deployments.
+                      type: integer
+                      format: int64
+                      example: 100
+              rejectedDeployments:
+                description: >
+                  Details of deployments that have not been accepted for
+                  submission, usually due to a problem with the request data.
+
+
+                  The object will contain the deployment key and any errors
+                  associated with that deployment that have prevented it being
+                  submitted.
+                type: array
+                items:
+                  title: RejectedDeployment
+                  description: >
+                    A deployment that has not been accepted for submission,
+                    usually due to a problem with the request data.
+
+
+                    The object is comprised of the key of the rejected
+                    deployment and the corresponding error messages.
+                  required:
+                    - key
+                    - errors
+                  properties:
+                    key:
+                      title: DeploymentKey
+                      description: |
+                        Fields that uniquely reference a deployment.
+                      required:
+                        - pipelineId
+                        - environmentId
+                        - deploymentSequenceNumber
+                      properties:
+                        pipelineId:
+                          description: >
+                            The identifier of a pipeline, must be unique for the
+                            provider.
+                          type: string
+                          maxLength: 255
+                          example: e9c906a7-451f-4fa6-ae1a-c389e2e2d87c
+                        environmentId:
+                          description: >
+                            The identifier of an environment, must be unique for
+                            the provider so that it can be shared across
+                            pipelines.
+                          type: string
+                          maxLength: 255
+                          example: 8ec94d72-a4fc-4ac0-b31d-c5a595f373ba
+                        deploymentSequenceNumber:
+                          description: >
+                            This is the identifier for the deployment. It must
+                            be unique for the specified pipeline and
+                            environment. It must be a monotonically increasing
+                            number, as this is used to sequence the deployments.
+                          type: integer
+                          format: int64
+                          example: 100
+                    errors:
+                      description: The error messages for the rejected deployment
+                      type: array
+                      items:
+                        title: ErrorMessage
+                        description: A message supplied in the case of an error.
+                        required:
+                          - message
+                        properties:
+                          message:
+                            type: string
+                            description: A human-readable message describing the error.
+                          errorTraceId:
+                            type: string
+                            description: >-
+                              An optional trace ID that can be used by Jira
+                              developers to locate the source of the error.
+              unknownIssueKeys:
+                description: >
+                  Issue keys that are not known on this Jira instance (if any).
+
+
+                  These may be invalid keys (e.g. `UTF-8` is sometimes
+                  incorrectly identified as a Jira issue key), or they may be
+                  for projects that no longer exist.
+
+
+                  If a deployment has been associated with issue keys other than
+                  those in this array it will still be stored against those
+                  valid keys.
+
+                  If a deployment was only associated with issue keys deemed to
+                  be invalid it won't be persisted.
+                type: array
+                items:
+                  title: IssueKey
+                  description: |
+                    An issue key that references an issue in Jira.
+                  type: string
+                  pattern: ^\w{1,255}-\d{1,255}$
+                  example: ABC-123
+              unknownAssociations:
+                description: >
+                  Associations (e.g. Issue Keys or Service IDs) that are not
+                  known on this Jira instance (if any).
+
+
+                  These may be invalid keys (e.g. `UTF-8` is sometimes
+                  incorrectly identified as a Jira issue key), or they may be
+                  for projects that no longer exist.
+
+
+                  If a deployment has been associated with any other association
+                  other than those in this array it will still be stored against
+                  those valid associations.
+
+                  If a deployment was only associated with the associations in
+                  this array, it is deemed to be invalid and it won't be
+                  persisted.
+                type: array
+                items:
+                  anyOf:
+                    - description: |
+                        An association type referencing issues in Jira.
+                      type: object
+                      required:
+                        - associationType
+                        - values
+                      properties:
+                        associationType:
+                          description: |
+                            Defines the asssociation type.
+                          type: string
+                          enum:
+                            - issueKeys
+                            - issueIdOrKeys
+                          example: issueIdOrKeys
+                        values:
+                          description: >
+                            The Jira issue keys to associate the Deployment
+                            information with.
+
+
+                            The number of values counted across all
+                            associationTypes (issueKeys,
+
+                            issueIdOrKeys and serviceIdOrKeys) must not exceed a
+                            limit of 500.
+                          type: array
+                          items:
+                            description: >
+                              An issue key or ID that references an issue in
+                              Jira.
+                            type: string
+                            pattern: (\w{1,255}-\d{1,255}|\d{1,255})
+                            example: ABC-123
+                          minItems: 1
+                          maxItems: 500
+                      example:
+                        associationType: issueIdOrKeys
+                        values:
+                          - ABC-123
+                          - ABC-456
+                    - description: |
+                        An association type referencing service id or keys.
+                      type: object
+                      required:
+                        - associationType
+                        - values
+                      properties:
+                        associationType:
+                          description: |
+                            Defines the asssociation type.
+                          type: string
+                          enum:
+                            - serviceIdOrKeys
+                          example: serviceIdOrKeys
+                        values:
+                          description: >
+                            The service id or keys to associate the Deployment
+                            information with.
+
+
+                            The number of values counted across all
+                            associationTypes (issueKeys,
+
+                            issueIdOrKeys and serviceIdOrKeys) must not exceed a
+                            limit of 500.
+                          type: array
+                          items:
+                            description: |
+                              A service id or service key.
+                            type: string
+                            maxLength: 255
+                            example: some-service-key
+                          minItems: 1
+                          maxItems: 500
+                      example:
+                        associationType: serviceIdOrKeys
+                        values:
+                          - some-service-key
+                    - description: >
+                        An association type referencing another DevOps entity.
+                        Initially only commit entities are supported for this
+                        type of association.
+                      type: object
+                      required:
+                        - associationType
+                        - values
+                      properties:
+                        associationType:
+                          description: >
+                            Defines the association type. Currently supported
+                            entities can be found in this field's value enums
+                            list.
+                          type: string
+                          maxLength: 255
+                          enum:
+                            - commit
+                        values:
+                          description: >
+                            The entity keys that represent the entities to be
+                            associated.
+
+                            The number of values counted across all
+                            associationTypes (issueKeys, issueIdOrKeys,
+                            serviceIdOrKeys, supported ATIs and entity
+                            associations) must not exceed a limit of 500.
+                          type: array
+                          items:
+                            anyOf:
+                              - description: >
+                                  Identifies an individual commit in a
+                                  repository.
+                                type: object
+                                required:
+                                  - commitHash
+                                  - repositoryId
+                                properties:
+                                  commitHash:
+                                    description: |
+                                      The hash for the Commit.
+                                    type: string
+                                    maxLength: 255
+                                    example: b00152456cf4
+                                  repositoryId:
+                                    description: >
+                                      The ID of the Repository that the Commit
+                                      belongs to.
+                                    type: string
+                                    maxLength: 255
+                                    example: de7fbebffabe
+                          minItems: 1
+                          maxItems: 500
+    '400':
+      description: >
+        Request has incorrect format.
+
+
+        Note that in the case of an individual deployment having an invalid
+        format (rather than the request as a whole) the response for the request
+        will be a 202 and details of the invalid deployment will be contained in
+        the response object.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+    '401':
+      description: |
+        Missing a JWT token, or token is invalid.
+    '403':
+      description: >
+        The JWT token used does not correspond to an app that defines the
+        `jiraDeploymentInfoProvider` module,
+
+        or the app does not define the 'WRITE' scope.
+    '413':
+      description: |
+        Data is too large. Submit fewer deployments in each payload.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+    '429':
+      description: |
+        API rate limit has been exceeded.
+    '503':
+      description: |
+        Service is unavailable due to maintenance or other reasons.
+    default:
+      description: |
+        An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+  x-atlassian-connect-scope: INACCESSIBLE
+parameters:
+  - name: Authorization
+    in: header
+    description: >
+      All requests must be signed with either a Connect JWT token or OAuth token
+      for an on-premise integration that corresponds to an app installed in
+      Jira.
+
+
+      If the Connect JWT token corresponds to an app that does not define
+      `jiraDeploymentInfoProvider` module it will be rejected with a 403.
+
+
+      See https://developer.atlassian.com/blog/2015/01/understanding-jwt/ for
+      more details about Connect JWT tokens.
+
+      See
+      https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/
+      for details about on-premise integrations.
+    required: true
+    schema:
+      type: string
+      pattern: JWT \S+

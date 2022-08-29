@@ -1,0 +1,10 @@
+type: object
+properties:
+  rankBeforeEpic:
+    type: string
+  rankAfterEpic:
+    type: string
+  rankCustomFieldId:
+    type: integer
+    format: int64
+additionalProperties: false

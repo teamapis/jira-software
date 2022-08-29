@@ -1,0 +1,35 @@
+type: object
+properties:
+  maxResults:
+    type: integer
+    format: int32
+  startAt:
+    type: integer
+    format: int64
+  total:
+    type: integer
+    format: int64
+  isLast:
+    type: boolean
+  values:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        boardId:
+          type: integer
+          format: int64
+        name:
+          type: string
+        jql:
+          type: string
+        description:
+          type: string
+        position:
+          type: integer
+          format: int32
+      additionalProperties: false
+additionalProperties: false

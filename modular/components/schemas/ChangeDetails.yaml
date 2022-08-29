@@ -1,0 +1,32 @@
+type: object
+properties:
+  field:
+    type: string
+    description: The name of the field changed.
+    readOnly: true
+  fieldtype:
+    type: string
+    description: The type of the field changed.
+    readOnly: true
+  fieldId:
+    type: string
+    description: The ID of the field changed.
+    readOnly: true
+  from:
+    type: string
+    description: The details of the original value.
+    readOnly: true
+  fromString:
+    type: string
+    description: The details of the original value as a string.
+    readOnly: true
+  to:
+    type: string
+    description: The details of the new value.
+    readOnly: true
+  toString:
+    type: string
+    description: The details of the new value as a string.
+    readOnly: true
+additionalProperties: false
+description: A change item.

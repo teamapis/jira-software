@@ -1,0 +1,120 @@
+delete:
+  tags:
+    - Development Information
+  summary: Delete development information by properties
+  description: >-
+    Deletes development information entities which have all the provided
+    properties. Entities will be deleted that match ALL of the properties (i.e.
+    treated as an AND). For example if request is `DELETE
+    bulk?accountId=123&projectId=ABC` entities which have properties
+    `accountId=123` and `projectId=ABC` will be deleted. Special property
+    `_updateSequenceId` can be used to delete all entities with updateSequenceId
+    less or equal than the value specified. In addition to the optional
+    `_updateSequenceId`, one or more query params must be supplied to specify
+    properties to delete by. Deletion is performed asynchronously: specified
+    entities will eventually be removed from Jira. 
+  operationId: deleteByProperties
+  parameters:
+    - name: Authorization
+      in: header
+      description: >-
+        All requests must be signed with either a Connect JWT token or OAuth
+        token for an on-premise integration that corresponds to an app installed
+        in Jira. If the JWT token corresponds to a Connect app that does not
+        define the jiraDevelopmentTool module it will be rejected with a 403.
+        See https://developer.atlassian.com/blog/2015/01/understanding-jwt/ for
+        more details about Connect JWT tokens. See
+        https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/
+        for details about on-premise integrations.
+      required: true
+      schema:
+        type: string
+    - name: _updateSequenceId
+      in: query
+      description: >-
+        An optional property to use to control deletion. Only stored data with
+        an updateSequenceId less than or equal to that provided will be deleted.
+        This can be used to help ensure submit/delete requests are applied
+        correctly if they are issued close together. 
+      required: false
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '202':
+      description: 'Delete accepted. Data will eventually be removed from Jira. '
+    '400':
+      description: >-
+        Request has incorrect format. It will fail in the following cases: If no
+        query properties are specified. If `_updateSequenceId` is not a numeric
+        value. If multiple values of the same property key are specified.
+        Deleting data for many property values, for the same property key,
+        requires multiple requests to this resource. 
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            type: object
+            required:
+              - errorMessages
+            properties:
+              errorMessages:
+                type: array
+                description: List of errors occurred.
+                items:
+                  title: ErrorMessage
+                  type: object
+                  required:
+                    - message
+                  properties:
+                    message:
+                      type: string
+                      description: A human-readable message describing the error.
+                    errorTraceId:
+                      type: string
+                      description: >-
+                        An optional trace ID that can be used by Jira developers
+                        to locate the source of the error.
+                  description: A message supplied in the case of an error.
+            description: A response returned in the case of an error.
+    '401':
+      description: Missing a JWT token, or token is invalid.
+    '403':
+      description: >-
+        The JWT token used does not correspond to an app that defines the
+        jiraDevelopmentTool module, or the app does not define the 'DELETE'
+        scope
+    '429':
+      description: API rate limit has been exceeded.
+    '500':
+      description: An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            type: object
+            required:
+              - errorMessages
+            properties:
+              errorMessages:
+                type: array
+                description: List of errors occurred.
+                items:
+                  title: ErrorMessage
+                  type: object
+                  required:
+                    - message
+                  properties:
+                    message:
+                      type: string
+                      description: A human-readable message describing the error.
+                    errorTraceId:
+                      type: string
+                      description: >-
+                        An optional trace ID that can be used by Jira developers
+                        to locate the source of the error.
+                  description: A message supplied in the case of an error.
+            description: A response returned in the case of an error.
+    '503':
+      description: Service is unavailable due to maintenance or other reasons.
+  x-atlassian-connect-scope: INACCESSIBLE

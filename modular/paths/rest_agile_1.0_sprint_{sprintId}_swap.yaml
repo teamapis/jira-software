@@ -1,0 +1,45 @@
+post:
+  tags:
+    - Sprint
+  summary: Swap sprint
+  description: Swap the position of the sprint with the second sprint.
+  operationId: swapSprint
+  parameters:
+    - name: sprintId
+      in: path
+      description: The ID of the sprint to swap.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            sprintToSwapWith:
+              type: integer
+              format: int64
+          additionalProperties: false
+        example:
+          sprintToSwapWith: 3
+    required: true
+  responses:
+    '204':
+      description: Returned if the sprint swap was performed successfully
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: >-
+        Returned if the user does not a have valid license or does not have
+        permission to at least one sprint.
+    '404':
+      description: >-
+        Returned if at least one sprint does not exist or user does not have
+        permission to view to at least one sprint.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:sprint:jira-software
+  x-atlassian-connect-scope: WRITE

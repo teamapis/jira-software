@@ -1,0 +1,46 @@
+post:
+  tags:
+    - Backlog
+  summary: Move issues to backlog
+  description: >-
+    Move issues to the backlog.  
+
+    This operation is equivalent to remove future and active sprints from a
+    given set of issues. At most 50 issues may be moved at once.
+  operationId: moveIssuesToBacklog
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            issues:
+              uniqueItems: true
+              type: array
+              items:
+                type: string
+          additionalProperties: false
+        example:
+          issues:
+            - PR-1
+            - '10001'
+            - PR-3
+    required: true
+  responses:
+    '204':
+      description: Empty response is returned if operation was successful.
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: >-
+        Returned if user does not a have valid license or does not have
+        permission to assign issues.
+    '404':
+      description: Returned if sprint does not exist or the user cannot view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:board-scope:jira-software
+  x-atlassian-connect-scope: WRITE

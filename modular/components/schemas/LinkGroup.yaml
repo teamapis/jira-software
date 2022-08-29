@@ -1,0 +1,61 @@
+type: object
+properties:
+  id:
+    type: string
+  styleClass:
+    type: string
+  header:
+    type: object
+    properties:
+      id:
+        type: string
+      styleClass:
+        type: string
+      iconClass:
+        type: string
+      label:
+        type: string
+      title:
+        type: string
+      href:
+        type: string
+      weight:
+        type: integer
+        format: int32
+    additionalProperties: false
+    description: Details about the operations available in this version.
+    xml:
+      name: link
+  weight:
+    type: integer
+    format: int32
+  links:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+        styleClass:
+          type: string
+        iconClass:
+          type: string
+        label:
+          type: string
+        title:
+          type: string
+        href:
+          type: string
+        weight:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Details about the operations available in this version.
+      xml:
+        name: link
+  groups:
+    type: array
+    items:
+      $ref: ./LinkGroup.yaml
+additionalProperties: false
+description: Details a link group, which defines issue operations.

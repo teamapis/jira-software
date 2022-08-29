@@ -1,0 +1,237 @@
+get:
+  tags:
+    - Sprint
+  summary: Get sprint
+  description: >-
+    Returns the sprint for a given sprint ID. The sprint will only be returned
+    if the user can view the board that the sprint was created on, or view at
+    least one of the issues in the sprint.
+  operationId: getSprint
+  parameters:
+    - name: sprintId
+      in: path
+      description: The ID of the requested sprint.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: Returns the requested sprint.
+      content:
+        application/json:
+          example: >-
+            {"id":37,"self":"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23","state":"closed","name":"sprint
+            1","startDate":"2015-04-11T15:22:00.000+10:00","endDate":"2015-04-20T01:22:00.000+10:00","completeDate":"2015-04-20T11:04:00.000+10:00","originBoardId":5,"goal":"sprint
+            1 goal"}
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: >-
+        Returned if the sprint does not exist or the user does not have
+        permission to view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:sprint:jira-software
+  x-atlassian-connect-scope: READ
+put:
+  tags:
+    - Sprint
+  summary: Update sprint
+  description: >-
+    Performs a full update of a sprint. A full update means that the result will
+    be exactly the same as the request body. Any fields not present in the
+    request JSON will be set to null.
+
+
+    Notes:
+
+     *  Sprints that are in a closed state cannot be updated.
+     *  A sprint can be started by updating the state to 'active'. This requires the sprint to be in the 'future' state and have a startDate and endDate set.
+     *  A sprint can be completed by updating the state to 'closed'. This action requires the sprint to be in the 'active' state. This sets the completeDate to the time of the request.
+     *  Other changes to state are not allowed.
+     *  The completeDate field cannot be updated manually.
+  operationId: updateSprint
+  parameters:
+    - name: sprintId
+      in: path
+      description: the ID of the sprint to update.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            self:
+              type: string
+              format: uri
+            state:
+              type: string
+            name:
+              type: string
+            startDate:
+              type: string
+            endDate:
+              type: string
+            completeDate:
+              type: string
+            createdDate:
+              type: string
+            originBoardId:
+              type: integer
+              format: int64
+            goal:
+              type: string
+          additionalProperties: false
+        example:
+          goal: sprint 1 goal
+          endDate: '2015-04-16T14:01:00.000+10:00'
+          name: sprint 1
+          state: closed
+          startDate: '2015-04-11T15:36:00.000+10:00'
+          completeDate: '2015-04-20T11:11:28.008+10:00'
+    required: true
+  responses:
+    '200':
+      description: Updated sprint
+      content:
+        application/json:
+          example: >-
+            {"id":37,"self":"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23","state":"closed","name":"sprint
+            1","startDate":"2015-04-11T15:22:00.000+10:00","endDate":"2015-04-20T01:22:00.000+10:00","completeDate":"2015-04-20T11:04:00.000+10:00","originBoardId":5,"goal":"sprint
+            1 goal"}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: Returned if the sprint does not exist.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:sprint:jira-software
+  x-atlassian-connect-scope: WRITE
+post:
+  tags:
+    - Sprint
+  summary: Partially update sprint
+  description: >-
+    Performs a partial update of a sprint. A partial update means that fields
+    not present in the request JSON will not be updated.
+
+
+    Notes:
+
+     *  Sprints that are in a closed state cannot be updated.
+     *  A sprint can be started by updating the state to 'active'. This requires the sprint to be in the 'future' state and have a startDate and endDate set.
+     *  A sprint can be completed by updating the state to 'closed'. This action requires the sprint to be in the 'active' state. This sets the completeDate to the time of the request.
+     *  Other changes to state are not allowed.
+     *  The completeDate field cannot be updated manually.
+  operationId: partiallyUpdateSprint
+  parameters:
+    - name: sprintId
+      in: path
+      description: The ID of the sprint to update.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            self:
+              type: string
+              format: uri
+            state:
+              type: string
+            name:
+              type: string
+            startDate:
+              type: string
+            endDate:
+              type: string
+            completeDate:
+              type: string
+            createdDate:
+              type: string
+            originBoardId:
+              type: integer
+              format: int64
+            goal:
+              type: string
+          additionalProperties: false
+        example:
+          name: new name
+    required: true
+  responses:
+    '200':
+      description: Updated sprint
+      content:
+        application/json:
+          example: >-
+            {"id":37,"self":"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23","state":"closed","name":"sprint
+            1","startDate":"2015-04-11T15:22:00.000+10:00","endDate":"2015-04-20T01:22:00.000+10:00","completeDate":"2015-04-20T11:04:00.000+10:00","originBoardId":5,"goal":"sprint
+            1 goal"}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: Returned if the sprint does not exist.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:sprint:jira-software
+  x-atlassian-connect-scope: WRITE
+delete:
+  tags:
+    - Sprint
+  summary: Delete sprint
+  description: >-
+    Deletes a sprint. Once a sprint is deleted, all open issues in the sprint
+    will be moved to the backlog.
+  operationId: deleteSprint
+  parameters:
+    - name: sprintId
+      in: path
+      description: The ID of the sprint to delete.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '204':
+      description: Returned if the sprint was deleted successfully
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: >-
+        Returned if the user does not a have valid license or does not have
+        permission to delete sprints.
+    '404':
+      description: Returned if the sprint does not exist.
+  deprecated: false
+  security:
+    - OAuth2:
+        - delete:sprint:jira-software
+  x-atlassian-connect-scope: DELETE

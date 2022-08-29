@@ -1,0 +1,70 @@
+put:
+  tags:
+    - Issue
+  summary: Rank issues
+  description: >-
+    Moves (ranks) issues before or after a given issue. At most 50 issues may be
+    ranked at once.
+
+
+    This operation may fail for some issues, although this will be rare. In that
+    case the 207 status code is returned for the whole response and detailed
+    information regarding each issue is available in the response body.
+
+
+    If rankCustomFieldId is not defined, the default rank field will be used.
+  operationId: rankIssues
+  requestBody:
+    description: >-
+      bean which contains list of issues to rank and information where it should
+      be ranked.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            issues:
+              type: array
+              items:
+                type: string
+            rankBeforeIssue:
+              type: string
+            rankAfterIssue:
+              type: string
+            rankCustomFieldId:
+              type: integer
+              format: int64
+          additionalProperties: false
+        example:
+          rankBeforeIssue: PR-4
+          rankCustomFieldId: 10521
+          issues:
+            - PR-1
+            - '10001'
+            - PR-3
+    required: true
+  responses:
+    '204':
+      description: Empty response is returned if operation was successful.
+    '207':
+      description: Returns the list of issue with status of rank operation.
+      content:
+        application/json:
+          example: >-
+            {"entries":[{"issueId":10000,"issueKey":"PR-1","status":200},{"issueId":10001,"issueKey":"PR-2","status":200},{"issueId":10002,"issueKey":"PR-3","status":503,"errors":["JIRA
+            Agile cannot execute the rank operation at this time. Please try
+            again later."]}]}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: >-
+        Returned if user does not a have valid license or does not have
+        permission to rank. To rank issues user has to have schedule issue
+        permission for issues that they want to rank.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:issue:jira-software
+  x-atlassian-connect-scope: WRITE

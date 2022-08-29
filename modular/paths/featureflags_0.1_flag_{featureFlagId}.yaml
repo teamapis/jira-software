@@ -1,0 +1,507 @@
+get:
+  operationId: getFeatureFlagById
+  summary: Get a Feature Flag by ID
+  tags:
+    - Feature Flags
+  description: >
+    Retrieve the currently stored Feature Flag data for the given ID.
+
+
+    The result will be what is currently stored, ignoring any pending updates or
+    deletes.
+
+
+    Only apps that define the Feature Flags module can access this resource.
+    This resource requires the 'READ' scope.
+  parameters:
+    - name: featureFlagId
+      in: path
+      description: |
+        The ID of the Feature Flag to fetch.
+      required: true
+      schema:
+        type: string
+        maxLength: 255
+  responses:
+    '200':
+      description: |
+        The Feature Flag data currently stored for the given ID.
+      content:
+        application/json:
+          schema:
+            title: FeatureFlagData
+            description: >
+              Data related to a single Feature Flag, across any Environment that
+              the flag is present in.
+            required:
+              - id
+              - key
+              - issueKeys
+              - summary
+              - details
+              - updateSequenceId
+            properties:
+              schemaVersion:
+                description: |
+                  The FeatureFlagData schema version used for this flag data. 
+
+                  Placeholder to support potential schema changes in the future.
+                type: string
+                enum:
+                  - '1.0'
+                default: '1.0'
+                example: '1.0'
+              id:
+                description: >
+                  The identifier for the Feature Flag. Must be unique for a
+                  given Provider.
+                type: string
+                maxLength: 255
+                example: 111-222-333
+              key:
+                description: >
+                  The identifier that users would use to reference the Feature
+                  Flag in their source code etc.
+
+
+                  Will be made available via the UI for users to copy into their
+                  source code etc.
+                type: string
+                maxLength: 255
+                example: my-awesome-feature
+              updateSequenceId:
+                description: >
+                  An ID used to apply an ordering to updates for this Feature
+                  Flag in the case of out-of-order receipt of update requests.
+
+
+                  This can be any monotonically increasing number. A suggested
+                  implementation is to use epoch millis from the Provider
+                  system, but other alternatives are valid (e.g. a Provider
+                  could store a counter against each Feature Flag and increment
+                  that on each update to Jira).
+
+
+                  Updates for a Feature Flag that are received with an
+                  updateSqeuenceId lower than what is currently stored will be
+                  ignored.
+                type: integer
+                format: int64
+                example: 1523494301448
+              displayName:
+                description: >
+                  The human-readable name for the Feature Flag. Will be shown in
+                  the UI.
+
+
+                  If not provided, will use the ID for display.
+                type: string
+                maxLength: 255
+                example: Enable awesome feature
+              issueKeys:
+                description: >
+                  The Jira issue keys to associate the Feature Flag information
+                  with.
+                type: array
+                items:
+                  title: IssueKey
+                  description: |
+                    An issue key that references an issue in Jira.
+                  type: string
+                  pattern: ^\w{1,255}-\d{1,255}$
+                  example: ISSUE-123
+                minItems: 1
+                maxItems: 100
+              summary:
+                title: FeatureFlagSummary
+                description: >
+                  Summary information for a single Feature Flag.
+
+
+                  Providers may elect to provide information from a specific
+                  environment, or they may choose to 'roll up' information from
+                  across multiple environments - whatever makes most sense in
+                  the Provider system.
+
+
+                  This is the summary information that will be presented to the
+                  user on e.g. the Jira issue screen.
+                required:
+                  - status
+                  - lastUpdated
+                properties:
+                  url:
+                    description: >
+                      A URL users can use to link to a summary view of this
+                      flag, if appropriate.
+
+
+                      This could be any location that makes sense in the
+                      Provider system (e.g. if the summary information comes
+                      from a specific environment, it might make sense to link
+                      the user to the flag in that environment).
+                    type: string
+                    format: uri
+                    maxLength: 2000
+                    example: https://example.com/project/feature-123/summary
+                  status:
+                    title: FeatureFlagStatus
+                    description: |
+                      Status information about a single Feature Flag.
+                    required:
+                      - enabled
+                    properties:
+                      enabled:
+                        description: >
+                          Whether the Feature Flag is enabled in the given
+                          environment (or in summary).
+
+
+                          Enabled may imply a partial rollout, which can be
+                          described using the 'rollout' field.
+                        type: boolean
+                      defaultValue:
+                        description: >
+                          The value served by this Feature Flag when it is
+                          disabled. This could be the actual value or an alias,
+                          as appropriate.
+
+
+                          This value may be presented to the user in the UI.
+                        type: string
+                        maxLength: 255
+                        example: Disabled
+                      rollout:
+                        title: FeatureFlagRollout
+                        description: >
+                          Information about the rollout of a Feature Flag in an
+                          environment (or in summary).
+
+
+                          Only one of 'percentage', 'text', or 'rules' should be
+                          provided. They will be used in that order if multiple
+                          are present.
+
+
+                          This information may be presented to the user in the
+                          UI.
+                        properties:
+                          percentage:
+                            description: >
+                              If the Feature Flag rollout is a simple percentage
+                              rollout
+                            type: number
+                            minimum: 0
+                            maximum: 100
+                          text:
+                            description: >
+                              A text status to display that represents the
+                              rollout. This could be e.g. a named cohort.
+                            type: string
+                            maxLength: 255
+                          rules:
+                            description: >
+                              A count of the number of rules active for this
+                              Feature Flag in an environment.
+                            type: integer
+                            minimum: 0
+                        example:
+                          percentage: 80
+                  lastUpdated:
+                    description: >
+                      The last-updated timestamp to present to the user as a
+                      summary of the state of the Feature Flag.
+
+
+                      Providers may choose to supply the last-updated timestamp
+                      from a specific environment, or the 'most recent'
+                      last-updated timestamp across all environments - whatever
+                      makes sense in the Provider system.
+
+
+                      Expected format is an RFC3339 formatted string.
+                    type: string
+                    format: date-time
+                    example: '2018-01-20T23:27:25.000Z'
+              details:
+                description: >
+                  Detail information for this Feature Flag.
+
+
+                  This may be information for each environment the Feature Flag
+                  is defined in or a selection of environments made by the user,
+                  as appropriate.
+                type: array
+                items:
+                  title: FeatureFlagDetails
+                  description: Details of a Feature Flag for a single environment.
+                  required:
+                    - url
+                    - lastUpdated
+                    - environment
+                    - status
+                  properties:
+                    url:
+                      description: >
+                        A URL users can use to link to this Feature Flag, in
+                        this environment.
+                      type: string
+                      format: uri
+                      maxLength: 2000
+                      example: https://example.com/project/feature-123/production
+                    lastUpdated:
+                      description: >
+                        The last-updated timestamp for this Feature Flag, in
+                        this environment.
+
+
+                        Expected format is an RFC3339 formatted string.
+                      type: string
+                      format: date-time
+                      example: '2018-01-20T23:27:25.000Z'
+                    environment:
+                      title: EnvironmentDetails
+                      description: >
+                        Details of a single environment.
+
+
+                        At the simplest this must be the name of the
+                        environment.
+
+
+                        Ideally there is also type information which may be used
+                        to group data from multiple Feature Flags and other
+                        entities for visualisation in the UI.
+                      required:
+                        - name
+                      properties:
+                        name:
+                          description: The name of the environment.
+                          type: string
+                          maxLength: 255
+                        type:
+                          description: >-
+                            The 'type' or 'category' of environment this
+                            environment belongs to.
+                          type: string
+                          enum:
+                            - development
+                            - testing
+                            - staging
+                            - production
+                      example:
+                        name: prod-us-west
+                        type: production
+                    status:
+                      title: FeatureFlagStatus
+                      description: |
+                        Status information about a single Feature Flag.
+                      required:
+                        - enabled
+                      properties:
+                        enabled:
+                          description: >
+                            Whether the Feature Flag is enabled in the given
+                            environment (or in summary).
+
+
+                            Enabled may imply a partial rollout, which can be
+                            described using the 'rollout' field.
+                          type: boolean
+                        defaultValue:
+                          description: >
+                            The value served by this Feature Flag when it is
+                            disabled. This could be the actual value or an
+                            alias, as appropriate.
+
+
+                            This value may be presented to the user in the UI.
+                          type: string
+                          maxLength: 255
+                          example: Disabled
+                        rollout:
+                          title: FeatureFlagRollout
+                          description: >
+                            Information about the rollout of a Feature Flag in
+                            an environment (or in summary).
+
+
+                            Only one of 'percentage', 'text', or 'rules' should
+                            be provided. They will be used in that order if
+                            multiple are present.
+
+
+                            This information may be presented to the user in the
+                            UI.
+                          properties:
+                            percentage:
+                              description: >
+                                If the Feature Flag rollout is a simple
+                                percentage rollout
+                              type: number
+                              minimum: 0
+                              maximum: 100
+                            text:
+                              description: >
+                                A text status to display that represents the
+                                rollout. This could be e.g. a named cohort.
+                              type: string
+                              maxLength: 255
+                            rules:
+                              description: >
+                                A count of the number of rules active for this
+                                Feature Flag in an environment.
+                              type: integer
+                              minimum: 0
+                          example:
+                            percentage: 80
+                minItems: 1
+    '401':
+      description: |
+        Missing a JWT token, or token is invalid.
+    '403':
+      description: >
+        The JWT token used does not correspond to an app that defines the
+        Feature Flags module,
+
+        or the app does not define the 'READ' scope.
+    '404':
+      description: |
+        No data found for the given Feature Flag ID.
+    '429':
+      description: |
+        API rate limit has been exceeded.
+    '503':
+      description: |
+        Service is unavailable due to maintenance or other reasons.
+    default:
+      description: |
+        An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+  x-atlassian-connect-scope: INACCESSIBLE
+delete:
+  operationId: deleteFeatureFlagById
+  summary: Delete a Feature Flag by ID
+  tags:
+    - Feature Flags
+  description: >
+    Delete the Feature Flag data currently stored for the given ID.
+
+
+    Deletion is performed asynchronously. The getFeatureFlagById operation can
+    be used to confirm that data has been deleted successfully (if needed).
+
+
+    Only apps that define the Feature Flags module can access this resource.
+    This resource requires the 'DELETE' scope.
+  parameters:
+    - name: featureFlagId
+      in: path
+      description: |
+        The ID of the Feature Flag to delete.
+      required: true
+      schema:
+        type: string
+        maxLength: 255
+    - name: _updateSequenceId
+      in: query
+      deprecated: true
+      description: >
+        This parameter usage is no longer supported.
+
+
+        An optional `_updateSequenceId` to use to control deletion.
+
+
+        Only stored data with an `updateSequenceId` less than or equal to that
+        provided will be deleted.
+
+        This can be used help ensure submit/delete requests are applied
+        correctly if issued close together.
+      required: false
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '202':
+      description: >
+        Delete has been accepted. Data will eventually be removed from Jira if
+        it exists.
+    '401':
+      description: |
+        Missing a JWT token, or token is invalid.
+    '403':
+      description: >
+        The JWT token used does not correspond to an app that defines the
+        Feature Flags module,
+
+        or the app does not define the 'DELETE' scope.
+    '429':
+      description: |
+        API rate limit has been exceeded.
+    '503':
+      description: |
+        Service is unavailable due to maintenance or other reasons.
+    default:
+      description: |
+        An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+  x-atlassian-connect-scope: INACCESSIBLE
+parameters:
+  - name: Authorization
+    in: header
+    description: >
+      All requests must be signed with a Connect JWT token that corresponds to
+      the Provider app installed in Jira.
+
+
+      If the JWT token corresponds to an app that does not define Feature Flags
+      module it will be rejected with a 403.
+
+
+      See https://developer.atlassian.com/blog/2015/01/understanding-jwt/ for
+      more details.
+    required: true
+    schema:
+      type: string
+      pattern: JWT \S+

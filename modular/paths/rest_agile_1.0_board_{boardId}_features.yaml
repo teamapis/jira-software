@@ -1,0 +1,203 @@
+get:
+  tags:
+    - Board
+  summary: Get features for board
+  description: ''
+  operationId: getFeaturesForBoard
+  parameters:
+    - name: boardId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: 200 response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              features:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    boardFeature:
+                      type: string
+                      enum:
+                        - SIMPLE_ROADMAP
+                        - BACKLOG
+                        - SPRINTS
+                        - DEVTOOLS
+                        - REPORTS
+                        - ESTIMATION
+                        - PAGES
+                        - CODE
+                        - RELEASES
+                        - DEPLOYMENTS
+                        - ISSUE_NAVIGATOR
+                        - ON_CALL_SCHEDULE
+                        - BOARD
+                    boardId:
+                      type: integer
+                      format: int64
+                    state:
+                      type: string
+                      enum:
+                        - ENABLED
+                        - DISABLED
+                        - COMING_SOON
+                    localisedName:
+                      type: string
+                    localisedDescription:
+                      type: string
+                    learnMoreLink:
+                      type: string
+                    imageUri:
+                      type: string
+                    featureType:
+                      type: string
+                      enum:
+                        - BASIC
+                        - ESTIMATION
+                    localisedGroup:
+                      type: string
+                    permissibleEstimationTypes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                            enum:
+                              - STORY_POINTS
+                              - ORIGINAL_ESTIMATE
+                          localisedName:
+                            type: string
+                          localisedDescription:
+                            type: string
+                        additionalProperties: false
+                    featureId:
+                      type: string
+                    learnMoreArticleId:
+                      type: string
+                    toggleLocked:
+                      type: boolean
+                  additionalProperties: false
+            additionalProperties: false
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope.admin:jira-software
+  x-atlassian-connect-scope: READ
+put:
+  tags:
+    - Board
+  summary: Toggle features
+  description: ''
+  operationId: toggleFeatures
+  parameters:
+    - name: boardId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            boardId:
+              type: integer
+              format: int64
+            feature:
+              type: string
+            enabling:
+              type: boolean
+          additionalProperties: false
+    required: true
+  responses:
+    '200':
+      description: 200 response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              features:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    boardFeature:
+                      type: string
+                      enum:
+                        - SIMPLE_ROADMAP
+                        - BACKLOG
+                        - SPRINTS
+                        - DEVTOOLS
+                        - REPORTS
+                        - ESTIMATION
+                        - PAGES
+                        - CODE
+                        - RELEASES
+                        - DEPLOYMENTS
+                        - ISSUE_NAVIGATOR
+                        - ON_CALL_SCHEDULE
+                        - BOARD
+                    boardId:
+                      type: integer
+                      format: int64
+                    state:
+                      type: string
+                      enum:
+                        - ENABLED
+                        - DISABLED
+                        - COMING_SOON
+                    localisedName:
+                      type: string
+                    localisedDescription:
+                      type: string
+                    learnMoreLink:
+                      type: string
+                    imageUri:
+                      type: string
+                    featureType:
+                      type: string
+                      enum:
+                        - BASIC
+                        - ESTIMATION
+                    localisedGroup:
+                      type: string
+                    permissibleEstimationTypes:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          value:
+                            type: string
+                            enum:
+                              - STORY_POINTS
+                              - ORIGINAL_ESTIMATE
+                          localisedName:
+                            type: string
+                          localisedDescription:
+                            type: string
+                        additionalProperties: false
+                    featureId:
+                      type: string
+                    learnMoreArticleId:
+                      type: string
+                    toggleLocked:
+                      type: boolean
+                  additionalProperties: false
+            additionalProperties: false
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:board-scope.admin:jira-software
+  x-atlassian-connect-scope: WRITE

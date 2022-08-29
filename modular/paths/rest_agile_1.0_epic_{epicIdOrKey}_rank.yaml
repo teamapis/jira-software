@@ -1,0 +1,58 @@
+put:
+  tags:
+    - Epic
+  summary: Rank epics
+  description: |-
+    Moves (ranks) an epic before or after a given epic.
+
+    If rankCustomFieldId is not defined, the default rank field will be used.
+
+    **Note:** This operation does not work for epics in next-gen projects.
+  operationId: rankEpics
+  parameters:
+    - name: epicIdOrKey
+      in: path
+      description: The id or key of the epic to rank.
+      required: true
+      schema:
+        type: string
+  requestBody:
+    description: bean which contains the information where the given epic should be ranked.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            rankBeforeEpic:
+              type: string
+            rankAfterEpic:
+              type: string
+            rankCustomFieldId:
+              type: integer
+              format: int64
+          additionalProperties: false
+        example:
+          rankBeforeEpic: '10000'
+          rankCustomFieldId: 10521
+    required: true
+  responses:
+    '204':
+      description: Empty response is returned if operation was successful.
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: >-
+        Returned if user does not a have valid license or does not have
+        permission to rank. To rank issues user have to have schedule issue
+        permission for epics that they want to rank.
+    '404':
+      description: >-
+        Returned when the given epics in the path parameter or the request body
+        do not exist.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:epic:jira-software
+  x-atlassian-connect-scope: WRITE

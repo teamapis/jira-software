@@ -1,0 +1,171 @@
+delete:
+  operationId: deleteRemoteLinksByProperty
+  summary: Delete Remote Links by Property
+  tags:
+    - Remote Links
+  description: >
+    Bulk delete all Remote Links data that match the given request.
+
+
+    One or more query params must be supplied to specify Properties to delete
+    by.
+
+    Optional param `_updateSequenceNumber` is no longer supported. If more than
+    one Property is provided,
+
+    data will be deleted that matches ALL of the Properties (e.g. treated as an
+    AND).
+
+
+    See the documentation for the `submitRemoteLinks` operation for more
+    details.
+
+
+    e.g. DELETE /bulkByProperties?accountId=account-123&repoId=repo-345
+
+
+    Deletion is performed asynchronously. The `getRemoteLinkById` operation can
+    be used to confirm that data has been
+
+    deleted successfully (if needed).
+
+
+    Only Connect apps that define the `jiraRemoteLinkInfoProvider` module, and
+    on-premise integrations, can access this resource.
+
+    This resource requires the 'WRITE' scope for Connect apps.
+  parameters:
+    - name: _updateSequenceNumber
+      in: query
+      deprecated: true
+      description: >
+        This parameter usage is no longer supported.
+
+
+        An optional `_updateSequenceNumber` to use to control deletion.
+
+
+        Only stored data with an `updateSequenceNumber` less than or equal to
+        that provided will be deleted.
+
+        This can be used help ensure submit/delete requests are applied
+        correctly if issued close together.
+
+
+        If not provided, all stored data that matches the request will be
+        deleted.
+      required: false
+      schema:
+        type: integer
+        format: int64
+    - name: params
+      in: query
+      description: >
+        Free-form query parameters to specify which properties to delete by.
+        Properties refer to the arbitrary
+
+        information the provider tagged Remote Links with previously.
+
+
+        For example, if the provider previously tagged a remote link with
+        accountId:
+          "properties": {
+            "accountId": "account-123"
+          }
+
+        And now they want to delete Remote Links in bulk by that specific
+        accountId as follows:
+
+        e.g. DELETE /bulkByProperties?accountId=account-123
+      schema:
+        type: object
+  responses:
+    '202':
+      description: |
+        Delete accepted. Data will eventually be removed from Jira.
+    '400':
+      description: |
+        Request has incorrect format (e.g. missing at least one Property param).
+      content:
+        application/json:
+          schema:
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              description: A message supplied in the case of an error.
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+    '401':
+      description: |
+        Missing a JWT token, or token is invalid.
+    '403':
+      description: >
+        The JWT token used does not correspond to an app that defines the
+        `jiraRemoteLinkInfoProvider` module,
+
+        or the app does not define the 'DELETE' scope.
+    '429':
+      description: |
+        API rate limit has been exceeded.
+    '503':
+      description: |
+        Service is unavailable due to maintenance or other reasons.
+    default:
+      description: |
+        An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              description: A message supplied in the case of an error.
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+  x-atlassian-connect-scope: INACCESSIBLE
+parameters:
+  - name: Authorization
+    in: header
+    description: >
+      All requests must be signed with either a Connect JWT token or OAuth token
+      for an on-premise integration that
+
+      corresponds to an app installed in Jira.
+
+
+      If the Connect JWT token corresponds to an app that does not define
+      `jiraRemoteLinkInfoProvider` module it will be rejected with a 403.
+
+
+      See https://developer.atlassian.com/blog/2015/01/understanding-jwt/ for
+      more details about Connect JWT tokens.
+
+      See
+      https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/
+      for details about on-premise integrations.
+    required: true
+    schema:
+      type: string
+      pattern: JWT \S+

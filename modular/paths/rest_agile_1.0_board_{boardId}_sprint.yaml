@@ -1,0 +1,70 @@
+get:
+  tags:
+    - Board
+  summary: Get all sprints
+  description: >-
+    Returns all sprints from a board, for a given board ID. This only includes
+    sprints that the user has permission to view.
+  operationId: getAllSprints
+  parameters:
+    - name: boardId
+      in: path
+      description: The ID of the board that contains the requested sprints.
+      required: true
+      schema:
+        type: integer
+        format: int64
+    - name: startAt
+      in: query
+      description: >-
+        The starting index of the returned sprints. Base index: 0. See the
+        'Pagination' section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int64
+    - name: maxResults
+      in: query
+      description: >-
+        The maximum number of sprints to return per page. See the 'Pagination'
+        section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int32
+    - name: state
+      in: query
+      description: >-
+        Filters results to sprints in specified states. Valid values: future,
+        active, closed. You can define multiple states separated by commas, e.g.
+        state=active,closed
+      schema:
+        type: object
+        additionalProperties: false
+  responses:
+    '200':
+      description: >-
+        Returns the requested sprints, at the specified page of the results.
+        Sprints will be ordered first by state (i.e. closed, active, future)
+        then by their position in the backlog.
+      content:
+        application/json:
+          example: >-
+            {"maxResults":2,"startAt":1,"total":5,"isLast":false,"values":[{"id":37,"self":"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23","state":"closed","name":"sprint
+            1","startDate":"2015-04-11T15:22:00.000+10:00","endDate":"2015-04-20T01:22:00.000+10:00","completeDate":"2015-04-20T11:04:00.000+10:00","originBoardId":5,"goal":"sprint
+            1
+            goal"},{"id":72,"self":"https://your-domain.atlassian.net/rest/agile/1.0/sprint/73","state":"future","name":"sprint
+            2","goal":"sprint 2 goal"}]}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: >-
+        Returned if board does not exist or the user does not have permission to
+        view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:sprint:jira-software
+  x-atlassian-connect-scope: READ

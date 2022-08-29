@@ -1,0 +1,8 @@
+type: object
+properties:
+  reports:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+additionalProperties: false

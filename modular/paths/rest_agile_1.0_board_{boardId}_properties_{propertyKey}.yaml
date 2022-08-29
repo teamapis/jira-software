@@ -1,0 +1,129 @@
+get:
+  tags:
+    - Board
+  summary: Get board property
+  description: >-
+    Returns the value of the property with a given key from the board identified
+    by the provided id. The user who retrieves the property is required to have
+    permissions to view the board.
+  operationId: getBoardProperty
+  parameters:
+    - name: boardId
+      in: path
+      description: the ID of the board from which the property will be returned.
+      required: true
+      schema:
+        type: string
+    - name: propertyKey
+      in: path
+      description: the key of the property to return.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Returned if the board exists and the property was found.
+      content:
+        application/json:
+          example: >-
+            com.atlassian.jira.rest.v2.entity.property.EntityPropertyResourceExamples#GET_PROPERTY_RESPONSE_200
+    '400':
+      description: Returned if the boardId is invalid (negative or not a number).
+    '401':
+      description: Returned if the calling user is not authenticated.
+    '404':
+      description: >-
+        Returned if the board with given id does not exist, or if the property
+        with given key is not found, or the user doesn't have permissions to see
+        it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope.admin:jira-software
+    - {}
+  x-atlassian-connect-scope: READ
+put:
+  tags:
+    - Board
+  summary: Set board property
+  description: >-
+    Sets the value of the specified board's property.
+
+
+    You can use this resource to store a custom data against the board
+    identified by the id. The user who stores the data is required to have
+    permissions to modify the board.
+  operationId: setBoardProperty
+  parameters:
+    - name: boardId
+      in: path
+      description: the ID of the board on which the property will be set.
+      required: true
+      schema:
+        type: string
+    - name: propertyKey
+      in: path
+      description: >-
+        the key of the board's property. The maximum length of the key is 255
+        bytes.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Returned if the board property is successfully updated.
+    '201':
+      description: Returned if the board property is successfully created.
+    '400':
+      description: Returned if the boardId is invalid (negative or not a number).
+    '401':
+      description: Returned if the calling user is not authenticated.
+    '404':
+      description: >-
+        Returned if the board with given id does not exist or the user doesn't
+        have permissions to see it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:board-scope.admin:jira-software
+    - {}
+  x-atlassian-connect-scope: WRITE
+delete:
+  tags:
+    - Board
+  summary: Delete board property
+  description: >-
+    Removes the property from the board identified by the id. Ths user removing
+    the property is required to have permissions to modify the board.
+  operationId: deleteBoardProperty
+  parameters:
+    - name: boardId
+      in: path
+      description: the id of the board from which the property will be removed.
+      required: true
+      schema:
+        type: string
+    - name: propertyKey
+      in: path
+      description: the key of the property to remove.
+      required: true
+      schema:
+        type: string
+  responses:
+    '204':
+      description: Returned if the board property was removed successfully.
+    '400':
+      description: Returned if the boardId is invalid (negative or not a number).
+    '401':
+      description: Returned if the calling user is not authenticated.
+    '404':
+      description: >-
+        Returned if the board with given id does not exist, or if the property
+        with given key is not found, or the user doesn't have permissions to see
+        it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - delete:board-scope.admin:jira-software
+    - {}
+  x-atlassian-connect-scope: DELETE

@@ -1,0 +1,62 @@
+post:
+  tags:
+    - Sprint
+  summary: Create sprint
+  description: >-
+    Creates a future sprint. Sprint name and origin board id are required. Start
+    date, end date, and goal are optional.
+
+
+    Note that the sprint name is trimmed. Also, when starting sprints from the
+    UI, the "endDate" set through this call is ignored and instead the last
+    sprint's duration is used to fill the form.
+  operationId: createSprint
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            startDate:
+              type: string
+            endDate:
+              type: string
+            originBoardId:
+              type: integer
+              format: int64
+            goal:
+              type: string
+          additionalProperties: false
+        example:
+          originBoardId: 5
+          goal: sprint 1 goal
+          endDate: '2015-04-20T01:22:00.000+10:00'
+          name: sprint 1
+          startDate: '2015-04-11T15:22:00.000+10:00'
+    required: true
+  responses:
+    '201':
+      description: Created sprint
+      content:
+        application/json:
+          example: >-
+            {"id":37,"self":"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23","state":"future","name":"sprint
+            1","startDate":"2015-04-11T15:22:00.000+10:00","endDate":"2015-04-20T01:22:00.000+10:00","originBoardId":5,"goal":"sprint
+            1 goal"}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: >-
+        Returned if the board does not exist or the user does not have
+        permission to view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:sprint:jira-software
+  x-atlassian-connect-scope: WRITE

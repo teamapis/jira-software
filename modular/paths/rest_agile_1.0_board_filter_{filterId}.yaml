@@ -1,0 +1,81 @@
+get:
+  tags:
+    - Board
+  summary: Get board by filter id
+  description: >-
+    Returns any boards which use the provided filter id. This method can be
+    executed by users without a valid software license in order to find which
+    boards are using a particular filter.
+  operationId: getBoardByFilterId
+  parameters:
+    - name: startAt
+      in: query
+      description: >-
+        The starting index of the returned boards. Base index: 0. See the
+        'Pagination' section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int64
+    - name: maxResults
+      in: query
+      description: >-
+        The maximum number of boards to return per page. Default: 50. See the
+        'Pagination' section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int32
+    - name: filterId
+      in: path
+      description: >-
+        Filters results to boards that are relevant to a filter. Not supported
+        for next-gen boards.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: Returns the requested boards, at the specified page of the results.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              maxResults:
+                type: integer
+                format: int32
+              startAt:
+                type: integer
+                format: int64
+              total:
+                type: integer
+                format: int64
+              isLast:
+                type: boolean
+              values:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                    self:
+                      type: string
+                      format: uri
+                    name:
+                      type: string
+                  additionalProperties: false
+            additionalProperties: false
+          example: >-
+            {"id":84,"self":"https://your-domain.atlassian.net/rest/agile/1.0/board/84","name":"scrum
+            board"}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope.admin:jira-software
+  x-atlassian-connect-scope: READ

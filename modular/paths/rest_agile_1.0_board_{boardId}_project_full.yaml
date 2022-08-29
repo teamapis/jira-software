@@ -1,0 +1,46 @@
+get:
+  tags:
+    - Board
+  summary: Get projects full
+  description: >-
+    Returns all projects that are statically associated with the board, for the
+    given board ID. Returned projects are ordered by the name.
+
+
+    A project is associated with a board if the board filter contains reference
+    the project.
+
+
+    The board filter contains reference the project only if JQL query guarantees
+    that returned issues will be returned from the project set defined in JQL.
+    For instance the query `project in (ABC, BCD) AND reporter = admin` have
+    reference to ABC and BCD projects but query `project in (ABC, BCD) OR
+    reporter = admin` doesn't have reference to any project.
+  operationId: getProjectsFull
+  parameters:
+    - name: boardId
+      in: path
+      description: The ID of the board that contains returned projects.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: Returns the board's projects, at the specified page of the results.
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: >-
+        Returned if board does not exist or the user does not have permission to
+        access it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope.admin:jira-software
+        - read:project:jira
+  x-atlassian-connect-scope: READ

@@ -1,0 +1,21 @@
+type: object
+properties:
+  entries:
+    type: array
+    items:
+      type: object
+      properties:
+        issueId:
+          type: integer
+          format: int64
+        issueKey:
+          type: string
+        status:
+          type: integer
+          format: int32
+        errors:
+          type: array
+          items:
+            type: string
+      additionalProperties: false
+additionalProperties: false

@@ -1,0 +1,18 @@
+type: object
+properties:
+  included:
+    uniqueItems: true
+    type: array
+    items:
+      type: string
+  actuallyIncluded:
+    uniqueItems: true
+    type: array
+    items:
+      type: string
+  excluded:
+    uniqueItems: true
+    type: array
+    items:
+      type: string
+additionalProperties: false

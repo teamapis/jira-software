@@ -1,0 +1,6 @@
+type: object
+properties:
+  sprintToSwapWith:
+    type: integer
+    format: int64
+additionalProperties: false

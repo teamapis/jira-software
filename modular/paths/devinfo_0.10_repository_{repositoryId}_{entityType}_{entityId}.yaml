@@ -1,0 +1,128 @@
+delete:
+  tags:
+    - Development Information
+  summary: Delete development information entity
+  description: >-
+    Deletes particular development information entity. Deletion is performed
+    asynchronously.
+  operationId: deleteEntity
+  parameters:
+    - name: repositoryId
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: entityType
+      in: path
+      required: true
+      schema:
+        type: string
+        enum:
+          - commit
+          - branch
+          - pull_request
+    - name: entityId
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: _updateSequenceId
+      in: query
+      description: >-
+        An optional property to use to control deletion. Only stored data with
+        an updateSequenceId less than or equal to that provided will be deleted.
+        This can be used to help ensure submit/delete requests are applied
+        correctly if they are issued close together. 
+      required: false
+      schema:
+        type: integer
+        format: int64
+    - name: Authorization
+      in: header
+      description: >-
+        All requests must be signed with either a Connect JWT token or OAuth
+        token for an on-premise integration that corresponds to an app installed
+        in Jira. If the JWT token corresponds to a Connect app that does not
+        define the jiraDevelopmentTool module it will be rejected with a 403.
+        See https://developer.atlassian.com/blog/2015/01/understanding-jwt/ for
+        more details about Connect JWT tokens. See
+        https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/
+        for details about on-premise integrations.
+      required: true
+      schema:
+        type: string
+  responses:
+    '202':
+      description: >-
+        Delete request has been accepted. Data will eventually be removed from
+        Jira if it exists.
+    '400':
+      description: Wrong entity type specified
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            type: object
+            required:
+              - errorMessages
+            properties:
+              errorMessages:
+                type: array
+                description: List of errors occurred.
+                items:
+                  title: ErrorMessage
+                  type: object
+                  required:
+                    - message
+                  properties:
+                    message:
+                      type: string
+                      description: A human-readable message describing the error.
+                    errorTraceId:
+                      type: string
+                      description: >-
+                        An optional trace ID that can be used by Jira developers
+                        to locate the source of the error.
+                  description: A message supplied in the case of an error.
+            description: A response returned in the case of an error.
+    '401':
+      description: Missing a JWT token, or token is invalid.
+    '403':
+      description: >-
+        The JWT token used does not correspond to an app that defines the
+        jiraDevelopmentTool module, or the app does not define the 'DELETE'
+        scope
+    '429':
+      description: API rate limit has been exceeded.
+    '500':
+      description: An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            type: object
+            required:
+              - errorMessages
+            properties:
+              errorMessages:
+                type: array
+                description: List of errors occurred.
+                items:
+                  title: ErrorMessage
+                  type: object
+                  required:
+                    - message
+                  properties:
+                    message:
+                      type: string
+                      description: A human-readable message describing the error.
+                    errorTraceId:
+                      type: string
+                      description: >-
+                        An optional trace ID that can be used by Jira developers
+                        to locate the source of the error.
+                  description: A message supplied in the case of an error.
+            description: A response returned in the case of an error.
+    '503':
+      description: Service is unavailable due to maintenance or other reasons.
+  x-atlassian-connect-scope: INACCESSIBLE

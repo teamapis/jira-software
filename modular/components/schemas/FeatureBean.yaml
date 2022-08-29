@@ -1,0 +1,64 @@
+type: object
+properties:
+  boardFeature:
+    type: string
+    enum:
+      - SIMPLE_ROADMAP
+      - BACKLOG
+      - SPRINTS
+      - DEVTOOLS
+      - REPORTS
+      - ESTIMATION
+      - PAGES
+      - CODE
+      - RELEASES
+      - DEPLOYMENTS
+      - ISSUE_NAVIGATOR
+      - ON_CALL_SCHEDULE
+      - BOARD
+  boardId:
+    type: integer
+    format: int64
+  state:
+    type: string
+    enum:
+      - ENABLED
+      - DISABLED
+      - COMING_SOON
+  localisedName:
+    type: string
+  localisedDescription:
+    type: string
+  learnMoreLink:
+    type: string
+  imageUri:
+    type: string
+  featureType:
+    type: string
+    enum:
+      - BASIC
+      - ESTIMATION
+  localisedGroup:
+    type: string
+  permissibleEstimationTypes:
+    type: array
+    items:
+      type: object
+      properties:
+        value:
+          type: string
+          enum:
+            - STORY_POINTS
+            - ORIGINAL_ESTIMATE
+        localisedName:
+          type: string
+        localisedDescription:
+          type: string
+      additionalProperties: false
+  featureId:
+    type: string
+  learnMoreArticleId:
+    type: string
+  toggleLocked:
+    type: boolean
+additionalProperties: false

@@ -1,0 +1,10 @@
+type: object
+properties:
+  linkGroups:
+    type: array
+    description: Details of the link groups defining issue operations.
+    readOnly: true
+    items:
+      $ref: ./LinkGroup.yaml
+additionalProperties: true
+description: Details of the operations that can be performed on the issue.

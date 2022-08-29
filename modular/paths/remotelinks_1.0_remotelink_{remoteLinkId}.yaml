@@ -1,0 +1,441 @@
+get:
+  operationId: getRemoteLinkById
+  summary: Get a Remote Link by ID
+  tags:
+    - Remote Links
+  description: >
+    Retrieve the currently stored Remote Link data for the given ID.
+
+
+    The result will be what is currently stored, ignoring any pending updates or
+    deletes.
+
+
+    Only Connect apps that define the `jiraRemoteLinkInfoProvider` module, and
+    on-premise integrations, can access this resource.
+
+    This resource requires the 'WRITE' scope for Connect apps.
+  parameters:
+    - name: remoteLinkId
+      in: path
+      description: |
+        The ID of the Remote Link to fetch.
+      required: true
+      schema:
+        type: string
+        maxLength: 255
+  responses:
+    '200':
+      description: |
+        The Remote Link data currently stored for the given ID.
+      content:
+        application/json:
+          schema:
+            title: RemoteLinkData
+            description: |
+              Data related to a single Remote Link.
+            required:
+              - id
+              - updateSequenceNumber
+              - displayName
+              - url
+              - type
+              - lastUpdated
+            properties:
+              schemaVersion:
+                description: |
+                  The schema version used for this data.
+
+                  Placeholder to support potential schema changes in the future.
+                type: string
+                enum:
+                  - '1.0'
+                default: '1.0'
+                example: '1.0'
+              id:
+                description: >
+                  The identifier for the Remote Link. Must be unique for a given
+                  Provider.
+                type: string
+                maxLength: 255
+                example: 111-222-333
+              updateSequenceNumber:
+                description: >
+                  An ID used to apply an ordering to updates for this Remote
+                  Link in the case of out-of-order receipt of
+
+                  update requests.
+
+
+                  It must be a monotonically increasing number. For example,
+                  epoch time could be one way to generate the
+
+                  `updateSequenceNumber`.
+
+
+                  Updates for a Remote Link that is received with an
+                  `updateSqeuenceNumber` less than or equal to what is currently
+
+                  stored will be ignored.
+                type: integer
+                format: int64
+                example: 1523494301448
+              displayName:
+                description: |
+                  The human-readable name for the Remote Link.
+
+                  Will be shown in the UI.
+                type: string
+                maxLength: 255
+                example: 'Remote Link #42'
+              url:
+                description: |
+                  The URL to this Remote Link in your system.
+                type: string
+                maxLength: 2000
+                format: uri
+              type:
+                description: >
+                  The type of the Remote Link. The current supported types are
+                  'document', 'alert', 'test',
+
+                  'security', 'logFile', 'prototype', 'coverage', 'bugReport'
+                  and 'other'
+                type: string
+                enum:
+                  - document
+                  - alert
+                  - test
+                  - security
+                  - logFile
+                  - prototype
+                  - coverage
+                  - bugReport
+                  - other
+                example: security
+              description:
+                description: |
+                  An optional description to attach to this Remote Link.
+
+                  This may be anything that makes sense in your system.
+                type: string
+                maxLength: 255
+                example: 'Remote Link #42 with more information in this description'
+              lastUpdated:
+                description: >
+                  The last-updated timestamp to present to the user as a summary
+                  of when Remote Link was last updated.
+                type: string
+                format: date-time
+                example: '2018-01-20T23:27:25.000Z'
+              associations:
+                description: |
+                  The entities to associate the Remote Link information with.
+                type: array
+                items:
+                  anyOf:
+                    - title: IssueKeysAssociation
+                      description: |
+                        An association type referencing issues in Jira.
+                      type: object
+                      required:
+                        - associationType
+                        - values
+                      properties:
+                        associationType:
+                          description: |
+                            Defines the asssociation type.
+                          type: string
+                          enum:
+                            - issueKeys
+                          example: issueKeys
+                        values:
+                          description: >
+                            The Jira issue keys to associate the Remote Link
+                            information with.
+
+
+                            The number of values counted across all
+                            associationTypes (issueKeys,
+
+                            issueIdOrKeys and serviceIdOrKeys) must not exceed a
+                            limit of 500.
+                          type: array
+                          items:
+                            title: IssueKey
+                            description: |
+                              An issue key that references an issue in Jira.
+                            type: string
+                            pattern: ^\w{1,255}-\d{1,255}$
+                            example: ABC-123
+                          minItems: 1
+                          maxItems: 500
+                      example:
+                        associationType: issueKeys
+                        values:
+                          - ABC-123
+                          - ABC-456
+                    - title: ServiceIdOrKeysAssociation
+                      description: |
+                        An association type referencing service id or keys.
+                      type: object
+                      required:
+                        - associationType
+                        - values
+                      properties:
+                        associationType:
+                          description: |
+                            Defines the asssociation type.
+                          type: string
+                          enum:
+                            - serviceIdOrKeys
+                          example: serviceIdOrKeys
+                        values:
+                          description: >
+                            The service id or keys to associate the Remote Link
+                            information with.
+
+
+                            The number of values counted across all
+                            associationTypes (issueKeys,
+
+                            issueIdOrKeys and serviceIdOrKeys) must not exceed a
+                            limit of 500.
+                          type: array
+                          items:
+                            title: ServiceIdOrKeys
+                            description: |
+                              A service id or service key.
+                            type: string
+                            maxLength: 255
+                            example: some-service-key
+                          minItems: 1
+                          maxItems: 500
+                      example:
+                        associationType: serviceIdOrKeys
+                        values:
+                          - some-service-key
+                minItems: 1
+                maxItems: 2
+              status:
+                title: RemoteLinkStatus
+                description: |
+                  The status of a Remote Link.
+                type: object
+                required:
+                  - appearance
+                  - label
+                properties:
+                  appearance:
+                    description: >
+                      Appearance is a fixed set of appearance types affecting
+                      the colour
+
+                      of the status lozenge in the UI. The colours they
+                      correspond to are
+
+                      equivalent to atlaskit's
+                      [Lozenge](https://atlaskit.atlassian.com/packages/core/lozenge)
+                      component.
+                    type: string
+                    enum:
+                      - default
+                      - inprogress
+                      - moved
+                      - new
+                      - removed
+                      - prototype
+                      - success
+                    example: inprogress
+                  label:
+                    description: |
+                      The human-readable description for the Remote Link status.
+
+                      Will be shown in the UI.
+                    type: string
+                    maxLength: 255
+                    example: ANOMALOUS
+              actionIds:
+                description: >
+                  Optional list of actionIds. They are associated with the
+                  actions the provider is able to provide when they
+
+                  registered. Indicates which actions this Remote Link has.
+
+
+                  If any actions have a templateUrl that requires string
+                  substitution, then `attributeMap` must be passed in.
+                type: array
+                items:
+                  type: string
+                example:
+                  - action-111-222-333
+                  - action-444-555-666
+                maxItems: 10
+              attributeMap:
+                description: >
+                  Map of key/values (string to string mapping). This is used to
+                  build the urls for actions from the
+
+                  templateUrl the provider registered their available actions
+                  with.
+                type: object
+                additionalProperties:
+                  type: string
+    '401':
+      description: |
+        Missing a JWT token, or token is invalid.
+    '403':
+      description: >
+        The JWT token used does not correspond to an app that defines the
+        `jiraRemoteLinkInfoProvider` module,
+
+        or the app does not define the 'READ' scope.
+    '404':
+      description: |
+        No Remote Link data found for the given ID.
+    '429':
+      description: |
+        API rate limit has been exceeded.
+    '503':
+      description: |
+        Service is unavailable due to maintenance or other reasons.
+    default:
+      description: |
+        An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              description: A message supplied in the case of an error.
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+  x-atlassian-connect-scope: INACCESSIBLE
+delete:
+  operationId: deleteRemoteLinkById
+  summary: Delete a Remote Link by ID
+  tags:
+    - Remote Links
+  description: >
+    Delete the Remote Link data currently stored for the given ID.
+
+
+    Deletion is performed asynchronously. The `getRemoteLinkById` operation can
+    be used to confirm that data has been
+
+    deleted successfully (if needed).
+
+
+    Only Connect apps that define the `jiraRemoteLinkInfoProvider` module, and
+    on-premise integrations, can access this resource.
+
+    This resource requires the 'WRITE' scope for Connect apps.
+  parameters:
+    - name: remoteLinkId
+      in: path
+      description: |
+        The ID of the Remote Link to fetch.
+      required: true
+      schema:
+        type: string
+        maxLength: 255
+    - name: _updateSequenceNumber
+      in: query
+      deprecated: true
+      description: >
+        This parameter usage is no longer supported.
+
+
+        An optional `_updateSequenceNumber` to use to control deletion.
+
+
+        Only stored data with an `updateSequenceNumber` less than or equal to
+        that provided will be deleted.
+
+        This can be used help ensure submit/delete requests are applied
+        correctly if issued close together.
+      required: false
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '202':
+      description: >
+        Delete has been accepted. Data will eventually be removed from Jira if
+        it exists.
+    '401':
+      description: |
+        Missing a JWT token, or token is invalid.
+    '403':
+      description: >
+        The JWT token used does not correspond to an app that defines the
+        `jiraRemoteLinkInfoProvider` module,
+
+        or the app does not define the 'DELETE' scope.
+    '429':
+      description: |
+        API rate limit has been exceeded.
+    '503':
+      description: |
+        Service is unavailable due to maintenance or other reasons.
+    default:
+      description: |
+        An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              description: A message supplied in the case of an error.
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+  x-atlassian-connect-scope: INACCESSIBLE
+parameters:
+  - name: Authorization
+    in: header
+    description: >
+      All requests must be signed with either a Connect JWT token or OAuth token
+      for an on-premise integration that
+
+      corresponds to an app installed in Jira.
+
+
+      If the Connect JWT token corresponds to an app that does not define
+      `jiraRemoteLinkInfoProvider` module it will be rejected with a 403.
+
+
+      See https://developer.atlassian.com/blog/2015/01/understanding-jwt/ for
+      more details about Connect JWT tokens.
+
+      See
+      https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/
+      for details about on-premise integrations.
+    required: true
+    schema:
+      type: string
+      pattern: JWT \S+

@@ -1,0 +1,154 @@
+get:
+  tags:
+    - Issue
+  summary: Get issue estimation for board
+  description: >-
+    Returns the estimation of the issue and a fieldId of the field that is used
+    for it. `boardId` param is required. This param determines which field will
+    be updated on a issue.
+
+
+    Original time internally stores and returns the estimation as a number of
+    seconds.
+
+
+    The field used for estimation on the given board can be obtained from [board
+    configuration resource](#agile/1.0/board-getConfiguration). More information
+    about the field are returned by [edit meta
+    resource](#api-rest-api-3-issue-getEditIssueMeta) or [field
+    resource](#api-rest-api-3-field-get).
+  operationId: getIssueEstimationForBoard
+  parameters:
+    - name: issueIdOrKey
+      in: path
+      description: The ID or key of the requested issue.
+      required: true
+      schema:
+        type: string
+    - name: boardId
+      in: query
+      description: >-
+        The ID of the board required to determine which field is used for
+        estimation.
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: >-
+        Returns the estimation of the issue and a fieldId of the field that is
+        used for it.
+      content:
+        application/json:
+          example: '{"fieldId":"customfield_12532","value":"8.0"}'
+    '400':
+      description: >-
+        Returned if the boardId was not provided, field does not exists or value
+        was in wrong format.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: >-
+        Returned if user does not a have valid license or does not have
+        permission to edit issue.
+    '404':
+      description: |-
+        Returned in these cases:
+
+         *  the issue does not exist
+         *  the user does not have permission to view issue
+         *  the board does not exist
+         *  the user does not have permission to view board
+         *  the issue does not belong to the board
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:issue:jira-software
+        - read:issue-details:jira
+  x-atlassian-connect-scope: READ
+put:
+  tags:
+    - Issue
+  summary: Estimate issue for board
+  description: >-
+    Updates the estimation of the issue. boardId param is required. This param
+    determines which field will be updated on a issue.
+
+
+    Note that this resource changes the estimation field of the issue regardless
+    of appearance the field on the screen.
+
+
+    Original time tracking estimation field accepts estimation in formats like
+    "1w", "2d", "3h", "20m" or number which represent number of minutes.
+    However, internally the field stores and returns the estimation as a number
+    of seconds.
+
+
+    The field used for estimation on the given board can be obtained from [board
+    configuration resource](#agile/1.0/board-getConfiguration). More information
+    about the field are returned by [edit meta
+    resource](#api-rest-api-3-issue-issueIdOrKey-editmeta-get) or [field
+    resource](#api-rest-api-3-field-get).
+  operationId: estimateIssueForBoard
+  parameters:
+    - name: issueIdOrKey
+      in: path
+      description: The ID or key of the requested issue.
+      required: true
+      schema:
+        type: string
+    - name: boardId
+      in: query
+      description: >-
+        The ID of the board required to determine which field is used for
+        estimation.
+      schema:
+        type: integer
+        format: int64
+  requestBody:
+    description: bean that contains value of a new estimation.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            value:
+              type: string
+          additionalProperties: false
+        example:
+          value: '8.0'
+    required: true
+  responses:
+    '200':
+      description: >-
+        Returns the estimation of the issue and a fieldId of the field that is
+        used for it.
+      content:
+        application/json:
+          example: '{"fieldId":"customfield_12532","value":"8.0"}'
+    '400':
+      description: >-
+        Returned if the boardId was not provided, field does not exists or value
+        was in wrong format.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: >-
+        Returned if user does not a have valid license or does not have
+        permission to edit issue.
+    '404':
+      description: |-
+        Returned in these cases:
+
+         *  the issue does not exist
+         *  the user does not have permission to view issue
+         *  the board does not exist
+         *  the user does not have permission to view board
+         *  the issue does not belong to the board
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:issue:jira-software
+        - read:issue-details:jira
+  x-atlassian-connect-scope: WRITE

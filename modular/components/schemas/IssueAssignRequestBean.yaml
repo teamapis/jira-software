@@ -1,0 +1,8 @@
+type: object
+properties:
+  issues:
+    uniqueItems: true
+    type: array
+    items:
+      type: string
+additionalProperties: false

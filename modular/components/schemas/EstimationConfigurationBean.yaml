@@ -1,0 +1,12 @@
+type: object
+properties:
+  value:
+    type: string
+    enum:
+      - STORY_POINTS
+      - ORIGINAL_ESTIMATE
+  localisedName:
+    type: string
+  localisedDescription:
+    type: string
+additionalProperties: false

@@ -1,0 +1,72 @@
+post:
+  tags:
+    - Backlog
+  summary: Move issues to backlog for board
+  description: >-
+    Move issues to the backlog of a particular board (if they are already on
+    that board).  
+
+    This operation is equivalent to remove future and active sprints from a
+    given set of issues if the board has sprints If the board does not have
+    sprints this will put the issues back into the backlog from the board. At
+    most 50 issues may be moved at once.
+  operationId: moveIssuesToBacklogForBoard
+  parameters:
+    - name: boardId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            issues:
+              type: array
+              items:
+                type: string
+            rankBeforeIssue:
+              type: string
+            rankAfterIssue:
+              type: string
+            rankCustomFieldId:
+              type: integer
+              format: int64
+          additionalProperties: false
+        example:
+          rankBeforeIssue: PR-4
+          rankCustomFieldId: 10521
+          issues:
+            - PR-1
+            - '10001'
+            - PR-3
+    required: true
+  responses:
+    '204':
+      description: Empty response is returned if operation was successful.
+    '207':
+      description: Returns the list of issue with status of rank operation.
+      content:
+        application/json:
+          example: >-
+            {"entries":[{"issueId":10000,"issueKey":"PR-1","status":200},{"issueId":10001,"issueKey":"PR-2","status":200},{"issueId":10002,"issueKey":"PR-3","status":503,"errors":["JIRA
+            Agile cannot execute the rank operation at this time. Please try
+            again later."]}]}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: >-
+        Returned if user does not a have valid license or does not have
+        permission to assign issues.
+    '404':
+      description: Returned if sprint does not exist or the user cannot view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:board-scope:jira-software
+  x-atlassian-connect-scope: WRITE

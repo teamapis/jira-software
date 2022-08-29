@@ -1,0 +1,32 @@
+get:
+  tags:
+    - Board
+  summary: Get reports for board
+  description: ''
+  operationId: getReportsForBoard
+  parameters:
+    - name: boardId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: 200 response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              reports:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: false
+            additionalProperties: false
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope:jira-software
+  x-atlassian-connect-scope: READ

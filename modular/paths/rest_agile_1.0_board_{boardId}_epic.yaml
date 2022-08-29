@@ -1,0 +1,66 @@
+get:
+  tags:
+    - Board
+  summary: Get epics
+  description: >-
+    Returns all epics from the board, for the given board ID. This only includes
+    epics that the user has permission to view. Note, if the user does not have
+    permission to view the board, no epics will be returned at all.
+  operationId: getEpics
+  parameters:
+    - name: boardId
+      in: path
+      description: The ID of the board that contains the requested epics.
+      required: true
+      schema:
+        type: integer
+        format: int64
+    - name: startAt
+      in: query
+      description: >-
+        The starting index of the returned epics. Base index: 0. See the
+        'Pagination' section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int64
+    - name: maxResults
+      in: query
+      description: >-
+        The maximum number of epics to return per page. See the 'Pagination'
+        section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int32
+    - name: done
+      in: query
+      description: >-
+        Filters results to epics that are either done or not done. Valid values:
+        true, false.
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Returns the requested epics, at the specified page of the results.
+      content:
+        application/json:
+          example: >-
+            {"maxResults":2,"startAt":1,"total":5,"isLast":false,"values":[{"id":37,"self":"https://your-domain.atlassian.net/rest/agile/1.0/epic/23","name":"epic
+            1","summary":"epic 1
+            summary","color":{"key":"color_4"},"done":true},{"id":37,"self":"https://your-domain.atlassian.net/rest/agile/1.0/epic/13","name":"epic
+            2","summary":"epic 2
+            summary","color":{"key":"color_2"},"done":false}]}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not have valid license.
+    '404':
+      description: >-
+        Returned if board does not exist or the user does not have permission to
+        view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:epic:jira-software
+  x-atlassian-connect-scope: READ

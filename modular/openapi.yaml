@@ -1,0 +1,875 @@
+openapi: 3.0.1
+info:
+  title: Jira Software Cloud API
+  description: Jira Software Cloud REST API documentation
+  termsOfService: http://atlassian.com/terms/
+  contact:
+    url: https://getsupport.atlassian.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1001.0.0
+externalDocs:
+  description: Find out more about Atlassian products and services.
+  url: http://www.atlassian.com
+servers:
+  - url: https://your-domain.atlassian.com
+tags:
+  - name: Backlog
+    description: Apis related to the backlog
+  - name: Board
+    description: Apis related to boards
+  - name: Epic
+    description: Apis related to epics
+  - name: Issue
+    description: Apis related to issues
+  - name: Sprint
+    description: Apis related to sprints
+  - name: Development Information
+    description: >-
+      APIs related to integrating development information (commits, branches and
+      pull requests) with Jira. These APIs are available to Atlassian Connect
+      apps and on-premise integrations using OAuth. Connect apps using these
+      APIs must have the Development Tool module in the app descriptor, see
+      https://developer.atlassian.com/cloud/jira/software/modules/development-tool/.
+      For more details on integrating Jira Software Cloud with on-premises tools
+      using OAuth 2.0 credentials, see
+      https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/.
+  - name: Feature Flags
+    description: >-
+      Apis related to integrating Feature Flags with Jira Software. These apis
+      are only available to Atlassian Connect apps. To use these apis you must
+      have the Feature Flag module (see
+      https://developer.atlassian.com/cloud/jira/software/modules/feature-flag/)
+      in your app's descriptor
+  - name: Deployments
+    description: >
+      APIs related to integrating deployments data with Jira Software. These
+      APIs
+
+      are available to Atlassian Connect apps. To use these APIs you must
+
+      have the Deployment module see
+      https://developer.atlassian.com/cloud/jira/software/modules/deployment/
+
+      in your app's descriptor. They are also related to integrating Jira
+
+      Software Cloud with on-premises tools using
+
+      OAuth 2.0 credentials, see
+      https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/.
+  - name: Builds
+    description: >
+      APIs related to integrating builds data with Jira Software. These APIs
+
+      are available to Atlassian Connect apps. To use these APIs you must
+
+      have the Build module see
+      https://developer.atlassian.com/cloud/jira/software/modules/build/
+
+      in your app's descriptor. They are also related to integrating Jira
+
+      Software Cloud with on-premises tools using
+
+      OAuth 2.0 credentials, see
+      https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/.
+  - name: Remote Links
+    description: >
+      APIs related to integrating Remote Links data with Jira Software. These
+      APIs are available to Atlassian Connect
+
+      apps. To use these APIs you must have the Remote Link module in your app's
+      descriptor. Read more about Jira Software modules
+      [here](https://developer.atlassian.com/cloud/jira/software/about-jira-modules/).
+
+
+      # Module
+
+
+      The Remote Link module allows third-party providers to add a generic link
+      through a public REST API and associate it with Jira issues or services.
+
+
+      Supplied remote link information will be presented in the right sidebar of
+      the new Jira issue view under Releases.
+
+
+      This module also provides actions, which allows users to perform an action
+      on the remote link.
+
+
+      Note that the module key and name are not private and should therefore not
+      contain any sensitive or personally identifiable information.
+
+
+      ## Example Module
+
+
+      An example can also be found at
+      [jira-data-provider-sample-addon](https://bitbucket.org/atlassianlabs/jira-data-provider-sample-addon/src/master/),
+      which has an `atlassian-connect.json`.
+
+
+      ```
+
+      {
+        "modules": {
+          "jiraRemoteLinkInfoProvider": {
+            "homeUrl": "https://my-remotelink-provider.com",
+            "logoUrl": "https://my-remotelink-provider.com/images/logo.svg",
+            "documentationUrl": "https://my-remotelink-provider.com/docs/jira-integration",
+            "actions": [
+              {
+                "actionId": "action-1",
+                "actionLabel": {
+                  "value": {
+                    "value": "Acknowledge"
+                  }
+                },
+                "templateUrl": "https://my-remotelink-provider.com/ack/{ack-id}"
+              }
+            ],
+            "name": {
+              "value": "My Remote Link Provider"
+            },
+            "key": "remotelink-integration"
+          }
+        }
+      }
+
+      ```
+
+
+      ### Properties
+
+
+      | Property         | type          |
+      Description                                                                                                                                    
+      | Required |
+
+      |------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+
+      | key              | string        | A key to identify this module.  Must
+      match `^[a-zA-Z0-9-]+$` pattern, with a max length of
+      100                                                  | Yes      |
+
+      | name             | object (i18N) | A human readable name. This object
+      supports 
+      [internationalization](https://developer.atlassian.com/cloud/jira/software/internationalization/).
+      | Yes      |
+
+      | homeUrl          | string        | URL to the provider’s
+      homepage                                                                                                                 
+      | Yes      |
+
+      | logoUrl          | string        | Optional URL to the provider’s logo,
+      which will be displayed in the
+      UI                                                                         
+      |          |
+
+      | documentationUrl | string        | Optional URL to documentation about
+      the provider’s Jira
+      integration                                                                            
+      |          |
+
+      | actions          | object        | Optional actions that can be
+      performed by Jira users on the remote link
+
+
+      ### Actions object
+
+
+      | Property    | type   |
+      Description                                                                                                                                                                                                                                 
+      | Required |
+
+      |-------------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+
+      | actionId    | string | A key to identify a specific action. Used for
+      associating a specific Remote link to an action of this ID.  <br> The
+      actionId of an action must be unique across all
+      actions.                                                                    
+      | Yes      |
+
+      | actionLabel | object | The actionLabel of an Action is shown visibly to
+      the User alongside the Remote
+      Link.                                                                                                                                                        
+      | Yes      |
+
+      | templateUrl | string | The templateUrl of an Action is a template where
+      strings can be substituted into the URL for a specific Remote Link. <br> 
+      Strings used in the templateUrl must be passed in via an attribute map
+      when associating an action with a remote link. | Yes      |
+
+
+      ### ActionLabel Object
+
+
+      | Property | type          |
+      Description                                                                                                                                        
+      | Required |
+
+      |----------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+
+      | value    | object (i18n) | The label shown on the UI. This object
+      supports 
+      [internationalization](https://developer.atlassian.com/cloud/jira/software/internationalization/).
+      | Yes      |
+paths:
+  /rest/agile/1.0/backlog/issue:
+    $ref: paths/rest_agile_1.0_backlog_issue.yaml
+  /rest/agile/1.0/backlog/{boardId}/issue:
+    $ref: paths/rest_agile_1.0_backlog_{boardId}_issue.yaml
+  /rest/agile/1.0/board:
+    $ref: paths/rest_agile_1.0_board.yaml
+  /rest/agile/1.0/board/filter/{filterId}:
+    $ref: paths/rest_agile_1.0_board_filter_{filterId}.yaml
+  /rest/agile/1.0/board/{boardId}:
+    $ref: paths/rest_agile_1.0_board_{boardId}.yaml
+  /rest/agile/1.0/board/{boardId}/backlog:
+    $ref: paths/rest_agile_1.0_board_{boardId}_backlog.yaml
+  /rest/agile/1.0/board/{boardId}/configuration:
+    $ref: paths/rest_agile_1.0_board_{boardId}_configuration.yaml
+  /rest/agile/1.0/board/{boardId}/epic:
+    $ref: paths/rest_agile_1.0_board_{boardId}_epic.yaml
+  /rest/agile/1.0/board/{boardId}/epic/none/issue:
+    $ref: paths/rest_agile_1.0_board_{boardId}_epic_none_issue.yaml
+  /rest/agile/1.0/board/{boardId}/epic/{epicId}/issue:
+    $ref: paths/rest_agile_1.0_board_{boardId}_epic_{epicId}_issue.yaml
+  /rest/agile/1.0/board/{boardId}/features:
+    $ref: paths/rest_agile_1.0_board_{boardId}_features.yaml
+  /rest/agile/1.0/board/{boardId}/issue:
+    $ref: paths/rest_agile_1.0_board_{boardId}_issue.yaml
+  /rest/agile/1.0/board/{boardId}/project:
+    $ref: paths/rest_agile_1.0_board_{boardId}_project.yaml
+  /rest/agile/1.0/board/{boardId}/project/full:
+    $ref: paths/rest_agile_1.0_board_{boardId}_project_full.yaml
+  /rest/agile/1.0/board/{boardId}/properties:
+    $ref: paths/rest_agile_1.0_board_{boardId}_properties.yaml
+  /rest/agile/1.0/board/{boardId}/properties/{propertyKey}:
+    $ref: paths/rest_agile_1.0_board_{boardId}_properties_{propertyKey}.yaml
+  /rest/agile/1.0/board/{boardId}/quickfilter:
+    $ref: paths/rest_agile_1.0_board_{boardId}_quickfilter.yaml
+  /rest/agile/1.0/board/{boardId}/quickfilter/{quickFilterId}:
+    $ref: paths/rest_agile_1.0_board_{boardId}_quickfilter_{quickFilterId}.yaml
+  /rest/agile/1.0/board/{boardId}/reports:
+    $ref: paths/rest_agile_1.0_board_{boardId}_reports.yaml
+  /rest/agile/1.0/board/{boardId}/sprint:
+    $ref: paths/rest_agile_1.0_board_{boardId}_sprint.yaml
+  /rest/agile/1.0/board/{boardId}/sprint/{sprintId}/issue:
+    $ref: paths/rest_agile_1.0_board_{boardId}_sprint_{sprintId}_issue.yaml
+  /rest/agile/1.0/board/{boardId}/version:
+    $ref: paths/rest_agile_1.0_board_{boardId}_version.yaml
+  /rest/agile/1.0/epic/none/issue:
+    $ref: paths/rest_agile_1.0_epic_none_issue.yaml
+  /rest/agile/1.0/epic/{epicIdOrKey}:
+    $ref: paths/rest_agile_1.0_epic_{epicIdOrKey}.yaml
+  /rest/agile/1.0/epic/{epicIdOrKey}/issue:
+    $ref: paths/rest_agile_1.0_epic_{epicIdOrKey}_issue.yaml
+  /rest/agile/1.0/epic/{epicIdOrKey}/rank:
+    $ref: paths/rest_agile_1.0_epic_{epicIdOrKey}_rank.yaml
+  /rest/agile/1.0/issue/rank:
+    $ref: paths/rest_agile_1.0_issue_rank.yaml
+  /rest/agile/1.0/issue/{issueIdOrKey}:
+    $ref: paths/rest_agile_1.0_issue_{issueIdOrKey}.yaml
+  /rest/agile/1.0/issue/{issueIdOrKey}/estimation:
+    $ref: paths/rest_agile_1.0_issue_{issueIdOrKey}_estimation.yaml
+  /rest/agile/1.0/sprint:
+    $ref: paths/rest_agile_1.0_sprint.yaml
+  /rest/agile/1.0/sprint/{sprintId}:
+    $ref: paths/rest_agile_1.0_sprint_{sprintId}.yaml
+  /rest/agile/1.0/sprint/{sprintId}/issue:
+    $ref: paths/rest_agile_1.0_sprint_{sprintId}_issue.yaml
+  /rest/agile/1.0/sprint/{sprintId}/properties:
+    $ref: paths/rest_agile_1.0_sprint_{sprintId}_properties.yaml
+  /rest/agile/1.0/sprint/{sprintId}/properties/{propertyKey}:
+    $ref: paths/rest_agile_1.0_sprint_{sprintId}_properties_{propertyKey}.yaml
+  /rest/agile/1.0/sprint/{sprintId}/swap:
+    $ref: paths/rest_agile_1.0_sprint_{sprintId}_swap.yaml
+  /devinfo/0.10/bulk:
+    $ref: paths/devinfo_0.10_bulk.yaml
+  /devinfo/0.10/repository/{repositoryId}:
+    $ref: paths/devinfo_0.10_repository_{repositoryId}.yaml
+  /devinfo/0.10/bulkByProperties:
+    $ref: paths/devinfo_0.10_bulkByProperties.yaml
+  /devinfo/0.10/existsByProperties:
+    $ref: paths/devinfo_0.10_existsByProperties.yaml
+  /devinfo/0.10/repository/{repositoryId}/{entityType}/{entityId}:
+    $ref: paths/devinfo_0.10_repository_{repositoryId}_{entityType}_{entityId}.yaml
+  /featureflags/0.1/bulk:
+    $ref: paths/featureflags_0.1_bulk.yaml
+  /featureflags/0.1/bulkByProperties:
+    $ref: paths/featureflags_0.1_bulkByProperties.yaml
+  /featureflags/0.1/flag/{featureFlagId}:
+    $ref: paths/featureflags_0.1_flag_{featureFlagId}.yaml
+  /deployments/0.1/bulk:
+    $ref: paths/deployments_0.1_bulk.yaml
+  /deployments/0.1/bulkByProperties:
+    $ref: paths/deployments_0.1_bulkByProperties.yaml
+  /deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}:
+    $ref: >-
+      paths/deployments_0.1_pipelines_{pipelineId}_environments_{environmentId}_deployments_{deploymentSequenceNumber}.yaml
+  /deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}/gating-status:
+    $ref: >-
+      paths/deployments_0.1_pipelines_{pipelineId}_environments_{environmentId}_deployments_{deploymentSequenceNumber}_gating-status.yaml
+  /builds/0.1/bulk:
+    $ref: paths/builds_0.1_bulk.yaml
+  /builds/0.1/bulkByProperties:
+    $ref: paths/builds_0.1_bulkByProperties.yaml
+  /builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}:
+    $ref: paths/builds_0.1_pipelines_{pipelineId}_builds_{buildNumber}.yaml
+  /remotelinks/1.0/bulk:
+    $ref: paths/remotelinks_1.0_bulk.yaml
+  /remotelinks/1.0/bulkByProperties:
+    $ref: paths/remotelinks_1.0_bulkByProperties.yaml
+  /remotelinks/1.0/remotelink/{remoteLinkId}:
+    $ref: paths/remotelinks_1.0_remotelink_{remoteLinkId}.yaml
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      description: You can access this resource via basic auth.
+      scheme: basic
+    OAuth2:
+      type: oauth2
+      description: OAuth2 scopes for Jira
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.atlassian.com/authorize
+          tokenUrl: https://auth.atlassian.com/oauth/token
+          scopes:
+            read:jira-user: >-
+              View user information in Jira that you have access to, including
+              usernames, email addresses, and avatars.
+            read:jira-work: >-
+              Read project and issue data. Search for issues and objects
+              associated with issues (such as attachments and worklogs).
+            write:jira-work: >-
+              Create and edit issues in Jira, post comments, create worklogs,
+              and delete issues.
+            manage:jira-project: >-
+              Create and edit project settings and create new project-level
+              objects, for example, versions, components.
+            manage:jira-configuration: >-
+              Configure Jira settings that require the Jira administrators
+              permission, for example, create projects and custom fields, view
+              workflows, manage issue link types.
+            manage:jira-webhook: >-
+              Manage Jira webhooks. Enables an OAuth app to register and
+              unregister dynamic webhooks in Jira. It also provides for fetching
+              of registered webhooks.
+            read:board-scope:jira-software: >-
+              View board and issues from a board, view issues from a backlog and
+              view reports and versions.
+            read:board-scope.admin:jira-software: >-
+              View configuration, features, filters, project, properties and
+              quick filters related to the given board.
+            read:epic:jira-software: >-
+              View and search for epics, view issues related to an epic and
+              issues without an epic.
+            read:issue:jira-software: View issues, issue estimations and field used for estimations.
+            read:sprint:jira-software: View sprints and sprint related issues and properties.
+            read:source-code:jira-software: >-
+              View repositories and check if data exists for the supplied
+              properties.
+            read:feature-flag:jira-software: View feature flags.
+            read:deployment:jira-software: View deployments.
+            read:build:jira-software: View builds.
+            read:remote-link:jira-software: View remote links.
+            write:board-scope:jira-software: >-
+              Move issues to a backlog and move issues from a backlog to a
+              board.
+            write:board-scope.admin:jira-software: Create board, toggle features and set and delete properties.
+            write:epic:jira-software: >-
+              Remove issues from epic, move issues to epic, rank epics and
+              partially update epics. A partial update means that fields not
+              present in the request JSON will not be updated.
+            write:issue:jira-software: Move (rank) issues and update estimation of the issue.
+            write:sprint:jira-software: Save, move issues to sprints, and change the order of sprints.
+            write:source-code:jira-software: >-
+              Store and delete development information, delete repository and
+              delete development information entity.
+            write:feature-flag:jira-software: Submit and delete feature flag.
+            write:deployment:jira-software: Submit and delete deployment.
+            write:build:jira-software: Submit and delete build.
+            write:remote-link:jira-software: Submit and delete remote link.
+            delete:board-scope.admin:jira-software: Remove board configuration, features, and properties.
+            delete:sprint:jira-software: Delete sprints and their properties.
+x-atlassian-narrative:
+  documents:
+    - title: Introduction
+      anchor: introduction
+      body: >
+        Welcome to the Jira Software Cloud REST API reference. You can use this
+        REST API to build add-ons for Jira Software,
+
+        develop integrations between Jira Software and other applications, or
+        script interactions with Jira Software. This page
+
+        documents the REST resources available in Jira Software Cloud, along
+        with expected HTTP response codes and sample
+
+        requests.
+
+
+        Jira Software is built on the Jira platform. As such, there is an
+        overlap in functionality
+
+        between what is provided by Jira Software and what is provided by the
+        Jira platform. The REST API reference for the
+
+        Jira Cloud platform is here: [Jira Cloud platform REST
+        API](https://developer.atlassian.com/cloud/jira/platform/rest).
+
+
+        ## Authentication
+
+
+        ### Authentication for Atlassian Connect add-ons
+
+
+        If you are integrating with the Jira REST APIs via an Atlassian Connect
+        add-on, API calls are authenticated via JWT
+
+        (JSON Web Tokens). This is built into the supported Atlassian Connect
+        libraries. At a high level, authentication works
+
+        by the add-on exchanging a security context with the application. This
+        context is used to create and validate JWT
+
+        tokens, embedded in API calls. To learn more, read the [Atlassian
+        Connect authentication
+        documentation](https://developer.atlassian.com/cloud/jira/platform/authentication-for-apps/).
+
+
+        Some integration APIs such as [Feature Flags](#api-group-Feature-Flags)
+        are only available to Atlassian Connect apps that
+
+        define the relevant
+        [module](https://developer.atlassian.com/cloud/jira/platform/about-jira-modules/)
+        related to that API.
+
+        Other APIs, such as the [Development
+        Information](#api-group-Development-Information),
+        [Builds](#api-group-Builds), and [Deployments](#api-group-Deployments)
+        APIs
+
+        are available to both Atlassian Connect apps and on-premises tools using
+        Jira Software's
+
+        [OAuth
+        credentials](https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/)
+        for system-to-system integration.
+
+
+        ### Authentication for REST API requests
+
+
+        If you are integrating directly with the REST APIs, rather than via an
+        Atlassian Connect add-on, use one of the
+
+        authentication methods listed below:
+
+        * [OAuth
+        2.0](https://developer.atlassian.com/cloud/jira/software/scopes-for-oauth-2-3LO-and-forge-apps/)
+        -
+          This token-based method is the recommended method. It is more flexible and secure than other options.
+         * [OAuth 1.0a](https://developer.atlassian.com/cloud/jira/platform/jira-rest-api-oauth-authentication) -
+         This is a legacy authentication method and, therefore, isn't recommended. Instead use OAuth 2.0.
+         * [Basic HTTP](https://developer.atlassian.com/cloud/jira/platform/jira-rest-api-basic-authentication/) -
+         This method is only recommended for tools like scripts or bots. It is easier to implement, but much less secure.
+
+        Note, Jira itself uses cookie-based authentication in the browser, so
+        you can call REST from Javascript on the page and
+
+        rely on the authentication that the browser has established. To
+        reproduce the behavior of the Jira log-in page (for
+
+        example, to display authentication error messages to users) can `POST`
+        to the `/auth/1/session`
+        [resource](https://docs.atlassian.com/jira/REST/cloud/#auth/1/session).
+
+
+        ### Authentication for on-premises integrations
+
+
+        If you are integrating an on-premises app with the Jira REST APIs, API
+        calls are authenticated via an OAuth token.
+
+        To obtain a token, create a set of OAuth credentials with permissions
+        for the APIs that app needs to access.
+
+        Use the credentials to request a token by calling
+        `https://api.atlassian.com/oauth/token`.
+
+        See [Integrating Jira Software Cloud with on-premises
+        tools](https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/)
+        for details.
+
+        Note that only the [Development
+        Information](#api-group-Development-Information),
+        [Builds](#api-group-Builds), and [Deployments](#api-group-Deployments)
+        APIs are currently available for on-premises integrations.
+
+        To simplify development, we have a separate [downloadable API
+        spec](https://developer.atlassian.com/cloud/jira/software/on-premise-swagger.json).
+
+
+        Atlassian has developed an [open source plugin for
+        Jenkins](https://github.com/jenkinsci/atlassian-jira-software-cloud-plugin),
+        which you can use to bootstrap development.
+
+        This plugin uses the authentication method described above and calls the
+        Builds and Deployments APIs.
+
+
+
+        #### Base URL differences
+
+
+        When building an on-premises integration, the base URL for API
+        operations is different to the base URL used for Connect apps. This is
+        because requests from on-premises integrations (OAuth) need to be sent
+        via the Atlassian API proxy at `https://api.atlassian.com`.
+
+
+        This document does not display the base URLs used by on-premises
+        integrations. Therefore, when using an operation, you must replace
+        `https://your-domain.atlassian.net/rest/{type}/{version}/{operation}`
+
+        with
+        `https://api.atlassian.com/jira/{type}/{version}/cloud/{cloudId}/{operation}`.
+
+
+        For example:
+
+        * Builds API: Change the path from
+        `https://your-domain.atlassian.net/rest/builds/0.1/bulk` to
+        `https://api.atlassian.com/jira/builds/0.1/cloud/{cloudId}/bulk`.
+
+        * Development Information: Change the path from
+        `https://your-domain.atlassian.net/rest/devinfo/0.10/bulk` to
+        `https://api.atlassian.com/jira/devinfo/0.1/cloud/{cloudId}/bulk`. Note
+        the version change.
+
+        * Deployments: Change the path from
+        `https://your-domain.atlassian.net/rest/deployments/0.1/bulk` to
+        `https://api.atlassian.com/jira/deployments/0.1/cloud/{cloudId}/bulk`.
+
+
+        Note, get the `cloudId` for a Jira instance by calling
+        `https://your-domain.atlassian.net/_edge/tenant_info`.
+
+
+
+        ## URI structure
+
+
+        Jira Agile's REST APIs provide access to resources (data entities) via
+        URI paths. To use a REST API, your application
+
+        will make an HTTP request and parse the response. The Jira Agile REST
+        API uses [JSON](http://en.wikipedia.org/wiki/JSON)
+
+        as its communication format, and the standard HTTP methods like `GET`,
+        `PUT`, `POST` and `DELETE` (see API descriptions
+
+        below for which methods are available for each resource). URIs for Jira
+        Agile's REST API resource have the following
+
+        structure:
+
+            http://host:port/context/rest/api-name/api-version/resource-name
+
+        Currently there are two API names available, which will be discussed
+        further below:
+
+         * `auth` - for authentication-related operations, and
+         * `api` - for everything else.
+
+        The current API version is `1`. However, there is also a symbolic
+        version, called `latest`, which resolves to the
+
+        latest version supported by the given Jira Software Cloud instance. For
+        example, if you wanted to retrieve the JSON
+
+        representation of a board with `boardId=123`, from a Jira Software Cloud
+        instance at `https://jira.atlassian.net`, you
+
+        would access:
+
+            https://jira.atlassian.net/rest/agile/latest/board/123
+
+        ## Pagination
+
+
+        Pagination is used for the Jira REST APIs to conserve server resources
+        and limit response size for resources that
+
+        return potentially large collection of items. A request to a pages API
+        will result in a values array wrapped in a JSON
+
+        object with some paging metadata, like this:
+
+
+        #### Request
+
+            http://host:port/context/rest/api-name/api-version/resource-name?startAt=0&maxResults=10
+
+        #### Response
+
+
+        ```javascript
+
+        {
+            "startAt" : 0,
+            "maxResults" : 10,
+            "total": 200,
+            "values": [
+                { /* result 0 */ },
+                { /* result 1 */ },
+                { /* result 2 */ }
+            ]
+        }
+
+        ```
+
+         * `startAt` - the item used as the first item in the page of results.
+         * `maxResults` - how many results to return per page.
+         * `total` - the number of items that the calling user has permissions for. This number *may change* while the client requests the next pages. A client should always assume that the requested page can be empty. REST API consumers should also consider the field to be optional. This value may not be included in the response, if it is too expensive to calculate.
+
+        Clients can use the `startAt`, `maxResults`, and `total` parameters to
+        retrieve the desired number of results. Note,
+
+        each API resource or method may have a different limit on the number of
+        items returned, which means you can ask for
+
+        more than you are given. The actual number of items returned is an
+        implementation detail and this can be changed over
+
+        time.
+
+
+        ## Experimental methods
+
+
+        Methods marked as experimental may change without an earlier notice. We
+        are looking for your feedback for these methods.
+
+
+        ## Query parameters
+
+
+        All query parameters for the resources described below are optional,
+        unless specified otherwise.
+
+
+        ## Special Request and Response headers
+
+         -   **X-Atlassian-Token** (request): Operations that accept multipart/form-data must include the `X-Atlassian-Token: no-check` header in requests.
+        Otherwise the request will be blocked by XSRF protection.
+
+        -   **X-AACCOUNTID** (response): This response header contains the
+        Atlassian account ID of the authenticated user.
+
+
+        ## Jira Software field input formats
+
+
+        Jira Software provides a number of custom fields, which are made
+        available in the Jira platform REST API. The custom
+
+        fields are: `Sprint`, `Epic link`, `Epic name`, and `Story points`.
+
+
+        You can read and edit these custom fields via the [issue
+        resource](https://docs.atlassian.com/jira/REST/cloud/#api/2/issue)
+
+        of the Jira Platform REST API. In order to identify the custom field
+        that you want to read or edit, you'll need the
+
+        custom field id. To obtain the custom field id, retrieve the list of
+        fields from the [fields
+        resource](https://docs.atlassian.com/jira/REST/latest/#api/2/field-getFields)
+
+        and search for the custom field. It's better to find the field based on
+        the schema where possible (e.g. the Sprint
+
+        field is identified by "`com.pyxis.greenhopper.jira:gh-sprint`"), as
+        custom field names are mutable. The custom field
+
+        id will be in the id, (e.g. `id: customfield_10007`).
+
+
+        If you only need to get the value of the custom field for a single
+        issue, you may want to use the [issue
+        resource](https://docs.atlassian.com/jira-software/REST/cloud/#agile/1.0/issue-getIssue)
+
+        provided by the Jira Software REST API instead. This resource returns
+        the issue with all Jira Software-specific fields,
+
+        including the fields listed above. These fields will also be formatted
+        as proper fields with keys, in the response.
+
+
+        Note, Jira Software also has a number of internal custom fields, which
+        are: `Epic Color`, `Epic Status`, `Flag`, `Rank`.
+
+        These internal fields shouldn't be read or updated using the REST API
+        and are not documented below.
+
+
+        ##### Sprint custom field
+
+
+        The Sprint custom field contains a list of sprints for a given issue.
+        This list includes the active/future sprint that
+
+        the issue is currently in, as well as any closed sprints that the issue
+        was in previously.
+
+
+        For legacy reasons, the [Get issue (Jira platform)
+        method](https://docs.atlassian.com/jira/REST/cloud/#api/2/issue-getIssue)
+
+        returns the Sprint custom field with sprints in a `toString` format,
+        which is difficult to parse. See the example below.
+
+
+        _**Deprecation notice:** The `toString` representation of sprints in the
+        Sprint custom field that is returned by Get
+
+        issue (Jira platform) will soon be removed. See the
+        [notice](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-tostring-representation-of-sprints-in-get-issue-response/)._
+
+
+        ###### Example - Get issue (Jira platform) response
+
+
+        ```javascript
+
+        customfield_11458": [
+            "com.atlassian.greenhopper.service.sprint.Sprint@1bf75fd[id=1,rapidViewId=1,state=CLOSED,name=Sprint 1,goal=Sprint 1 goal,startDate=2016-06-06T21:30:53.537+10:00,endDate=2016-06-20T21:30:00.000+10:00,completeDate=2016-06-06T21:30:57.523+10:00,sequence=1]",
+            "com.atlassian.greenhopper.service.sprint.Sprint@1689feb[id=2,rapidViewId=1,state=FUTURE,name=Sprint 2,goal=Sprint 2 goal,startDate=<null>,endDate=<null>,completeDate=<null>,sequence=2]"
+        ]
+
+        ```
+
+
+        If you want to parse the sprint information, use either the [Get issue
+        (Jira Software)
+        method](https://docs.atlassian.com/jira-software/REST/cloud/#agile/1.0/issue-getIssue)
+
+        or [Get issue (Jira platform)
+        method](https://docs.atlassian.com/jira/REST/cloud/#api/2/issue-getIssue)
+        with expanded
+
+        `versionedRepresentations` instead, both of which return sprints in a
+        proper format. See the example below.
+
+
+        ###### Example - Get issue (Jira platform) response with expanded
+        versionedRepresentations
+
+
+        ```javascript
+
+        "customfield_10021": {
+            "1": [
+                "com.atlassian.greenhopper.service.sprint.Sprint@1bf75fd[id=1,rapidViewId=1,state=CLOSED,name=Sprint 1,goal=Sprint 1 goal,startDate=2016-06-06T21:30:53.537+10:00,endDate=2016-06-20T21:30:00.000+10:00,completeDate=2016-06-06T21:30:57.523+10:00,sequence=1]",
+                "com.atlassian.greenhopper.service.sprint.Sprint@1689feb[id=2,rapidViewId=1,state=FUTURE,name=Sprint 2,goal=Sprint 2 goal,startDate=<null>,endDate=<null>,completeDate=<null>,sequence=2]"
+            ],
+            "2": [
+                {
+                    "id": 1,
+                    "name": "Sprint 1",
+                    "state": "closed",
+                    "boardId": 1
+                },
+                {
+                    "id": 2,
+                    "name": "Sprint 2",
+                    "state": "future",
+                    "boardId": 1
+                }
+            ]
+        }
+
+        ```
+
+
+        If you want to update a sprint, you need to know the sprint id, which is
+        a number. See the example below. Note, an
+
+        issue can only be in one active or future sprint at a time, and only the
+        active/future sprint can edited.
+
+
+        ###### Example - Update issue request
+
+
+        ```javascript
+
+        "customfield_10021": 2
+
+        ```
+
+
+        ##### Epic link custom field
+
+
+        The Epic link custom field contains the key of an epic that a given
+        issue belongs to. Be aware that only the issue key
+
+        of the existing epic can be set. Also, the Epic link cannot be set for
+        sub-tasks and epics.
+
+
+        ###### Example
+
+
+        ```javascript
+
+        "customfield_11458": "EPIC-1"
+
+        ```
+
+
+        ##### Epic Name
+
+
+        The Epic name custom field contains the name of an epic that a given
+        issue belongs to. Be aware that only the issue key
+
+        of the existing epic can be set. Also, the epic link cannot be set for
+        sub-tasks and epics.
+
+
+        ###### Example
+
+
+        ```javascript
+
+        "customfield_11410": "Epic Name"
+
+        ```
+
+
+        ##### Estimation
+
+
+        Jira Software provides a `Story Points` custom field, however the field
+        is just a regular numeric field. The type of
+
+        estimation and field used for estimation is determined by the board
+        configuration. You can get this from the
+
+        [board configuration
+        resource](https://docs.atlassian.com/jira-software/REST/cloud/#agile/1.0/board-getConfiguration).
+
+        Note that if the estimation field is not on a screen, it cannot be
+        edited, and you should use the
+
+        [Estimate issue for board
+        method](https://docs.atlassian.com/jira-software/REST/cloud/#agile/1.0/issue-estimateIssueForBoard)
+        instead.

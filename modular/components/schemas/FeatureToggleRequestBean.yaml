@@ -1,0 +1,10 @@
+type: object
+properties:
+  boardId:
+    type: integer
+    format: int64
+  feature:
+    type: string
+  enabling:
+    type: boolean
+additionalProperties: false

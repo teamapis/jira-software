@@ -1,0 +1,25 @@
+type: object
+properties:
+  projectId:
+    type: integer
+    format: int64
+  userId:
+    type: integer
+    format: int64
+  userAccountId:
+    type: string
+  displayName:
+    type: string
+  projectName:
+    type: string
+  projectKey:
+    type: string
+  projectTypeKey:
+    type: string
+  avatarURI:
+    type: string
+    format: uri
+  name:
+    type: string
+additionalProperties: false
+description: The container that the board is located in.

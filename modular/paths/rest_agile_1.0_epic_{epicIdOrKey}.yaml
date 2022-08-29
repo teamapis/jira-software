@@ -1,0 +1,120 @@
+get:
+  tags:
+    - Epic
+  summary: Get epic
+  description: >-
+    Returns the epic for a given epic ID. This epic will only be returned if the
+    user has permission to view it. **Note:** This operation does not work for
+    epics in next-gen projects.
+  operationId: getEpic
+  parameters:
+    - name: epicIdOrKey
+      in: path
+      description: The id or key of the requested epic.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Returns the requested epic.
+      content:
+        application/json:
+          example: >-
+            {"id":37,"self":"https://your-domain.atlassian.net/rest/agile/1.0/epic/23","name":"epic
+            1","summary":"epic 1 summary","color":{"key":"color_4"},"done":true}
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: >-
+        Returned if the epic does not exist or the user does not have permission
+        to view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:epic:jira-software
+  x-atlassian-connect-scope: READ
+post:
+  tags:
+    - Epic
+  summary: Partially update epic
+  description: >-
+    Performs a partial update of the epic. A partial update means that fields
+    not present in the request JSON will not be updated. Valid values for color
+    are `color_1` to `color_9`. **Note:** This operation does not work for epics
+    in next-gen projects.
+  operationId: partiallyUpdateEpic
+  parameters:
+    - name: epicIdOrKey
+      in: path
+      description: The id or key of the epic to update.
+      required: true
+      schema:
+        type: string
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            summary:
+              type: string
+            color:
+              type: object
+              properties:
+                key:
+                  type: string
+                  enum:
+                    - color_1
+                    - color_2
+                    - color_3
+                    - color_4
+                    - color_5
+                    - color_6
+                    - color_7
+                    - color_8
+                    - color_9
+                    - color_10
+                    - color_11
+                    - color_12
+                    - color_13
+                    - color_14
+              additionalProperties: false
+            done:
+              type: boolean
+          additionalProperties: false
+        example:
+          summary: epic 2 summary
+          color:
+            key: color_6
+          name: epic 2
+          done: true
+    required: true
+  responses:
+    '200':
+      description: Updated epic
+      content:
+        application/json:
+          example: >-
+            {"id":37,"self":"https://your-domain.atlassian.net/rest/agile/1.0/epic/23","name":"epic
+            1","summary":"epic 1 summary","color":{"key":"color_4"},"done":true}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: >-
+        Returned if the user does not a have valid license or edit issue
+        permission.
+    '404':
+      description: >-
+        Returned if the epic does not exist or the user does not have permission
+        to view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:epic:jira-software
+  x-atlassian-connect-scope: WRITE

@@ -1,0 +1,13 @@
+type: object
+properties:
+  type:
+    type: string
+  field:
+    type: object
+    properties:
+      fieldId:
+        type: string
+      displayName:
+        type: string
+    additionalProperties: false
+additionalProperties: false

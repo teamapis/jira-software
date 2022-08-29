@@ -1,0 +1,6 @@
+type: object
+properties:
+  rankCustomFieldId:
+    type: integer
+    format: int64
+additionalProperties: false

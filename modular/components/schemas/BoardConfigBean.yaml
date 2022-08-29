@@ -1,0 +1,91 @@
+type: object
+properties:
+  id:
+    type: integer
+    format: int64
+  name:
+    type: string
+  type:
+    type: string
+  self:
+    type: string
+    format: uri
+  location:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - project
+          - user
+      projectKeyOrId:
+        type: string
+    additionalProperties: false
+  filter:
+    type: object
+    properties:
+      id:
+        type: string
+      self:
+        type: string
+        format: uri
+    additionalProperties: false
+  subQuery:
+    type: object
+    properties:
+      query:
+        type: string
+    additionalProperties: false
+  columnConfig:
+    type: object
+    properties:
+      columns:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            statuses:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  self:
+                    type: string
+                    format: uri
+                additionalProperties: false
+            min:
+              type: integer
+              format: int32
+            max:
+              type: integer
+              format: int32
+          additionalProperties: false
+      constraintType:
+        type: string
+    additionalProperties: false
+  estimation:
+    type: object
+    properties:
+      type:
+        type: string
+      field:
+        type: object
+        properties:
+          fieldId:
+            type: string
+          displayName:
+            type: string
+        additionalProperties: false
+    additionalProperties: false
+  ranking:
+    type: object
+    properties:
+      rankCustomFieldId:
+        type: integer
+        format: int64
+    additionalProperties: false
+additionalProperties: false

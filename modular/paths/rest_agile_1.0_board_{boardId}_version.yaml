@@ -1,0 +1,68 @@
+get:
+  tags:
+    - Board
+  summary: Get all versions
+  description: >-
+    Returns all versions from a board, for a given board ID. This only includes
+    versions that the user has permission to view. Note, if the user does not
+    have permission to view the board, no versions will be returned at all.
+    Returned versions are ordered by the name of the project from which they
+    belong and then by sequence defined by user.
+  operationId: getAllVersions
+  parameters:
+    - name: boardId
+      in: path
+      description: The ID of the board that contains the requested versions.
+      required: true
+      schema:
+        type: integer
+        format: int64
+    - name: startAt
+      in: query
+      description: >-
+        The starting index of the returned versions. Base index: 0. See the
+        'Pagination' section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int64
+    - name: maxResults
+      in: query
+      description: >-
+        The maximum number of versions to return per page. See the 'Pagination'
+        section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int32
+    - name: released
+      in: query
+      description: >-
+        Filters results to versions that are either released or unreleased.
+        Valid values: true, false.
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Returns the requested versions, at the specified page of the results.
+      content:
+        application/json:
+          example: >-
+            {"maxResults":2,"startAt":1,"total":5,"isLast":false,"values":[{"self":"https://your-domain.atlassian.net/version/10000","id":10000,"projectId":10000,"name":"Version
+            1","description":"A first
+            version","archived":false,"released":true,"releaseDate":"2015-04-20T01:02:00.000+10:00"},{"self":"https://your-domain.atlassian.net/version/10010","id":10010,"projectId":10000,"name":"Next
+            Version","description":"Minor Bugfix
+            version","archived":false,"released":false}]}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: >-
+        Returned if board does not exist or the user does not have permission to
+        view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope:jira-software
+  x-atlassian-connect-scope: READ

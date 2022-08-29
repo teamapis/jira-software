@@ -1,0 +1,7 @@
+type: object
+properties:
+  fieldId:
+    type: string
+  displayName:
+    type: string
+additionalProperties: false

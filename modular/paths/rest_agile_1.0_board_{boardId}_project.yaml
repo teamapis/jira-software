@@ -1,0 +1,75 @@
+get:
+  tags:
+    - Board
+  summary: Get projects
+  description: >-
+    Returns all projects that are associated with the board, for the given board
+    ID. If the user does not have permission to view the board, no projects will
+    be returned at all. Returned projects are ordered by the name.
+
+
+    A project is associated with a board if the board filter contains reference
+    the project or there is an issue from the project that belongs to the board.
+
+
+    The board filter contains reference the project only if JQL query guarantees
+    that returned issues will be returned from the project set defined in JQL.
+    For instance the query `project in (ABC, BCD) AND reporter = admin` have
+    reference to ABC and BCD projects but query `project in (ABC, BCD) OR
+    reporter = admin` doesn't have reference to any project.
+
+
+    An issue belongs to the board if its status is mapped to the board's column.
+    Epic issues do not belongs to the scrum boards.
+  operationId: getProjects
+  parameters:
+    - name: boardId
+      in: path
+      description: The ID of the board that contains returned projects.
+      required: true
+      schema:
+        type: integer
+        format: int64
+    - name: startAt
+      in: query
+      description: >-
+        The starting index of the returned projects. Base index: 0. See the
+        'Pagination' section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int64
+    - name: maxResults
+      in: query
+      description: >-
+        The maximum number of projects to return per page. See the 'Pagination'
+        section at the top of this page for more details.
+      schema:
+        type: integer
+        format: int32
+  responses:
+    '200':
+      description: Returns the board's projects, at the specified page of the results.
+      content:
+        application/json:
+          example: >-
+            {"maxResults":10,"startAt":0,"total":2,"isLast":true,"values":[{"self":"https://your-domain.atlassian.net/rest/api/3/project/EX","id":"10000","key":"EX","name":"Example","avatarUrls":{"48x48":"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000","24x24":"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000","16x16":"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000","32x32":"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000"},"projectCategory":{"self":"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000","id":"10000","name":"FIRST","description":"First
+            Project
+            Category"},"simplified":false,"style":"classic","insight":{"totalIssueCount":100,"lastIssueUpdateTime":"2022-08-25T06:08:25.556+0000"}},{"self":"https://your-domain.atlassian.net/rest/api/3/project/ABC","id":"10001","key":"ABC","name":"Alphabetical","avatarUrls":{"48x48":"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10001","24x24":"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10001","16x16":"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10001","32x32":"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10001"},"projectCategory":{"self":"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000","id":"10000","name":"FIRST","description":"First
+            Project
+            Category"},"simplified":false,"style":"classic","insight":{"totalIssueCount":100,"lastIssueUpdateTime":"2022-08-25T06:08:25.556+0000"}}]}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: >-
+        Returned if board does not exist or the user does not have permission to
+        access it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope.admin:jira-software
+        - read:project:jira
+  x-atlassian-connect-scope: READ

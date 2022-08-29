@@ -1,0 +1,137 @@
+delete:
+  operationId: deleteFeatureFlagsByProperty
+  summary: Delete Feature Flags by Property
+  tags:
+    - Feature Flags
+  description: >
+    Bulk delete all Feature Flags that match the given request.
+
+
+    One or more query params must be supplied to specify Properties to delete
+    by. Optional param `_updateSequenceId` is no longer supported.
+
+    If more than one Property is provided, data will be deleted that matches ALL
+    of the Properties (e.g. treated as an AND).
+
+    See the documentation for the submitFeatureFlags operation for more details.
+
+
+    e.g. DELETE /bulkByProperties?accountId=account-123&createdBy=user-456
+
+
+    Deletion is performed asynchronously. The getFeatureFlagById operation can
+    be used to confirm that data has been deleted successfully (if needed).
+
+
+    Only apps that define the Feature Flags module can access this resource.
+    This resource requires the 'DELETE' scope.
+  parameters:
+    - name: _updateSequenceId
+      in: query
+      deprecated: true
+      description: >
+        This parameter usage is no longer supported.
+
+
+        An optional `_updateSequenceId` to use to control deletion.
+
+
+        Only stored data with an `updateSequenceId` less than or equal to that
+        provided will be deleted.
+
+        This can be used help ensure submit/delete requests are applied
+        correctly if issued close together.
+
+
+        If not provided, all stored data that matches the request will be
+        deleted.
+      required: false
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '202':
+      description: |
+        Delete accepted. Data will eventually be removed from Jira.
+    '400':
+      description: |
+        Request has incorrect format (e.g. missing at least one Property param).
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+    '401':
+      description: |
+        Missing a JWT token, or token is invalid.
+    '403':
+      description: >
+        The JWT token used does not correspond to an app that defines the
+        Feature Flags module,
+
+        or the app does not define the 'DELETE' scope.
+    '429':
+      description: |
+        API rate limit has been exceeded.
+    '503':
+      description: |
+        Service is unavailable due to maintenance or other reasons.
+    default:
+      description: |
+        An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            description: Messages supplied in the case of an error.
+            type: array
+            minItems: 1
+            items:
+              title: ErrorMessage
+              description: A message supplied in the case of an error.
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  description: A human-readable message describing the error.
+                errorTraceId:
+                  type: string
+                  description: >-
+                    An optional trace ID that can be used by Jira developers to
+                    locate the source of the error.
+  x-atlassian-connect-scope: INACCESSIBLE
+parameters:
+  - name: Authorization
+    in: header
+    description: >
+      All requests must be signed with a Connect JWT token that corresponds to
+      the Provider app installed in Jira.
+
+
+      If the JWT token corresponds to an app that does not define Feature Flags
+      module it will be rejected with a 403.
+
+
+      See https://developer.atlassian.com/blog/2015/01/understanding-jwt/ for
+      more details.
+    required: true
+    schema:
+      type: string
+      pattern: JWT \S+

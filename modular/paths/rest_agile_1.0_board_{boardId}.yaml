@@ -1,0 +1,232 @@
+get:
+  tags:
+    - Board
+  summary: Get board
+  description: >-
+    Returns the board for the given board ID. This board will only be returned
+    if the user has permission to view it. Admins without the view permission
+    will see the board as a private one, so will see only a subset of the
+    board's data (board location for instance).
+  operationId: getBoard
+  parameters:
+    - name: boardId
+      in: path
+      description: The ID of the requested board.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: Returns the requested board.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The ID of the board.
+                format: int64
+              self:
+                type: string
+                description: The URL of the board.
+                format: uri
+                readOnly: true
+              name:
+                type: string
+                description: The name of the board.
+              type:
+                type: string
+                description: The type the board.
+              admins:
+                readOnly: true
+                allOf:
+                  - type: object
+                    properties:
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              description: >-
+                                This property is deprecated in favor of
+                                `accountId` because of privacy changes. See the
+                                [migration
+                                guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/)
+                                for details.  
+
+                                The key of the user.
+                            self:
+                              type: string
+                              description: The URL of the user.
+                              format: uri
+                            name:
+                              type: string
+                              description: >-
+                                This property is deprecated in favor of
+                                `accountId` because of privacy changes. See the
+                                [migration
+                                guide](https://developer.atlassian.com/cloud/jira/platform/deprecation-notice-user-privacy-api-migration-guide/)
+                                for details.  
+
+                                The username of the user.
+                            displayName:
+                              type: string
+                              description: >-
+                                The display name of the user. Depending on the
+                                user’s privacy setting, this may return an
+                                alternative value.
+                            active:
+                              type: boolean
+                              description: Whether the user is active.
+                            accountId:
+                              maxLength: 128
+                              type: string
+                              description: >-
+                                The account ID of the user, which uniquely
+                                identifies the user across all Atlassian
+                                products. For example,
+                                *5b10ac8d82e05b22cc7d4ef5*.
+                            avatarUrls:
+                              description: The avatars of the user.
+                              allOf:
+                                - type: object
+                                  properties:
+                                    32x32:
+                                      type: string
+                                      description: >-
+                                        The URL of the user's 32x32 pixel
+                                        avatar.
+                                      format: uri
+                                    48x48:
+                                      type: string
+                                      description: >-
+                                        The URL of the user's 48x48 pixel
+                                        avatar.
+                                      format: uri
+                                    16x16:
+                                      type: string
+                                      description: >-
+                                        The URL of the user's 16x16 pixel
+                                        avatar.
+                                      format: uri
+                                    24x24:
+                                      type: string
+                                      description: >-
+                                        The URL of the user's 24x24 pixel
+                                        avatar.
+                                      format: uri
+                                  additionalProperties: false
+                          additionalProperties: false
+                      groups:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            self:
+                              type: string
+                              format: uri
+                          additionalProperties: false
+                    additionalProperties: false
+                    description: The users and groups who own the board.
+              location:
+                type: object
+                properties:
+                  projectId:
+                    type: integer
+                    format: int64
+                  userId:
+                    type: integer
+                    format: int64
+                  userAccountId:
+                    type: string
+                  displayName:
+                    type: string
+                  projectName:
+                    type: string
+                  projectKey:
+                    type: string
+                  projectTypeKey:
+                    type: string
+                  avatarURI:
+                    type: string
+                    format: uri
+                  name:
+                    type: string
+                additionalProperties: false
+                description: The container that the board is located in.
+              canEdit:
+                type: boolean
+                description: Whether the board can be edited.
+                readOnly: true
+              isPrivate:
+                type: boolean
+                description: Whether the board is private.
+                readOnly: true
+              favourite:
+                type: boolean
+                description: Whether the board is selected as a favorite.
+                readOnly: true
+            additionalProperties: false
+            description: Details about a board.
+          example: >-
+            {"id":84,"self":"https://your-domain.atlassian.net/rest/agile/1.0/board/84","name":"scrum
+            board","type":"scrum","location":{"projectId":10040,"userId":10040,"userAccountId":"5b10a2844c20165700ede21g","displayName":"Example
+            Project","projectName":"Example Project","projectKey":"Example
+            Project Key","projectTypeKey":"KEY","name":"Example Project"}}
+    '400':
+      description: Returned if the request is invalid.
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: >-
+        Returned if the board does not exist or the user does not have
+        permission to view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope:jira-software
+        - read:issue-details:jira
+  x-atlassian-connect-scope: READ
+delete:
+  tags:
+    - Board
+  summary: Delete board
+  description: >-
+    Deletes the board. Admin without the view permission can still remove the
+    board.
+  operationId: deleteBoard
+  parameters:
+    - name: boardId
+      in: path
+      description: ID of the board to be deleted
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '204':
+      description: Returned if the board has been successfully removed.
+    '403':
+      description: >-
+        Returned if the user does not a have valid license, or when the user
+        does not have the permission to delete the board, or when the user tried
+        to delete a next-gen board. The user has to be a Jira Administrator or a
+        board administrator to remove the board. Next-gen boards cannot be
+        deleted, because next-gen software projects must have a board.
+    '404':
+      description: >-
+        Returned if a board with the given ID does not exist or the user does
+        not have the permission to view the board.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:board-scope:jira-software
+  x-atlassian-connect-scope: DELETE

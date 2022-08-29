@@ -1,0 +1,138 @@
+get:
+  tags:
+    - Board
+  summary: Get configuration
+  description: |-
+    Get the board configuration. The response contains the following fields:
+
+     *  `id` \- ID of the board.
+     *  `name` \- Name of the board.
+     *  `filter` \- Reference to the filter used by the given board.
+     *  `location` \- Reference to the container that the board is located in. Includes the container type (Valid values: project, user).
+     *  `subQuery` (Kanban only) - JQL subquery used by the given board.
+     *  `columnConfig` \- The column configuration lists the columns for the board, in the order defined in the column configuration. For each column, it shows the issue status mapping as well as the constraint type (Valid values: none, issueCount, issueCountExclSubs) for the min/max number of issues. Note, the last column with statuses mapped to it is treated as the "Done" column, which means that issues in that column will be marked as already completed.
+     *  `estimation` (Scrum only) - Contains information about type of estimation used for the board. Valid values: none, issueCount, field. If the estimation type is "field", the ID and display name of the field used for estimation is also returned. Note, estimates for an issue can be updated by a PUT /rest/api/3/issue/\{issueIdOrKey\} request, however the fields must be on the screen. "timeoriginalestimate" field will never be on the screen, so in order to update it "originalEstimate" in "timetracking" field should be updated.
+     *  `ranking` \- Contains information about custom field used for ranking in the given board.
+  operationId: getConfiguration
+  parameters:
+    - name: boardId
+      in: path
+      description: The ID of the board for which configuration is requested.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: Returns the configuration of the board for given boardId.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              type:
+                type: string
+              self:
+                type: string
+                format: uri
+              location:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                      - project
+                      - user
+                  projectKeyOrId:
+                    type: string
+                additionalProperties: false
+              filter:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  self:
+                    type: string
+                    format: uri
+                additionalProperties: false
+              subQuery:
+                type: object
+                properties:
+                  query:
+                    type: string
+                additionalProperties: false
+              columnConfig:
+                type: object
+                properties:
+                  columns:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        statuses:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                              self:
+                                type: string
+                                format: uri
+                            additionalProperties: false
+                        min:
+                          type: integer
+                          format: int32
+                        max:
+                          type: integer
+                          format: int32
+                      additionalProperties: false
+                  constraintType:
+                    type: string
+                additionalProperties: false
+              estimation:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  field:
+                    type: object
+                    properties:
+                      fieldId:
+                        type: string
+                      displayName:
+                        type: string
+                    additionalProperties: false
+                additionalProperties: false
+              ranking:
+                type: object
+                properties:
+                  rankCustomFieldId:
+                    type: integer
+                    format: int64
+                additionalProperties: false
+            additionalProperties: false
+          example: >-
+            {"id":10000,"name":"Board","self":"https://your-domain.atlassian.net/rest/agile/1.0/board/84/config","location":{"type":"project","key":"PROJ","id":"10010","self":"https://your-domain.atlassian.net/rest/api/3/project/10010","name":"name"},"filter":{"id":"1001","self":"https://your-domain.atlassian.net/filter/1001"},"columnConfig":{"columns":[{"name":"To
+            Do","statuses":[{"id":"1","self":"https://your-domain.atlassian.net/status/1"},{"id":"4","self":"https://your-domain.atlassian.net/status/4"}]},{"name":"In
+            progress","statuses":[{"id":"3","self":"https://your-domain.atlassian.net/status/3"}],"min":2,"max":4},{"name":"Done","statuses":[{"id":"5","self":"https://your-domain.atlassian.net/status/5"}]}],"constraintType":"issueCount"},"estimation":{"type":"field","field":{"fieldId":"customfield_10002","displayName":"Story
+            Points"}},"ranking":{"rankCustomFieldId":10020}}
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if user does not a have valid license.
+    '404':
+      description: Returned if board does not exist or the user cannot view it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope.admin:jira-software
+        - read:project:jira
+  x-atlassian-connect-scope: READ

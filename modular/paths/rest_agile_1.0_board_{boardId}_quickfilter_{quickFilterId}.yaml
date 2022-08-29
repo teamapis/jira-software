@@ -1,0 +1,65 @@
+get:
+  tags:
+    - Board
+  summary: Get quick filter
+  description: >-
+    Returns the quick filter for a given quick filter ID. The quick filter will
+    only be returned if the user can view the board that the quick filter
+    belongs to.
+  operationId: getQuickFilter
+  parameters:
+    - name: boardId
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+    - name: quickFilterId
+      in: path
+      description: The ID of the requested quick filter.
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    '200':
+      description: Returns the requested quick filter.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              boardId:
+                type: integer
+                format: int64
+              name:
+                type: string
+              jql:
+                type: string
+              description:
+                type: string
+              position:
+                type: integer
+                format: int32
+            additionalProperties: false
+          example: >-
+            {"id":1,"boardId":1,"name":"Bugs","jql":"issueType =
+            bug","description":"Issues of type bug","position":0}
+    '401':
+      description: Returned if the user is not logged in.
+    '403':
+      description: Returned if the user does not a have valid license.
+    '404':
+      description: >-
+        Returned if the board with given id does not exist or if the quick
+        filter with given id is not found or the user doesn't have permissions
+        to see it.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:board-scope.admin:jira-software
+        - read:jql:jira
+  x-atlassian-connect-scope: READ

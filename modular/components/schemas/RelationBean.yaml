@@ -1,0 +1,8 @@
+type: object
+properties:
+  id:
+    type: string
+  self:
+    type: string
+    format: uri
+additionalProperties: false

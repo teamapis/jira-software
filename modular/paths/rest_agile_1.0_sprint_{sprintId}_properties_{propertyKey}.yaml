@@ -1,0 +1,133 @@
+get:
+  tags:
+    - Sprint
+  summary: Get property
+  description: >-
+    Returns the value of the property with a given key from the sprint
+    identified by the provided id. The user who retrieves the property is
+    required to have permissions to view the sprint.
+  operationId: getProperty
+  parameters:
+    - name: sprintId
+      in: path
+      description: the ID of the sprint from which the property will be returned.
+      required: true
+      schema:
+        type: string
+    - name: propertyKey
+      in: path
+      description: the key of the property to return.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Returned if the sprint exists and the property was found.
+      content:
+        application/json: {}
+    '400':
+      description: Returned if the sprintId is invalid (negative or not a number).
+    '401':
+      description: Returned if the calling user is not authenticated.
+    '403':
+      description: >-
+        Returned if the calling user does not have permission to view the
+        sprint.
+    '404':
+      description: >-
+        Returned if the sprint with a given id does not exist or if the property
+        with given key is not found.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:sprint:jira-software
+    - {}
+  x-atlassian-connect-scope: READ
+put:
+  tags:
+    - Sprint
+  summary: Set property
+  description: >-
+    Sets the value of the specified sprint's property.
+
+
+    You can use this resource to store a custom data against the sprint
+    identified by the id. The user who stores the data is required to have
+    permissions to modify the sprint.
+  operationId: setProperty
+  parameters:
+    - name: sprintId
+      in: path
+      description: the ID of the sprint on which the property will be set.
+      required: true
+      schema:
+        type: string
+    - name: propertyKey
+      in: path
+      description: >-
+        the key of the sprint's property. The maximum length of the key is 255
+        bytes.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Returned if the sprint property is successfully updated.
+    '201':
+      description: Returned if the sprint property is successfully created.
+    '400':
+      description: Returned if the sprintId is invalid (negative or not a number).
+    '401':
+      description: Returned if the calling user is not authenticated.
+    '403':
+      description: Returned if the calling user does not have permission to edit the sprint
+    '404':
+      description: Returned if the sprint with given id does not exist.
+  deprecated: false
+  security:
+    - OAuth2:
+        - write:sprint:jira-software
+    - {}
+  x-atlassian-connect-scope: WRITE
+delete:
+  tags:
+    - Sprint
+  summary: Delete property
+  description: >-
+    Removes the property from the sprint identified by the id. Ths user removing
+    the property is required to have permissions to modify the sprint.
+  operationId: deleteProperty
+  parameters:
+    - name: sprintId
+      in: path
+      description: the ID of the sprint from which the property will be removed.
+      required: true
+      schema:
+        type: string
+    - name: propertyKey
+      in: path
+      description: the key of the property to remove.
+      required: true
+      schema:
+        type: string
+  responses:
+    '204':
+      description: Returned if the sprint property was removed successfully.
+    '400':
+      description: Returned if the sprintId is invalid (negative or not a number).
+    '401':
+      description: Returned if the calling user is not authenticated.
+    '403':
+      description: >-
+        Returned if the calling user does not have permission to modify the
+        sprint.
+    '404':
+      description: >-
+        Returned if the sprint with given id does not exist or if the property
+        with given key is not found.
+  deprecated: false
+  security:
+    - OAuth2:
+        - delete:sprint:jira-software
+    - {}
+  x-atlassian-connect-scope: DELETE

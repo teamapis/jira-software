@@ -1,0 +1,957 @@
+get:
+  tags:
+    - Development Information
+  summary: Get repository
+  description: >-
+    For the specified repository ID, retrieves the repository and the most
+    recent 400 development information entities. The result will be what is
+    currently stored, ignoring any pending updates or deletes.
+  operationId: getRepository
+  parameters:
+    - name: repositoryId
+      in: path
+      description: The ID of repository to fetch
+      required: true
+      schema:
+        type: string
+    - name: Authorization
+      in: header
+      description: >-
+        All requests must be signed with either a Connect JWT token or OAuth
+        token for an on-premise integration that corresponds to an app installed
+        in Jira. If the JWT token corresponds to a Connect app that does not
+        define the jiraDevelopmentTool module it will be rejected with a 403.
+        See https://developer.atlassian.com/blog/2015/01/understanding-jwt/ for
+        more details about Connect JWT tokens. See
+        https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/
+        for details about on-premise integrations.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: The repository data currently stored for the given ID.
+      content:
+        application/json:
+          schema:
+            title: Repository
+            type: object
+            required:
+              - id
+              - name
+              - updateSequenceId
+              - url
+            properties:
+              name:
+                type: string
+                example: atlassian-connect-jira-example
+                description: The name of this repository. Max length is 255 characters.
+                maxLength: 255
+              description:
+                type: string
+                example: >-
+                  The repository which stores code of the Atlassian Connect
+                  Add-on Devinfo application.
+                description: Description of this repository. Max length is 1024 characters.
+                maxLength: 1024
+              forkOf:
+                type: string
+                example: 56c7c750-cee2-48e2-b920-d7706dfd11f7
+                description: >-
+                  The ID of the repository this repository was forked from, if
+                  it's a fork. Max length is 1024 characters.
+                maxLength: 1024
+              url:
+                type: string
+                example: >-
+                  https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example
+                description: The URL of this repository. Max length is 2000 characters.
+                maxLength: 2000
+              commits:
+                type: array
+                description: >-
+                  List of commits to update in this repository. Must not contain
+                  duplicate entity IDs. Maximum number of commits is 400
+                items:
+                  title: Commit
+                  type: object
+                  required:
+                    - id
+                    - issueKeys
+                    - updateSequenceId
+                    - author
+                    - authorTimestamp
+                    - displayId
+                    - fileCount
+                    - message
+                    - url
+                  properties:
+                    id:
+                      type: string
+                      example: a7727ee6350c33cdf90826dc21abaa26a5704370
+                      description: >-
+                        The identifier or hash of the commit. Will be used for
+                        cross entity linking. Must be unique for all commits
+                        within a repository, i.e., only one commit can have ID
+                        'X' in repository 'Y'. But adding, e.g., a branch with
+                        ID 'X' to repository 'Y' is acceptable. Only
+                        alphanumeric characters, and '~.-_', are allowed. Max
+                        length is 1024 characters
+                    issueKeys:
+                      type: array
+                      example: '["ISSUE-1","TEST-2"]'
+                      description: >-
+                        List of issues keys that this entity is associated with.
+                        They must be valid Jira issue keys. Minimum number of
+                        issue keys is 1. Maximum number of issue keys is 100.
+                      minItems: 1
+                      maxItems: 100
+                      items:
+                        type: string
+                    updateSequenceId:
+                      type: integer
+                      format: int64
+                      example: 1523494301248
+                      description: >-
+                        An ID used to apply an ordering to updates for this
+                        entity in the case of out-of-order receipt of update
+                        requests. This can be any monotonically increasing
+                        number. A suggested implementation is to use epoch
+                        millis from the provider system, but other alternatives
+                        are valid (e.g. a provider could store a counter against
+                        each entity and increment that on each update to Jira).
+                        Updates for an entity that are received with an
+                        updateSqeuenceId lower than what is currently stored
+                        will be ignored.
+                    hash:
+                      type: string
+                      description: Deprecated. Use the id field instead.
+                      maxLength: 255
+                    flags:
+                      type: array
+                      example: '[MERGE_COMMIT]'
+                      description: The set of flags for this commit
+                      uniqueItems: true
+                      items:
+                        type: string
+                        enum:
+                          - MERGE_COMMIT
+                    message:
+                      type: string
+                      example: README.md edited online with Bitbucket
+                      description: The commit message. Max length is 1024 characters.
+                      maxLength: 1024
+                    author:
+                      title: Author
+                      type: object
+                      required:
+                        - name
+                        - email
+                      properties:
+                        name:
+                          type: string
+                          example: Jane Doe
+                          description: >-
+                            The name of this user in a format suitable for
+                            display. Max length is 255 characters.
+                          maxLength: 255
+                        email:
+                          type: string
+                          example: jane_doe@atlassian.com
+                          description: >-
+                            The email address of the user. Used to associate the
+                            user with a Jira user. Max length is 255 characters.
+                          maxLength: 255
+                        username:
+                          type: string
+                          example: jdoe
+                          description: >-
+                            The username of the user. Used to associate the user
+                            with a Jira user if there are multiple users for a
+                            given email. Max length is 255 characters.
+                          maxLength: 255
+                        url:
+                          type: string
+                          example: https://atlassian.com/account/jane_doe
+                          description: >-
+                            The URL of the profile for this user. Max length is
+                            2000 characters.
+                          maxLength: 2000
+                        avatar:
+                          type: string
+                          example: https://atlassian.com/account/jane_doe/avatar/32
+                          description: >-
+                            The URL of the avatar for this user. Max length is
+                            2000 characters.
+                          maxLength: 2000
+                      description: Describes the author of a particular entity
+                    fileCount:
+                      type: integer
+                      format: int32
+                      example: 1
+                      description: >-
+                        The total number of files added, removed, or modified by
+                        this commit
+                      minimum: 0
+                    url:
+                      type: string
+                      example: >-
+                        https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/commits/a7727ee6350c33cdf90826dc21abaa26a5704370
+                      description: The URL of this commit. Max length is 2000 characters.
+                      maxLength: 2000
+                    files:
+                      type: array
+                      description: >-
+                        List of file changes. Max number of files is 10.
+                        Currently, only the first 5 files are shown (sorted by
+                        path) in the UI. This UI behavior may change without
+                        notice.
+                      maxItems: 10
+                      items:
+                        title: File
+                        type: object
+                        required:
+                          - changeType
+                          - linesAdded
+                          - linesRemoved
+                          - path
+                          - url
+                        properties:
+                          path:
+                            type: string
+                            example: >-
+                              /home/user/src/atlassian-connect-jira-example/README.md
+                            description: >-
+                              The path of the file. Max length is 1024
+                              characters.
+                            maxLength: 1024
+                          url:
+                            type: string
+                            example: >-
+                              https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/src/a7727ee6350c33cdf90826dc21abaa26a5704370/README.md
+                            description: >-
+                              The URL of this file. Max length is 2000
+                              characters.
+                            maxLength: 2000
+                          changeType:
+                            type: string
+                            example: MODIFIED
+                            description: The operation performed on this file
+                            enum:
+                              - ADDED
+                              - COPIED
+                              - DELETED
+                              - MODIFIED
+                              - MOVED
+                              - UNKNOWN
+                          linesAdded:
+                            type: integer
+                            format: int32
+                            example: 0
+                            description: Number of lines added to the file
+                            minimum: 0
+                          linesRemoved:
+                            type: integer
+                            format: int32
+                            example: 1
+                            description: Number of lines removed from the file
+                            minimum: 0
+                        description: Describes changes to a file
+                    authorTimestamp:
+                      type: string
+                      example: '2016-10-31T23:27:25+00:00'
+                      description: >-
+                        The author timestamp of this commit. Formatted as a UTC
+                        ISO 8601 date time format.
+                    displayId:
+                      type: string
+                      example: a7727ee
+                      description: >-
+                        Shortened identifier for this commit, used for display.
+                        Max length is 255 characters.
+                      maxLength: 255
+                  description: Represents a commit in the version control system.
+                minItems: 0
+                maxItems: 400
+              branches:
+                type: array
+                description: >-
+                  List of branches to update in this repository. Must not
+                  contain duplicate entity IDs. Maximum number of branches is
+                  400.
+                items:
+                  title: Branch
+                  type: object
+                  required:
+                    - id
+                    - issueKeys
+                    - updateSequenceId
+                    - lastCommit
+                    - name
+                    - url
+                  properties:
+                    id:
+                      type: string
+                      example: c6c7c750-cee2-48e2-b920-d7706dfd11f9
+                      description: >-
+                        The ID of this entity. Will be used for cross entity
+                        linking. Must be unique by entity type within a
+                        repository, i.e., only one commit can have ID 'X' in
+                        repository 'Y'. But adding, e.g., a branch with ID 'X'
+                        to repository 'Y' is acceptable. Only alphanumeric
+                        characters, and '~.-_', are allowed. Max length is 1024
+                        characters.
+                      maxLength: 1024
+                    issueKeys:
+                      type: array
+                      example: '["ISSUE-1","TEST-2"]'
+                      description: >-
+                        List of issues keys that this entity is associated with.
+                        They must be valid Jira issue keys. Minimum number of
+                        issue keys is 1. Maximum number of issue keys is 100.
+                      minItems: 1
+                      maxItems: 100
+                      items:
+                        type: string
+                    updateSequenceId:
+                      type: integer
+                      format: int64
+                      example: 1523494301248
+                      description: >-
+                        An ID used to apply an ordering to updates for this
+                        entity in the case of out-of-order receipt of update
+                        requests. This can be any monotonically increasing
+                        number. A suggested implementation is to use epoch
+                        millis from the provider system, but other alternatives
+                        are valid (e.g. a provider could store a counter against
+                        each entity and increment that on each update to Jira).
+                        Updates for an entity that are received with an
+                        updateSqeuenceId lower than what is currently stored
+                        will be ignored.
+                    name:
+                      type: string
+                      example: master
+                      description: The name of the branch. Max length is 512 characters.
+                      maxLength: 512
+                    lastCommit:
+                      title: Commit
+                      type: object
+                      required:
+                        - id
+                        - issueKeys
+                        - updateSequenceId
+                        - author
+                        - authorTimestamp
+                        - displayId
+                        - fileCount
+                        - message
+                        - url
+                      properties:
+                        id:
+                          type: string
+                          example: a7727ee6350c33cdf90826dc21abaa26a5704370
+                          description: >-
+                            The identifier or hash of the commit. Will be used
+                            for cross entity linking. Must be unique for all
+                            commits within a repository, i.e., only one commit
+                            can have ID 'X' in repository 'Y'. But adding, e.g.,
+                            a branch with ID 'X' to repository 'Y' is
+                            acceptable. Only alphanumeric characters, and
+                            '~.-_', are allowed. Max length is 1024 characters
+                        issueKeys:
+                          type: array
+                          example: '["ISSUE-1","TEST-2"]'
+                          description: >-
+                            List of issues keys that this entity is associated
+                            with. They must be valid Jira issue keys. Minimum
+                            number of issue keys is 1. Maximum number of issue
+                            keys is 100.
+                          minItems: 1
+                          maxItems: 100
+                          items:
+                            type: string
+                        updateSequenceId:
+                          type: integer
+                          format: int64
+                          example: 1523494301248
+                          description: >-
+                            An ID used to apply an ordering to updates for this
+                            entity in the case of out-of-order receipt of update
+                            requests. This can be any monotonically increasing
+                            number. A suggested implementation is to use epoch
+                            millis from the provider system, but other
+                            alternatives are valid (e.g. a provider could store
+                            a counter against each entity and increment that on
+                            each update to Jira). Updates for an entity that are
+                            received with an updateSqeuenceId lower than what is
+                            currently stored will be ignored.
+                        hash:
+                          type: string
+                          description: Deprecated. Use the id field instead.
+                          maxLength: 255
+                        flags:
+                          type: array
+                          example: '[MERGE_COMMIT]'
+                          description: The set of flags for this commit
+                          uniqueItems: true
+                          items:
+                            type: string
+                            enum:
+                              - MERGE_COMMIT
+                        message:
+                          type: string
+                          example: README.md edited online with Bitbucket
+                          description: The commit message. Max length is 1024 characters.
+                          maxLength: 1024
+                        author:
+                          title: Author
+                          type: object
+                          required:
+                            - name
+                            - email
+                          properties:
+                            name:
+                              type: string
+                              example: Jane Doe
+                              description: >-
+                                The name of this user in a format suitable for
+                                display. Max length is 255 characters.
+                              maxLength: 255
+                            email:
+                              type: string
+                              example: jane_doe@atlassian.com
+                              description: >-
+                                The email address of the user. Used to associate
+                                the user with a Jira user. Max length is 255
+                                characters.
+                              maxLength: 255
+                            username:
+                              type: string
+                              example: jdoe
+                              description: >-
+                                The username of the user. Used to associate the
+                                user with a Jira user if there are multiple
+                                users for a given email. Max length is 255
+                                characters.
+                              maxLength: 255
+                            url:
+                              type: string
+                              example: https://atlassian.com/account/jane_doe
+                              description: >-
+                                The URL of the profile for this user. Max length
+                                is 2000 characters.
+                              maxLength: 2000
+                            avatar:
+                              type: string
+                              example: https://atlassian.com/account/jane_doe/avatar/32
+                              description: >-
+                                The URL of the avatar for this user. Max length
+                                is 2000 characters.
+                              maxLength: 2000
+                          description: Describes the author of a particular entity
+                        fileCount:
+                          type: integer
+                          format: int32
+                          example: 1
+                          description: >-
+                            The total number of files added, removed, or
+                            modified by this commit
+                          minimum: 0
+                        url:
+                          type: string
+                          example: >-
+                            https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/commits/a7727ee6350c33cdf90826dc21abaa26a5704370
+                          description: >-
+                            The URL of this commit. Max length is 2000
+                            characters.
+                          maxLength: 2000
+                        files:
+                          type: array
+                          description: >-
+                            List of file changes. Max number of files is 10.
+                            Currently, only the first 5 files are shown (sorted
+                            by path) in the UI. This UI behavior may change
+                            without notice.
+                          maxItems: 10
+                          items:
+                            title: File
+                            type: object
+                            required:
+                              - changeType
+                              - linesAdded
+                              - linesRemoved
+                              - path
+                              - url
+                            properties:
+                              path:
+                                type: string
+                                example: >-
+                                  /home/user/src/atlassian-connect-jira-example/README.md
+                                description: >-
+                                  The path of the file. Max length is 1024
+                                  characters.
+                                maxLength: 1024
+                              url:
+                                type: string
+                                example: >-
+                                  https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/src/a7727ee6350c33cdf90826dc21abaa26a5704370/README.md
+                                description: >-
+                                  The URL of this file. Max length is 2000
+                                  characters.
+                                maxLength: 2000
+                              changeType:
+                                type: string
+                                example: MODIFIED
+                                description: The operation performed on this file
+                                enum:
+                                  - ADDED
+                                  - COPIED
+                                  - DELETED
+                                  - MODIFIED
+                                  - MOVED
+                                  - UNKNOWN
+                              linesAdded:
+                                type: integer
+                                format: int32
+                                example: 0
+                                description: Number of lines added to the file
+                                minimum: 0
+                              linesRemoved:
+                                type: integer
+                                format: int32
+                                example: 1
+                                description: Number of lines removed from the file
+                                minimum: 0
+                            description: Describes changes to a file
+                        authorTimestamp:
+                          type: string
+                          example: '2016-10-31T23:27:25+00:00'
+                          description: >-
+                            The author timestamp of this commit. Formatted as a
+                            UTC ISO 8601 date time format.
+                        displayId:
+                          type: string
+                          example: a7727ee
+                          description: >-
+                            Shortened identifier for this commit, used for
+                            display. Max length is 255 characters.
+                          maxLength: 255
+                      description: Represents a commit in the version control system.
+                    createPullRequestUrl:
+                      type: string
+                      example: >-
+                        https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/pull-requests/new
+                      description: >-
+                        The URL of the page for creating a pull request from
+                        this branch. Max length is 2000 characters.
+                      maxLength: 2000
+                    url:
+                      type: string
+                      example: >-
+                        https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/branch/master
+                      description: The URL of the branch. Max length is 2000 characters.
+                      maxLength: 2000
+                  description: Represents a branch in the version control system
+                minItems: 0
+                maxItems: 400
+              pullRequests:
+                type: array
+                description: >-
+                  List of pull requests to update in this repository. Must not
+                  contain duplicate entity IDs. Maximum number of pull requests
+                  is 400
+                items:
+                  title: PullRequest
+                  type: object
+                  required:
+                    - id
+                    - issueKeys
+                    - updateSequenceId
+                    - author
+                    - commentCount
+                    - displayId
+                    - lastUpdate
+                    - sourceBranch
+                    - status
+                    - title
+                    - url
+                  properties:
+                    id:
+                      type: string
+                      example: c6c7c750-cee2-48e2-b920-d7706dfd11f9
+                      description: >-
+                        The ID of this entity. Will be used for cross entity
+                        linking. Must be unique by entity type within a
+                        repository, i.e., only one commit can have ID 'X' in
+                        repository 'Y'. But adding, e.g., a branch with ID 'X'
+                        to repository 'Y' is acceptable. Only alphanumeric
+                        characters, and '~.-_', are allowed. Max length is 1024
+                        characters
+                    issueKeys:
+                      type: array
+                      example: '["ISSUE-1","TEST-2"]'
+                      description: >-
+                        List of issues keys that this entity is associated with.
+                        They must be valid Jira issue keys. Minimum number of
+                        issue keys is 1. Maximum number of issue keys is 100.
+                      minItems: 1
+                      maxItems: 100
+                      items:
+                        type: string
+                    updateSequenceId:
+                      type: integer
+                      format: int64
+                      example: 1523494301248
+                      description: >-
+                        An ID used to apply an ordering to updates for this
+                        entity in the case of out-of-order receipt of update
+                        requests. This can be any monotonically increasing
+                        number. A suggested implementation is to use epoch
+                        millis from the provider system, but other alternatives
+                        are valid (e.g. a provider could store a counter against
+                        each entity and increment that on each update to Jira).
+                        Updates for an entity that are received with an
+                        updateSqeuenceId lower than what is currently stored
+                        will be ignored.
+                    status:
+                      type: string
+                      example: OPEN
+                      description: >-
+                        The status of the pull request. In the case of
+                        concurrent updates, priority is given in the order OPEN,
+                        MERGED, DECLINED, UNKNOWN
+                      enum:
+                        - OPEN
+                        - MERGED
+                        - DECLINED
+                        - UNKNOWN
+                    title:
+                      type: string
+                      example: >-
+                        Pull request 2, fixing all the issues caused by pull
+                        request #1
+                      description: >-
+                        Title of the pull request. Max length is 1024
+                        characters.
+                      maxLength: 1024
+                    author:
+                      title: Author
+                      type: object
+                      required:
+                        - name
+                        - email
+                      properties:
+                        name:
+                          type: string
+                          example: Jane Doe
+                          description: >-
+                            The name of this user in a format suitable for
+                            display. Max length is 255 characters.
+                          maxLength: 255
+                        email:
+                          type: string
+                          example: jane_doe@atlassian.com
+                          description: >-
+                            The email address of the user. Used to associate the
+                            user with a Jira user. Max length is 255 characters.
+                          maxLength: 255
+                        username:
+                          type: string
+                          example: jdoe
+                          description: >-
+                            The username of the user. Used to associate the user
+                            with a Jira user if there are multiple users for a
+                            given email. Max length is 255 characters.
+                          maxLength: 255
+                        url:
+                          type: string
+                          example: https://atlassian.com/account/jane_doe
+                          description: >-
+                            The URL of the profile for this user. Max length is
+                            2000 characters.
+                          maxLength: 2000
+                        avatar:
+                          type: string
+                          example: https://atlassian.com/account/jane_doe/avatar/32
+                          description: >-
+                            The URL of the avatar for this user. Max length is
+                            2000 characters.
+                          maxLength: 2000
+                      description: Describes the author of a particular entity
+                    commentCount:
+                      type: integer
+                      format: int32
+                      example: 42
+                      description: The number of comments on the pull request
+                    sourceBranch:
+                      type: string
+                      example: ISSUE-1-feature-branch
+                      description: >-
+                        The name of the source branch of this PR. Max length is
+                        255 characters.
+                      maxLength: 255
+                    sourceBranchUrl:
+                      type: string
+                      example: >-
+                        https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/branch/ISSUE-1-feature-branch
+                      description: >-
+                        The url of the source branch of this PR. This is used to
+                        match this PR against the branch. Max length is 2000
+                        characters.
+                      maxLength: 2000
+                    lastUpdate:
+                      type: string
+                      example: '2016-10-31T23:27:25+00:00'
+                      description: >-
+                        The most recent update to this PR. Formatted as a UTC
+                        ISO 8601 date time format.
+                    destinationBranch:
+                      type: string
+                      example: master
+                      description: >-
+                        The name of destination branch of this PR. Max length is
+                        255 characters.
+                      maxLength: 255
+                    destinationBranchUrl:
+                      type: string
+                      example: >-
+                        https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/src/master
+                      description: >-
+                        The url of the destination branch of this PR. Max length
+                        is 2000 characters.
+                      maxLength: 2000
+                    reviewers:
+                      type: array
+                      description: The list of reviewers of this pull request
+                      items:
+                        title: Reviewer
+                        type: object
+                        required:
+                          - name
+                          - email
+                        properties:
+                          name:
+                            type: string
+                            example: Jane Doe
+                            description: >-
+                              The name of this reviewer. Max length is 255
+                              characters.
+                            maxLength: 255
+                          approvalStatus:
+                            type: string
+                            example: APPROVED
+                            description: >-
+                              The approval status of this reviewer, default is
+                              UNAPPROVED.
+                            enum:
+                              - APPROVED
+                              - UNAPPROVED
+                          url:
+                            type: string
+                            example: https://atlassian.com/account/jane_doe
+                            description: >-
+                              The URL of the profile for this reviewer. Max
+                              length is 2000 characters.
+                            maxLength: 2000
+                          avatar:
+                            type: string
+                            example: https://atlassian.com/account/jane_doe/avatar/32
+                            description: >-
+                              The URL of the avatar for this reviewer. Max
+                              length is 2000 characters.
+                            maxLength: 2000
+                          email:
+                            type: string
+                            example: jane_doe@example.com
+                            description: >-
+                              The email address of this reviewer. Max length is
+                              254 characters.
+                            maxLength: 254
+                          accountId:
+                            type: string
+                            example: 655363:e4ca5e2d-a901-40e3-877e-bf5d22c0f130
+                            description: >-
+                              The Atlassian Account ID (AAID) of this reviewer.
+                              Max length is 128 characters.
+                            maxLength: 128
+                        description: The reviewer of a pull request
+                    url:
+                      type: string
+                      example: >-
+                        https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/pull-requests/2
+                      description: >-
+                        The URL of this pull request. Max length is 2000
+                        characters.
+                      maxLength: 2000
+                    displayId:
+                      type: string
+                      example: Pull request 2
+                      description: >-
+                        Shortened identifier for this pull request, used for
+                        display. Max length is 255 characters.
+                      maxLength: 255
+                  description: Represents a pull request
+                minItems: 0
+                maxItems: 400
+              avatar:
+                type: string
+                example: >-
+                  http://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/avatar/32
+                description: >-
+                  The URL of the avatar for this repository. Max length is 2000
+                  characters.
+                maxLength: 2000
+              avatarDescription:
+                type: string
+                example: Avatar description
+                description: >-
+                  Description of the avatar for this repository. Max length is
+                  1024 characters.
+                maxLength: 1024
+              id:
+                type: string
+                example: c6c7c750-cee2-48e2-b920-d7706dfd11f9
+                description: >-
+                  The ID of this entity. Will be used for cross entity linking.
+                  Must be unique by entity type within a repository, i.e., only
+                  one commit can have ID 'X' in repository 'Y'. But adding,
+                  e.g., a branch with ID 'X' to repository 'Y' is acceptable.
+                  Only alphanumeric characters, and '~.-_', are allowed. Max
+                  length is 1024 characters.
+                maxLength: 1024
+              updateSequenceId:
+                type: integer
+                format: int64
+                example: 1523494301248
+                description: ' An ID used to apply an ordering to updates for this entity in the case of out-of-order receipt of update requests. This can be any monotonically increasing number. A suggested implementation is to use epoch millis from the provider system, but other alternatives are valid (e.g. a provider could store a counter against each entity and increment that on each update to Jira). Updates for an entity that are received with an updateSqeuenceId lower than what is currently stored will be ignored.'
+            description: >-
+              Represents a repository, containing development information such
+              as commits, pull requests, and branches.
+    '401':
+      description: Missing a JWT token, or token is invalid.
+    '403':
+      description: >-
+        The JWT token used does not correspond to an app that defines the
+        jiraDevelopmentTool module, or the app does not define the 'READ' scope
+    '404':
+      description: No data found for the given repository ID.
+    '429':
+      description: API rate limit has been exceeded.
+    '500':
+      description: An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            type: object
+            required:
+              - errorMessages
+            properties:
+              errorMessages:
+                type: array
+                description: List of errors occurred.
+                items:
+                  title: ErrorMessage
+                  type: object
+                  required:
+                    - message
+                  properties:
+                    message:
+                      type: string
+                      description: A human-readable message describing the error.
+                    errorTraceId:
+                      type: string
+                      description: >-
+                        An optional trace ID that can be used by Jira developers
+                        to locate the source of the error.
+                  description: A message supplied in the case of an error.
+            description: A response returned in the case of an error.
+    '503':
+      description: Service is unavailable due to maintenance or other reasons.
+  x-atlassian-connect-scope: INACCESSIBLE
+delete:
+  tags:
+    - Development Information
+  summary: Delete repository
+  description: >-
+    Deletes the repository data stored by the given ID and all related
+    development information entities. Deletion is performed asynchronously.
+  operationId: deleteRepository
+  parameters:
+    - name: repositoryId
+      in: path
+      description: The ID of repository to delete
+      required: true
+      schema:
+        type: string
+    - name: _updateSequenceId
+      in: query
+      description: >-
+        An optional property to use to control deletion. Only stored data with
+        an updateSequenceId less than or equal to that provided will be deleted.
+        This can be used to help ensure submit/delete requests are applied
+        correctly if they are issued close together. 
+      required: false
+      schema:
+        type: integer
+        format: int64
+    - name: Authorization
+      in: header
+      description: >-
+        All requests must be signed with either a Connect JWT token or OAuth
+        token for an on-premise integration that corresponds to an app installed
+        in Jira. If the JWT token corresponds to a Connect app that does not
+        define the jiraDevelopmentTool module it will be rejected with a 403.
+        See https://developer.atlassian.com/blog/2015/01/understanding-jwt/ for
+        more details about Connect JWT tokens. See
+        https://developer.atlassian.com/cloud/jira/software/integrate-jsw-cloud-with-onpremises-tools/
+        for details about on-premise integrations.
+      required: true
+      schema:
+        type: string
+  responses:
+    '202':
+      description: >-
+        Delete request has been accepted. Data will eventually be removed from
+        Jira if it exists.
+    '401':
+      description: Missing a JWT token, or token is invalid.
+    '403':
+      description: >-
+        The JWT token used does not correspond to an app that defines the
+        jiraDevelopmentTool module, or the app does not define the 'DELETE'
+        scope
+    '429':
+      description: API rate limit has been exceeded.
+    '500':
+      description: An unknown error has occurred.
+      content:
+        application/json:
+          schema:
+            title: ErrorMessages
+            type: object
+            required:
+              - errorMessages
+            properties:
+              errorMessages:
+                type: array
+                description: List of errors occurred.
+                items:
+                  title: ErrorMessage
+                  type: object
+                  required:
+                    - message
+                  properties:
+                    message:
+                      type: string
+                      description: A human-readable message describing the error.
+                    errorTraceId:
+                      type: string
+                      description: >-
+                        An optional trace ID that can be used by Jira developers
+                        to locate the source of the error.
+                  description: A message supplied in the case of an error.
+            description: A response returned in the case of an error.
+    '503':
+      description: Service is unavailable due to maintenance or other reasons.
+  x-atlassian-connect-scope: INACCESSIBLE

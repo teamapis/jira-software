@@ -1,0 +1,21 @@
+type: object
+properties:
+  id:
+    type: string
+  styleClass:
+    type: string
+  iconClass:
+    type: string
+  label:
+    type: string
+  title:
+    type: string
+  href:
+    type: string
+  weight:
+    type: integer
+    format: int32
+additionalProperties: false
+description: Details about the operations available in this version.
+xml:
+  name: link

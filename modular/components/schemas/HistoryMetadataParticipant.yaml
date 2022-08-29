@@ -1,0 +1,26 @@
+type: object
+properties:
+  id:
+    type: string
+    description: The ID of the user or system associated with a history record.
+  displayName:
+    type: string
+    description: The display name of the user or system associated with a history record.
+  displayNameKey:
+    type: string
+    description: >-
+      The key of the display name of the user or system associated with a
+      history record.
+  type:
+    type: string
+    description: The type of the user or system associated with a history record.
+  avatarUrl:
+    type: string
+    description: >-
+      The URL to an avatar for the user or system associated with a history
+      record.
+  url:
+    type: string
+    description: The URL of the user or system associated with a history record.
+additionalProperties: true
+description: Details of user or system associated with a issue history metadata item.

@@ -1,0 +1,37 @@
+get:
+  tags:
+    - Sprint
+  summary: Get properties keys
+  description: >-
+    Returns the keys of all properties for the sprint identified by the id. The
+    user who retrieves the property keys is required to have permissions to view
+    the sprint.
+  operationId: getPropertiesKeys
+  parameters:
+    - name: sprintId
+      in: path
+      description: the ID of the sprint from which property keys will be returned.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: Returned if the sprint with given id exists.
+      content:
+        application/json: {}
+    '400':
+      description: Returned if the sprintId is invalid (negative or not a number).
+    '401':
+      description: Returned if the calling user is not authenticated.
+    '403':
+      description: >-
+        Returned if the calling user does not have permission to view the
+        sprint.
+    '404':
+      description: Returned if the sprint with given id does not exist.
+  deprecated: false
+  security:
+    - OAuth2:
+        - read:sprint:jira-software
+    - {}
+  x-atlassian-connect-scope: READ
