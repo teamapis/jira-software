@@ -437,14 +437,14 @@
                                                   "description": "The URL of the user's 48x48 pixel avatar.",
                                                   "format": "uri"
                                                 },
-                                                "16x16": {
-                                                  "type": "string",
-                                                  "description": "The URL of the user's 16x16 pixel avatar.",
-                                                  "format": "uri"
-                                                },
                                                 "24x24": {
                                                   "type": "string",
                                                   "description": "The URL of the user's 24x24 pixel avatar.",
+                                                  "format": "uri"
+                                                },
+                                                "16x16": {
+                                                  "type": "string",
+                                                  "description": "The URL of the user's 16x16 pixel avatar.",
                                                   "format": "uri"
                                                 }
                                               },
@@ -700,14 +700,14 @@
                                             "description": "The URL of the user's 48x48 pixel avatar.",
                                             "format": "uri"
                                           },
-                                          "16x16": {
-                                            "type": "string",
-                                            "description": "The URL of the user's 16x16 pixel avatar.",
-                                            "format": "uri"
-                                          },
                                           "24x24": {
                                             "type": "string",
                                             "description": "The URL of the user's 24x24 pixel avatar.",
+                                            "format": "uri"
+                                          },
+                                          "16x16": {
+                                            "type": "string",
+                                            "description": "The URL of the user's 16x16 pixel avatar.",
                                             "format": "uri"
                                           }
                                         },
@@ -1028,14 +1028,14 @@
                                             "description": "The URL of the user's 48x48 pixel avatar.",
                                             "format": "uri"
                                           },
-                                          "16x16": {
-                                            "type": "string",
-                                            "description": "The URL of the user's 16x16 pixel avatar.",
-                                            "format": "uri"
-                                          },
                                           "24x24": {
                                             "type": "string",
                                             "description": "The URL of the user's 24x24 pixel avatar.",
+                                            "format": "uri"
+                                          },
+                                          "16x16": {
+                                            "type": "string",
+                                            "description": "The URL of the user's 16x16 pixel avatar.",
                                             "format": "uri"
                                           }
                                         },
@@ -1276,7 +1276,7 @@
                 "schema": {
                   "$ref": "#/components/schemas/SearchResults"
                 },
-                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
+                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
               }
             }
           },
@@ -1648,7 +1648,7 @@
             "description": "Returns the requested issues, at the specified page of the results.",
             "content": {
               "application/json": {
-                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
+                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
               }
             }
           },
@@ -1767,7 +1767,7 @@
             "description": "Returns the requested issues, at the specified page of the results.",
             "content": {
               "application/json": {
-                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
+                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
               }
             }
           },
@@ -2174,7 +2174,7 @@
                 "schema": {
                   "$ref": "#/components/schemas/SearchResults"
                 },
-                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
+                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
               }
             }
           },
@@ -2366,7 +2366,7 @@
             "description": "Returns the board's projects, at the specified page of the results.",
             "content": {
               "application/json": {
-                "example": "{\"maxResults\":10,\"startAt\":0,\"total\":2,\"isLast\":true,\"values\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}},{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/ABC\",\"id\":\"10001\",\"key\":\"ABC\",\"name\":\"Alphabetical\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10001\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10001\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10001\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10001\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}}]}"
+                "example": "{\"maxResults\":10,\"startAt\":0,\"total\":2,\"isLast\":true,\"values\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}},{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/ABC\",\"id\":\"10001\",\"key\":\"ABC\",\"name\":\"Alphabetical\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10001\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10001\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10001\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10001\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}}]}"
               }
             }
           },
@@ -3091,7 +3091,7 @@
             "description": "Returns the requested issues, at the specified page of the results.",
             "content": {
               "application/json": {
-                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
+                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
               }
             }
           },
@@ -3269,7 +3269,7 @@
             "description": "Returns the requested issues, at the specified page of the results.",
             "content": {
               "application/json": {
-                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
+                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
               }
             }
           },
@@ -3589,7 +3589,7 @@
             "description": "Returns the requested issues, at the specified page of the results.",
             "content": {
               "application/json": {
-                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
+                "example": "{\"expand\":\"names,schema\",\"startAt\":0,\"maxResults\":50,\"total\":1,\"issues\":[{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}]}"
               }
             }
           },
@@ -3898,7 +3898,7 @@
             "description": "Returns the requested issue.",
             "content": {
               "application/json": {
-                "example": "{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}"
+                "example": "{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}"
               }
             }
           },
@@ -4522,7 +4522,7 @@
             "description": "Returns the requested issues, at the specified page of the results.",
             "content": {
               "application/json": {
-                "example": "{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-08-25T06:08:25.556+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}"
+                "example": "{\"expand\":\"\",\"id\":\"10001\",\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/board/92/issue/10001\",\"key\":\"HSP-1\",\"fields\":{\"flagged\":true,\"sprint\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/13\",\"state\":\"future\",\"name\":\"sprint 2\",\"goal\":\"sprint 2 goal\"},\"closedSprints\":[{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/sprint/23\",\"state\":\"closed\",\"name\":\"sprint 1\",\"startDate\":\"2015-04-11T15:22:00.000+10:00\",\"endDate\":\"2015-04-20T01:22:00.000+10:00\",\"completeDate\":\"2015-04-20T11:04:00.000+10:00\",\"goal\":\"sprint 1 goal\"}],\"description\":\"example bug report\",\"project\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/project/EX\",\"id\":\"10000\",\"key\":\"EX\",\"name\":\"Example\",\"avatarUrls\":{\"48x48\":\"https://your-domain.atlassian.net/secure/projectavatar?size=large&pid=10000\",\"24x24\":\"https://your-domain.atlassian.net/secure/projectavatar?size=small&pid=10000\",\"16x16\":\"https://your-domain.atlassian.net/secure/projectavatar?size=xsmall&pid=10000\",\"32x32\":\"https://your-domain.atlassian.net/secure/projectavatar?size=medium&pid=10000\"},\"projectCategory\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/projectCategory/10000\",\"id\":\"10000\",\"name\":\"FIRST\",\"description\":\"First Project Category\"},\"simplified\":false,\"style\":\"classic\",\"insight\":{\"totalIssueCount\":100,\"lastIssueUpdateTime\":\"2022-09-01T05:35:07.911+0000\"}},\"comment\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/comment/10000\",\"id\":\"10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"body\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.\"}]}]},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"created\":\"2021-01-17T12:34:00.000+0000\",\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"role\",\"value\":\"Administrators\",\"identifier\":\"Administrators\"}}],\"epic\":{\"id\":37,\"self\":\"https://your-domain.atlassian.net/rest/agile/1.0/epic/23\",\"name\":\"epic 1\",\"summary\":\"epic 1 summary\",\"color\":{\"key\":\"color_4\"},\"done\":true},\"worklog\":[{\"self\":\"https://your-domain.atlassian.net/rest/api/3/issue/10010/worklog/10000\",\"author\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"updateAuthor\":{\"self\":\"https://your-domain.atlassian.net/rest/api/3/user?accountId=5b10a2844c20165700ede21g\",\"accountId\":\"5b10a2844c20165700ede21g\",\"displayName\":\"Mia Krystof\",\"active\":false},\"comment\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"I did some work here.\"}]}]},\"updated\":\"2021-01-18T23:45:00.000+0000\",\"visibility\":{\"type\":\"group\",\"value\":\"jira-developers\",\"identifier\":\"276f955c-63d7-42c8-9520-92d01dca0625\"},\"started\":\"2021-01-17T12:34:00.000+0000\",\"timeSpent\":\"3h 20m\",\"timeSpentSeconds\":12000,\"id\":\"100028\",\"issueId\":\"10002\"}],\"updated\":1,\"timetracking\":{\"originalEstimate\":\"10m\",\"remainingEstimate\":\"3m\",\"timeSpent\":\"6m\",\"originalEstimateSeconds\":600,\"remainingEstimateSeconds\":200,\"timeSpentSeconds\":400}}}"
               }
             }
           },
@@ -4987,7 +4987,8 @@
                           "type": "string",
                           "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example",
                           "description": "The URL of this repository. Max length is 2000 characters.",
-                          "maxLength": 2000
+                          "maxLength": 2000,
+                          "format": "url"
                         },
                         "commits": {
                           "type": "array",
@@ -5015,9 +5016,10 @@
                               "issueKeys": {
                                 "type": "array",
                                 "example": "[\"ISSUE-1\",\"TEST-2\"]",
-                                "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys. Minimum number of issue keys is 1. Maximum number of issue keys is 100.",
+                                "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys.",
                                 "minItems": 1,
-                                "maxItems": 100,
+                                "maxItems": 500,
+                                "pattern": "^\\p{L}[\\p{L}\\p{Digit}_]{1,255}-\\p{Digit}{1,255}$",
                                 "items": {
                                   "type": "string"
                                 }
@@ -5048,21 +5050,17 @@
                               "message": {
                                 "type": "string",
                                 "example": "README.md edited online with Bitbucket",
-                                "description": "The commit message. Max length is 1024 characters.",
+                                "description": "The commit message. Max length is 1024 characters. If anything longer is supplied, it will be truncated down to 1024 characters.",
                                 "maxLength": 1024
                               },
                               "author": {
                                 "title": "Author",
                                 "type": "object",
-                                "required": [
-                                  "name",
-                                  "email"
-                                ],
                                 "properties": {
                                   "name": {
                                     "type": "string",
                                     "example": "Jane Doe",
-                                    "description": "The name of this user in a format suitable for display. Max length is 255 characters.",
+                                    "description": "Deprecated. The name of this user in a format suitable for display. Max length is 255 characters.",
                                     "maxLength": 255
                                   },
                                   "email": {
@@ -5074,19 +5072,19 @@
                                   "username": {
                                     "type": "string",
                                     "example": "jdoe",
-                                    "description": "The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
+                                    "description": "Deprecated. The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
                                     "maxLength": 255
                                   },
                                   "url": {
                                     "type": "string",
                                     "example": "https://atlassian.com/account/jane_doe",
-                                    "description": "The URL of the profile for this user. Max length is 2000 characters.",
+                                    "description": "Deprecated. The URL of the profile for this user. Max length is 2000 characters.",
                                     "maxLength": 2000
                                   },
                                   "avatar": {
                                     "type": "string",
                                     "example": "https://atlassian.com/account/jane_doe/avatar/32",
-                                    "description": "The URL of the avatar for this user. Max length is 2000 characters.",
+                                    "description": "Deprecated. The URL of the avatar for this user. Max length is 2000 characters.",
                                     "maxLength": 2000
                                   }
                                 },
@@ -5103,7 +5101,8 @@
                                 "type": "string",
                                 "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/commits/a7727ee6350c33cdf90826dc21abaa26a5704370",
                                 "description": "The URL of this commit. Max length is 2000 characters.",
-                                "maxLength": 2000
+                                "maxLength": 2000,
+                                "format": "url"
                               },
                               "files": {
                                 "type": "array",
@@ -5130,7 +5129,8 @@
                                       "type": "string",
                                       "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/src/a7727ee6350c33cdf90826dc21abaa26a5704370/README.md",
                                       "description": "The URL of this file. Max length is 2000 characters.",
-                                      "maxLength": 2000
+                                      "maxLength": 2000,
+                                      "format": "url"
                                     },
                                     "changeType": {
                                       "type": "string",
@@ -5204,9 +5204,10 @@
                               "issueKeys": {
                                 "type": "array",
                                 "example": "[\"ISSUE-1\",\"TEST-2\"]",
-                                "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys. Minimum number of issue keys is 1. Maximum number of issue keys is 100.",
+                                "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys.",
                                 "minItems": 1,
-                                "maxItems": 100,
+                                "maxItems": 500,
+                                "pattern": "^\\p{L}[\\p{L}\\p{Digit}_]{1,255}-\\p{Digit}{1,255}$",
                                 "items": {
                                   "type": "string"
                                 }
@@ -5246,9 +5247,10 @@
                                   "issueKeys": {
                                     "type": "array",
                                     "example": "[\"ISSUE-1\",\"TEST-2\"]",
-                                    "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys. Minimum number of issue keys is 1. Maximum number of issue keys is 100.",
+                                    "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys.",
                                     "minItems": 1,
-                                    "maxItems": 100,
+                                    "maxItems": 500,
+                                    "pattern": "^\\p{L}[\\p{L}\\p{Digit}_]{1,255}-\\p{Digit}{1,255}$",
                                     "items": {
                                       "type": "string"
                                     }
@@ -5279,21 +5281,17 @@
                                   "message": {
                                     "type": "string",
                                     "example": "README.md edited online with Bitbucket",
-                                    "description": "The commit message. Max length is 1024 characters.",
+                                    "description": "The commit message. Max length is 1024 characters. If anything longer is supplied, it will be truncated down to 1024 characters.",
                                     "maxLength": 1024
                                   },
                                   "author": {
                                     "title": "Author",
                                     "type": "object",
-                                    "required": [
-                                      "name",
-                                      "email"
-                                    ],
                                     "properties": {
                                       "name": {
                                         "type": "string",
                                         "example": "Jane Doe",
-                                        "description": "The name of this user in a format suitable for display. Max length is 255 characters.",
+                                        "description": "Deprecated. The name of this user in a format suitable for display. Max length is 255 characters.",
                                         "maxLength": 255
                                       },
                                       "email": {
@@ -5305,19 +5303,19 @@
                                       "username": {
                                         "type": "string",
                                         "example": "jdoe",
-                                        "description": "The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
+                                        "description": "Deprecated. The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
                                         "maxLength": 255
                                       },
                                       "url": {
                                         "type": "string",
                                         "example": "https://atlassian.com/account/jane_doe",
-                                        "description": "The URL of the profile for this user. Max length is 2000 characters.",
+                                        "description": "Deprecated. The URL of the profile for this user. Max length is 2000 characters.",
                                         "maxLength": 2000
                                       },
                                       "avatar": {
                                         "type": "string",
                                         "example": "https://atlassian.com/account/jane_doe/avatar/32",
-                                        "description": "The URL of the avatar for this user. Max length is 2000 characters.",
+                                        "description": "Deprecated. The URL of the avatar for this user. Max length is 2000 characters.",
                                         "maxLength": 2000
                                       }
                                     },
@@ -5334,7 +5332,8 @@
                                     "type": "string",
                                     "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/commits/a7727ee6350c33cdf90826dc21abaa26a5704370",
                                     "description": "The URL of this commit. Max length is 2000 characters.",
-                                    "maxLength": 2000
+                                    "maxLength": 2000,
+                                    "format": "url"
                                   },
                                   "files": {
                                     "type": "array",
@@ -5361,7 +5360,8 @@
                                           "type": "string",
                                           "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/src/a7727ee6350c33cdf90826dc21abaa26a5704370/README.md",
                                           "description": "The URL of this file. Max length is 2000 characters.",
-                                          "maxLength": 2000
+                                          "maxLength": 2000,
+                                          "format": "url"
                                         },
                                         "changeType": {
                                           "type": "string",
@@ -5454,9 +5454,10 @@
                               "issueKeys": {
                                 "type": "array",
                                 "example": "[\"ISSUE-1\",\"TEST-2\"]",
-                                "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys. Minimum number of issue keys is 1. Maximum number of issue keys is 100.",
+                                "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys.",
                                 "minItems": 1,
-                                "maxItems": 100,
+                                "maxItems": 500,
+                                "pattern": "^\\p{L}[\\p{L}\\p{Digit}_]{1,255}-\\p{Digit}{1,255}$",
                                 "items": {
                                   "type": "string"
                                 }
@@ -5487,15 +5488,11 @@
                               "author": {
                                 "title": "Author",
                                 "type": "object",
-                                "required": [
-                                  "name",
-                                  "email"
-                                ],
                                 "properties": {
                                   "name": {
                                     "type": "string",
                                     "example": "Jane Doe",
-                                    "description": "The name of this user in a format suitable for display. Max length is 255 characters.",
+                                    "description": "Deprecated. The name of this user in a format suitable for display. Max length is 255 characters.",
                                     "maxLength": 255
                                   },
                                   "email": {
@@ -5507,19 +5504,19 @@
                                   "username": {
                                     "type": "string",
                                     "example": "jdoe",
-                                    "description": "The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
+                                    "description": "Deprecated. The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
                                     "maxLength": 255
                                   },
                                   "url": {
                                     "type": "string",
                                     "example": "https://atlassian.com/account/jane_doe",
-                                    "description": "The URL of the profile for this user. Max length is 2000 characters.",
+                                    "description": "Deprecated. The URL of the profile for this user. Max length is 2000 characters.",
                                     "maxLength": 2000
                                   },
                                   "avatar": {
                                     "type": "string",
                                     "example": "https://atlassian.com/account/jane_doe/avatar/32",
-                                    "description": "The URL of the avatar for this user. Max length is 2000 characters.",
+                                    "description": "Deprecated. The URL of the avatar for this user. Max length is 2000 characters.",
                                     "maxLength": 2000
                                   }
                                 },
@@ -5541,7 +5538,8 @@
                                 "type": "string",
                                 "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/branch/ISSUE-1-feature-branch",
                                 "description": "The url of the source branch of this PR. This is used to match this PR against the branch. Max length is 2000 characters.",
-                                "maxLength": 2000
+                                "maxLength": 2000,
+                                "format": "url"
                               },
                               "lastUpdate": {
                                 "type": "string",
@@ -5558,7 +5556,8 @@
                                 "type": "string",
                                 "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/src/master",
                                 "description": "The url of the destination branch of this PR. Max length is 2000 characters.",
-                                "maxLength": 2000
+                                "maxLength": 2000,
+                                "format": "url"
                               },
                               "reviewers": {
                                 "type": "array",
@@ -5566,15 +5565,11 @@
                                 "items": {
                                   "title": "Reviewer",
                                   "type": "object",
-                                  "required": [
-                                    "name",
-                                    "email"
-                                  ],
                                   "properties": {
                                     "name": {
                                       "type": "string",
                                       "example": "Jane Doe",
-                                      "description": "The name of this reviewer. Max length is 255 characters.",
+                                      "description": "Deprecated. The name of this reviewer. Max length is 255 characters.",
                                       "maxLength": 255
                                     },
                                     "approvalStatus": {
@@ -5589,14 +5584,16 @@
                                     "url": {
                                       "type": "string",
                                       "example": "https://atlassian.com/account/jane_doe",
-                                      "description": "The URL of the profile for this reviewer. Max length is 2000 characters.",
-                                      "maxLength": 2000
+                                      "description": "Deprecated. The URL of the profile for this reviewer. Max length is 2000 characters.",
+                                      "maxLength": 2000,
+                                      "format": "url"
                                     },
                                     "avatar": {
                                       "type": "string",
                                       "example": "https://atlassian.com/account/jane_doe/avatar/32",
-                                      "description": "The URL of the avatar for this reviewer. Max length is 2000 characters.",
-                                      "maxLength": 2000
+                                      "description": "Deprecated. The URL of the avatar for this reviewer. Max length is 2000 characters.",
+                                      "maxLength": 2000,
+                                      "format": "url"
                                     },
                                     "email": {
                                       "type": "string",
@@ -5618,7 +5615,8 @@
                                 "type": "string",
                                 "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/pull-requests/2",
                                 "description": "The URL of this pull request. Max length is 2000 characters.",
-                                "maxLength": 2000
+                                "maxLength": 2000,
+                                "format": "url"
                               },
                               "displayId": {
                                 "type": "string",
@@ -5636,7 +5634,8 @@
                           "type": "string",
                           "example": "http://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/avatar/32",
                           "description": "The URL of the avatar for this repository. Max length is 2000 characters.",
-                          "maxLength": 2000
+                          "maxLength": 2000,
+                          "format": "url"
                         },
                         "avatarDescription": {
                           "type": "string",
@@ -6105,7 +6104,8 @@
                       "type": "string",
                       "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example",
                       "description": "The URL of this repository. Max length is 2000 characters.",
-                      "maxLength": 2000
+                      "maxLength": 2000,
+                      "format": "url"
                     },
                     "commits": {
                       "type": "array",
@@ -6133,9 +6133,10 @@
                           "issueKeys": {
                             "type": "array",
                             "example": "[\"ISSUE-1\",\"TEST-2\"]",
-                            "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys. Minimum number of issue keys is 1. Maximum number of issue keys is 100.",
+                            "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys.",
                             "minItems": 1,
-                            "maxItems": 100,
+                            "maxItems": 500,
+                            "pattern": "^\\p{L}[\\p{L}\\p{Digit}_]{1,255}-\\p{Digit}{1,255}$",
                             "items": {
                               "type": "string"
                             }
@@ -6166,21 +6167,17 @@
                           "message": {
                             "type": "string",
                             "example": "README.md edited online with Bitbucket",
-                            "description": "The commit message. Max length is 1024 characters.",
+                            "description": "The commit message. Max length is 1024 characters. If anything longer is supplied, it will be truncated down to 1024 characters.",
                             "maxLength": 1024
                           },
                           "author": {
                             "title": "Author",
                             "type": "object",
-                            "required": [
-                              "name",
-                              "email"
-                            ],
                             "properties": {
                               "name": {
                                 "type": "string",
                                 "example": "Jane Doe",
-                                "description": "The name of this user in a format suitable for display. Max length is 255 characters.",
+                                "description": "Deprecated. The name of this user in a format suitable for display. Max length is 255 characters.",
                                 "maxLength": 255
                               },
                               "email": {
@@ -6192,19 +6189,19 @@
                               "username": {
                                 "type": "string",
                                 "example": "jdoe",
-                                "description": "The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
+                                "description": "Deprecated. The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
                                 "maxLength": 255
                               },
                               "url": {
                                 "type": "string",
                                 "example": "https://atlassian.com/account/jane_doe",
-                                "description": "The URL of the profile for this user. Max length is 2000 characters.",
+                                "description": "Deprecated. The URL of the profile for this user. Max length is 2000 characters.",
                                 "maxLength": 2000
                               },
                               "avatar": {
                                 "type": "string",
                                 "example": "https://atlassian.com/account/jane_doe/avatar/32",
-                                "description": "The URL of the avatar for this user. Max length is 2000 characters.",
+                                "description": "Deprecated. The URL of the avatar for this user. Max length is 2000 characters.",
                                 "maxLength": 2000
                               }
                             },
@@ -6221,7 +6218,8 @@
                             "type": "string",
                             "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/commits/a7727ee6350c33cdf90826dc21abaa26a5704370",
                             "description": "The URL of this commit. Max length is 2000 characters.",
-                            "maxLength": 2000
+                            "maxLength": 2000,
+                            "format": "url"
                           },
                           "files": {
                             "type": "array",
@@ -6248,7 +6246,8 @@
                                   "type": "string",
                                   "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/src/a7727ee6350c33cdf90826dc21abaa26a5704370/README.md",
                                   "description": "The URL of this file. Max length is 2000 characters.",
-                                  "maxLength": 2000
+                                  "maxLength": 2000,
+                                  "format": "url"
                                 },
                                 "changeType": {
                                   "type": "string",
@@ -6322,9 +6321,10 @@
                           "issueKeys": {
                             "type": "array",
                             "example": "[\"ISSUE-1\",\"TEST-2\"]",
-                            "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys. Minimum number of issue keys is 1. Maximum number of issue keys is 100.",
+                            "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys.",
                             "minItems": 1,
-                            "maxItems": 100,
+                            "maxItems": 500,
+                            "pattern": "^\\p{L}[\\p{L}\\p{Digit}_]{1,255}-\\p{Digit}{1,255}$",
                             "items": {
                               "type": "string"
                             }
@@ -6364,9 +6364,10 @@
                               "issueKeys": {
                                 "type": "array",
                                 "example": "[\"ISSUE-1\",\"TEST-2\"]",
-                                "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys. Minimum number of issue keys is 1. Maximum number of issue keys is 100.",
+                                "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys.",
                                 "minItems": 1,
-                                "maxItems": 100,
+                                "maxItems": 500,
+                                "pattern": "^\\p{L}[\\p{L}\\p{Digit}_]{1,255}-\\p{Digit}{1,255}$",
                                 "items": {
                                   "type": "string"
                                 }
@@ -6397,21 +6398,17 @@
                               "message": {
                                 "type": "string",
                                 "example": "README.md edited online with Bitbucket",
-                                "description": "The commit message. Max length is 1024 characters.",
+                                "description": "The commit message. Max length is 1024 characters. If anything longer is supplied, it will be truncated down to 1024 characters.",
                                 "maxLength": 1024
                               },
                               "author": {
                                 "title": "Author",
                                 "type": "object",
-                                "required": [
-                                  "name",
-                                  "email"
-                                ],
                                 "properties": {
                                   "name": {
                                     "type": "string",
                                     "example": "Jane Doe",
-                                    "description": "The name of this user in a format suitable for display. Max length is 255 characters.",
+                                    "description": "Deprecated. The name of this user in a format suitable for display. Max length is 255 characters.",
                                     "maxLength": 255
                                   },
                                   "email": {
@@ -6423,19 +6420,19 @@
                                   "username": {
                                     "type": "string",
                                     "example": "jdoe",
-                                    "description": "The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
+                                    "description": "Deprecated. The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
                                     "maxLength": 255
                                   },
                                   "url": {
                                     "type": "string",
                                     "example": "https://atlassian.com/account/jane_doe",
-                                    "description": "The URL of the profile for this user. Max length is 2000 characters.",
+                                    "description": "Deprecated. The URL of the profile for this user. Max length is 2000 characters.",
                                     "maxLength": 2000
                                   },
                                   "avatar": {
                                     "type": "string",
                                     "example": "https://atlassian.com/account/jane_doe/avatar/32",
-                                    "description": "The URL of the avatar for this user. Max length is 2000 characters.",
+                                    "description": "Deprecated. The URL of the avatar for this user. Max length is 2000 characters.",
                                     "maxLength": 2000
                                   }
                                 },
@@ -6452,7 +6449,8 @@
                                 "type": "string",
                                 "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/commits/a7727ee6350c33cdf90826dc21abaa26a5704370",
                                 "description": "The URL of this commit. Max length is 2000 characters.",
-                                "maxLength": 2000
+                                "maxLength": 2000,
+                                "format": "url"
                               },
                               "files": {
                                 "type": "array",
@@ -6479,7 +6477,8 @@
                                       "type": "string",
                                       "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/src/a7727ee6350c33cdf90826dc21abaa26a5704370/README.md",
                                       "description": "The URL of this file. Max length is 2000 characters.",
-                                      "maxLength": 2000
+                                      "maxLength": 2000,
+                                      "format": "url"
                                     },
                                     "changeType": {
                                       "type": "string",
@@ -6572,9 +6571,10 @@
                           "issueKeys": {
                             "type": "array",
                             "example": "[\"ISSUE-1\",\"TEST-2\"]",
-                            "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys. Minimum number of issue keys is 1. Maximum number of issue keys is 100.",
+                            "description": "List of issues keys that this entity is associated with. They must be valid Jira issue keys.",
                             "minItems": 1,
-                            "maxItems": 100,
+                            "maxItems": 500,
+                            "pattern": "^\\p{L}[\\p{L}\\p{Digit}_]{1,255}-\\p{Digit}{1,255}$",
                             "items": {
                               "type": "string"
                             }
@@ -6605,15 +6605,11 @@
                           "author": {
                             "title": "Author",
                             "type": "object",
-                            "required": [
-                              "name",
-                              "email"
-                            ],
                             "properties": {
                               "name": {
                                 "type": "string",
                                 "example": "Jane Doe",
-                                "description": "The name of this user in a format suitable for display. Max length is 255 characters.",
+                                "description": "Deprecated. The name of this user in a format suitable for display. Max length is 255 characters.",
                                 "maxLength": 255
                               },
                               "email": {
@@ -6625,19 +6621,19 @@
                               "username": {
                                 "type": "string",
                                 "example": "jdoe",
-                                "description": "The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
+                                "description": "Deprecated. The username of the user. Used to associate the user with a Jira user if there are multiple users for a given email. Max length is 255 characters.",
                                 "maxLength": 255
                               },
                               "url": {
                                 "type": "string",
                                 "example": "https://atlassian.com/account/jane_doe",
-                                "description": "The URL of the profile for this user. Max length is 2000 characters.",
+                                "description": "Deprecated. The URL of the profile for this user. Max length is 2000 characters.",
                                 "maxLength": 2000
                               },
                               "avatar": {
                                 "type": "string",
                                 "example": "https://atlassian.com/account/jane_doe/avatar/32",
-                                "description": "The URL of the avatar for this user. Max length is 2000 characters.",
+                                "description": "Deprecated. The URL of the avatar for this user. Max length is 2000 characters.",
                                 "maxLength": 2000
                               }
                             },
@@ -6659,7 +6655,8 @@
                             "type": "string",
                             "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/branch/ISSUE-1-feature-branch",
                             "description": "The url of the source branch of this PR. This is used to match this PR against the branch. Max length is 2000 characters.",
-                            "maxLength": 2000
+                            "maxLength": 2000,
+                            "format": "url"
                           },
                           "lastUpdate": {
                             "type": "string",
@@ -6676,7 +6673,8 @@
                             "type": "string",
                             "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/src/master",
                             "description": "The url of the destination branch of this PR. Max length is 2000 characters.",
-                            "maxLength": 2000
+                            "maxLength": 2000,
+                            "format": "url"
                           },
                           "reviewers": {
                             "type": "array",
@@ -6684,15 +6682,11 @@
                             "items": {
                               "title": "Reviewer",
                               "type": "object",
-                              "required": [
-                                "name",
-                                "email"
-                              ],
                               "properties": {
                                 "name": {
                                   "type": "string",
                                   "example": "Jane Doe",
-                                  "description": "The name of this reviewer. Max length is 255 characters.",
+                                  "description": "Deprecated. The name of this reviewer. Max length is 255 characters.",
                                   "maxLength": 255
                                 },
                                 "approvalStatus": {
@@ -6707,14 +6701,16 @@
                                 "url": {
                                   "type": "string",
                                   "example": "https://atlassian.com/account/jane_doe",
-                                  "description": "The URL of the profile for this reviewer. Max length is 2000 characters.",
-                                  "maxLength": 2000
+                                  "description": "Deprecated. The URL of the profile for this reviewer. Max length is 2000 characters.",
+                                  "maxLength": 2000,
+                                  "format": "url"
                                 },
                                 "avatar": {
                                   "type": "string",
                                   "example": "https://atlassian.com/account/jane_doe/avatar/32",
-                                  "description": "The URL of the avatar for this reviewer. Max length is 2000 characters.",
-                                  "maxLength": 2000
+                                  "description": "Deprecated. The URL of the avatar for this reviewer. Max length is 2000 characters.",
+                                  "maxLength": 2000,
+                                  "format": "url"
                                 },
                                 "email": {
                                   "type": "string",
@@ -6736,7 +6732,8 @@
                             "type": "string",
                             "example": "https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/pull-requests/2",
                             "description": "The URL of this pull request. Max length is 2000 characters.",
-                            "maxLength": 2000
+                            "maxLength": 2000,
+                            "format": "url"
                           },
                           "displayId": {
                             "type": "string",
@@ -6754,7 +6751,8 @@
                       "type": "string",
                       "example": "http://bitbucket.org/atlassianlabs/atlassian-connect-jira-example/avatar/32",
                       "description": "The URL of the avatar for this repository. Max length is 2000 characters.",
-                      "maxLength": 2000
+                      "maxLength": 2000,
+                      "format": "url"
                     },
                     "avatarDescription": {
                       "type": "string",
@@ -10029,7 +10027,7 @@
         "x-atlassian-connect-scope": "INACCESSIBLE"
       }
     },
-    "/builds/0.1/bulk": {
+    "/rest/builds/0.1/bulk": {
       "post": {
         "operationId": "submitBuilds",
         "summary": "Submit build data",
@@ -10500,7 +10498,7 @@
             }
           }
         },
-        "x-atlassian-connect-scope": "INACCESSIBLE"
+        "x-atlassian-connect-scope": "WRITE"
       },
       "parameters": [
         {
@@ -10515,14 +10513,14 @@
         }
       ]
     },
-    "/builds/0.1/bulkByProperties": {
+    "/rest/builds/0.1/bulkByProperties": {
       "delete": {
         "operationId": "deleteBuildsByProperty",
         "summary": "Delete builds by Property",
         "tags": [
           "Builds"
         ],
-        "description": "Bulk delete all builds data that match the given request.\n\nOne or more query params must be supplied to specify Properties to delete by.\nOptional param `_updateSequenceNumber` is no longer supported.\nIf more than one Property is provided, data will be deleted that matches ALL of the\nProperties (e.g. treated as an AND).\n\nSee the documentation for the `submitBuilds` operation for more details.\n\ne.g. DELETE /bulkByProperties?accountId=account-123&repoId=repo-345\n\nDeletion is performed asynchronously. The `getBuildByKey` operation can be used to confirm that data has been\ndeleted successfully (if needed).\n\nOnly Connect apps that define the `jiraBuildInfoProvider` module, and on-premise integrations, can access this resource.\nThis resource requires the 'WRITE' scope for Connect apps.\n",
+        "description": "Bulk delete all builds data that match the given request.\n\nOne or more query params must be supplied to specify Properties to delete by.\nOptional param `_updateSequenceNumber` is no longer supported.\nIf more than one Property is provided, data will be deleted that matches ALL of the\nProperties (e.g. treated as an AND).\n\nSee the documentation for the `submitBuilds` operation for more details.\n\ne.g. DELETE /bulkByProperties?accountId=account-123&repoId=repo-345\n\nDeletion is performed asynchronously. The `getBuildByKey` operation can be used to confirm that data has been\ndeleted successfully (if needed).\n\nOnly Connect apps that define the `jiraBuildInfoProvider` module, and on-premise integrations, can access this resource.\nThis resource requires the 'DELETE' scope for Connect apps.\n",
         "parameters": [
           {
             "name": "_updateSequenceNumber",
@@ -10615,7 +10613,7 @@
             }
           }
         },
-        "x-atlassian-connect-scope": "INACCESSIBLE"
+        "x-atlassian-connect-scope": "DELETE"
       },
       "parameters": [
         {
@@ -10630,14 +10628,14 @@
         }
       ]
     },
-    "/builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}": {
+    "/rest/builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}": {
       "get": {
         "operationId": "getBuildByKey",
         "summary": "Get a build by key",
         "tags": [
           "Builds"
         ],
-        "description": "Retrieve the currently stored build data for the given `pipelineId` and `buildNumber` combination.\n\nThe result will be what is currently stored, ignoring any pending updates or deletes.\n\nOnly Connect apps that define the `jiraBuildInfoProvider` module, and on-premise integrations, can access this resource.\nThis resource requires the 'WRITE' scope for Connect apps.\n",
+        "description": "Retrieve the currently stored build data for the given `pipelineId` and `buildNumber` combination.\n\nThe result will be what is currently stored, ignoring any pending updates or deletes.\n\nOnly Connect apps that define the `jiraBuildInfoProvider` module, and on-premise integrations, can access this resource.\nThis resource requires the 'READ' scope for Connect apps.\n",
         "parameters": [
           {
             "name": "pipelineId",
@@ -10910,7 +10908,7 @@
             }
           }
         },
-        "x-atlassian-connect-scope": "INACCESSIBLE"
+        "x-atlassian-connect-scope": "READ"
       },
       "delete": {
         "operationId": "deleteBuildByKey",
@@ -10918,7 +10916,7 @@
         "tags": [
           "Builds"
         ],
-        "description": "Delete the build data currently stored for the given `pipelineId` and `buildNumber` combination.\n\nDeletion is performed asynchronously. The `getBuildByKey` operation can be used to confirm that data has been\ndeleted successfully (if needed).\n\nOnly Connect apps that define the `jiraBuildInfoProvider` module, and on-premise integrations, can access this resource.\nThis resource requires the 'WRITE' scope for Connect apps.\n",
+        "description": "Delete the build data currently stored for the given `pipelineId` and `buildNumber` combination.\n\nDeletion is performed asynchronously. The `getBuildByKey` operation can be used to confirm that data has been\ndeleted successfully (if needed).\n\nOnly Connect apps that define the `jiraBuildInfoProvider` module, and on-premise integrations, can access this resource.\nThis resource requires the 'DELETE' scope for Connect apps.\n",
         "parameters": [
           {
             "name": "pipelineId",
@@ -11000,7 +10998,7 @@
             }
           }
         },
-        "x-atlassian-connect-scope": "INACCESSIBLE"
+        "x-atlassian-connect-scope": "DELETE"
       },
       "parameters": [
         {
@@ -12033,6 +12031,88 @@
   },
   "components": {
     "schemas": {
+      "PageBeanQuickFilterBean": {
+        "type": "object",
+        "properties": {
+          "maxResults": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "startAt": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "total": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "isLast": {
+            "type": "boolean"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "boardId": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "jql": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuickFilterBean": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "boardId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "jql": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StringList": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "ReportBean": {
         "type": "object",
         "additionalProperties": false
@@ -12045,23 +12125,6 @@
             "items": {
               "type": "object",
               "additionalProperties": false
-            }
-          }
-        },
-        "additionalProperties": false
-      },
-      "StringList": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "IssueAssignRequestBean": {
-        "type": "object",
-        "properties": {
-          "issues": {
-            "uniqueItems": true,
-            "type": "array",
-            "items": {
-              "type": "string"
             }
           }
         },
@@ -12085,6 +12148,15 @@
           "rankCustomFieldId": {
             "type": "integer",
             "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FieldEditBean": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -12156,96 +12228,6 @@
           "sprintToSwapWith": {
             "type": "integer",
             "format": "int64"
-          }
-        },
-        "additionalProperties": false
-      },
-      "FieldEditBean": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "EpicRankRequestBean": {
-        "type": "object",
-        "properties": {
-          "rankBeforeEpic": {
-            "type": "string"
-          },
-          "rankAfterEpic": {
-            "type": "string"
-          },
-          "rankCustomFieldId": {
-            "type": "integer",
-            "format": "int64"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ColorBean": {
-        "type": "object",
-        "properties": {
-          "key": {
-            "type": "string",
-            "enum": [
-              "color_1",
-              "color_2",
-              "color_3",
-              "color_4",
-              "color_5",
-              "color_6",
-              "color_7",
-              "color_8",
-              "color_9",
-              "color_10",
-              "color_11",
-              "color_12",
-              "color_13",
-              "color_14"
-            ]
-          }
-        },
-        "additionalProperties": false
-      },
-      "EpicUpdateBean": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "summary": {
-            "type": "string"
-          },
-          "color": {
-            "type": "object",
-            "properties": {
-              "key": {
-                "type": "string",
-                "enum": [
-                  "color_1",
-                  "color_2",
-                  "color_3",
-                  "color_4",
-                  "color_5",
-                  "color_6",
-                  "color_7",
-                  "color_8",
-                  "color_9",
-                  "color_10",
-                  "color_11",
-                  "color_12",
-                  "color_13",
-                  "color_14"
-                ]
-              }
-            },
-            "additionalProperties": false
-          },
-          "done": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -12472,80 +12454,96 @@
         },
         "additionalProperties": false
       },
-      "PageBeanQuickFilterBean": {
+      "IssueAssignRequestBean": {
         "type": "object",
         "properties": {
-          "maxResults": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "startAt": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "total": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "isLast": {
-            "type": "boolean"
-          },
-          "values": {
+          "issues": {
+            "uniqueItems": true,
             "type": "array",
             "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "format": "int64"
-                },
-                "boardId": {
-                  "type": "integer",
-                  "format": "int64"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "jql": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "position": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "additionalProperties": false
+              "type": "string"
             }
           }
         },
         "additionalProperties": false
       },
-      "QuickFilterBean": {
+      "EpicRankRequestBean": {
         "type": "object",
         "properties": {
-          "id": {
+          "rankBeforeEpic": {
+            "type": "string"
+          },
+          "rankAfterEpic": {
+            "type": "string"
+          },
+          "rankCustomFieldId": {
             "type": "integer",
             "format": "int64"
-          },
-          "boardId": {
-            "type": "integer",
-            "format": "int64"
-          },
+          }
+        },
+        "additionalProperties": false
+      },
+      "ColorBean": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "color_1",
+              "color_2",
+              "color_3",
+              "color_4",
+              "color_5",
+              "color_6",
+              "color_7",
+              "color_8",
+              "color_9",
+              "color_10",
+              "color_11",
+              "color_12",
+              "color_13",
+              "color_14"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "EpicUpdateBean": {
+        "type": "object",
+        "properties": {
           "name": {
             "type": "string"
           },
-          "jql": {
+          "summary": {
             "type": "string"
           },
-          "description": {
-            "type": "string"
+          "color": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "enum": [
+                  "color_1",
+                  "color_2",
+                  "color_3",
+                  "color_4",
+                  "color_5",
+                  "color_6",
+                  "color_7",
+                  "color_8",
+                  "color_9",
+                  "color_10",
+                  "color_11",
+                  "color_12",
+                  "color_13",
+                  "color_14"
+                ]
+              }
+            },
+            "additionalProperties": false
           },
-          "position": {
-            "type": "integer",
-            "format": "int32"
+          "done": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -12625,14 +12623,14 @@
                                   "description": "The URL of the user's 48x48 pixel avatar.",
                                   "format": "uri"
                                 },
-                                "16x16": {
-                                  "type": "string",
-                                  "description": "The URL of the user's 16x16 pixel avatar.",
-                                  "format": "uri"
-                                },
                                 "24x24": {
                                   "type": "string",
                                   "description": "The URL of the user's 24x24 pixel avatar.",
+                                  "format": "uri"
+                                },
+                                "16x16": {
+                                  "type": "string",
+                                  "description": "The URL of the user's 16x16 pixel avatar.",
                                   "format": "uri"
                                 }
                               },
@@ -12772,14 +12770,14 @@
                           "description": "The URL of the user's 48x48 pixel avatar.",
                           "format": "uri"
                         },
-                        "16x16": {
-                          "type": "string",
-                          "description": "The URL of the user's 16x16 pixel avatar.",
-                          "format": "uri"
-                        },
                         "24x24": {
                           "type": "string",
                           "description": "The URL of the user's 24x24 pixel avatar.",
+                          "format": "uri"
+                        },
+                        "16x16": {
+                          "type": "string",
+                          "description": "The URL of the user's 16x16 pixel avatar.",
                           "format": "uri"
                         }
                       },
@@ -12956,14 +12954,14 @@
                                         "description": "The URL of the user's 48x48 pixel avatar.",
                                         "format": "uri"
                                       },
-                                      "16x16": {
-                                        "type": "string",
-                                        "description": "The URL of the user's 16x16 pixel avatar.",
-                                        "format": "uri"
-                                      },
                                       "24x24": {
                                         "type": "string",
                                         "description": "The URL of the user's 24x24 pixel avatar.",
+                                        "format": "uri"
+                                      },
+                                      "16x16": {
+                                        "type": "string",
+                                        "description": "The URL of the user's 16x16 pixel avatar.",
                                         "format": "uri"
                                       }
                                     },
@@ -13102,14 +13100,14 @@
                     "description": "The URL of the user's 48x48 pixel avatar.",
                     "format": "uri"
                   },
-                  "16x16": {
-                    "type": "string",
-                    "description": "The URL of the user's 16x16 pixel avatar.",
-                    "format": "uri"
-                  },
                   "24x24": {
                     "type": "string",
                     "description": "The URL of the user's 24x24 pixel avatar.",
+                    "format": "uri"
+                  },
+                  "16x16": {
+                    "type": "string",
+                    "description": "The URL of the user's 16x16 pixel avatar.",
                     "format": "uri"
                   }
                 },
@@ -13133,14 +13131,14 @@
             "description": "The URL of the user's 48x48 pixel avatar.",
             "format": "uri"
           },
-          "16x16": {
-            "type": "string",
-            "description": "The URL of the user's 16x16 pixel avatar.",
-            "format": "uri"
-          },
           "24x24": {
             "type": "string",
             "description": "The URL of the user's 24x24 pixel avatar.",
+            "format": "uri"
+          },
+          "16x16": {
+            "type": "string",
+            "description": "The URL of the user's 16x16 pixel avatar.",
             "format": "uri"
           }
         },

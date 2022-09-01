@@ -78,6 +78,7 @@ post:
                       https://bitbucket.org/atlassianlabs/atlassian-connect-jira-example
                     description: The URL of this repository. Max length is 2000 characters.
                     maxLength: 2000
+                    format: url
                   commits:
                     type: array
                     description: >-
@@ -114,11 +115,10 @@ post:
                           example: '["ISSUE-1","TEST-2"]'
                           description: >-
                             List of issues keys that this entity is associated
-                            with. They must be valid Jira issue keys. Minimum
-                            number of issue keys is 1. Maximum number of issue
-                            keys is 100.
+                            with. They must be valid Jira issue keys.
                           minItems: 1
-                          maxItems: 100
+                          maxItems: 500
+                          pattern: ^\p{L}[\p{L}\p{Digit}_]{1,255}-\p{Digit}{1,255}$
                           items:
                             type: string
                         updateSequenceId:
@@ -152,21 +152,22 @@ post:
                         message:
                           type: string
                           example: README.md edited online with Bitbucket
-                          description: The commit message. Max length is 1024 characters.
+                          description: >-
+                            The commit message. Max length is 1024 characters.
+                            If anything longer is supplied, it will be truncated
+                            down to 1024 characters.
                           maxLength: 1024
                         author:
                           title: Author
                           type: object
-                          required:
-                            - name
-                            - email
                           properties:
                             name:
                               type: string
                               example: Jane Doe
                               description: >-
-                                The name of this user in a format suitable for
-                                display. Max length is 255 characters.
+                                Deprecated. The name of this user in a format
+                                suitable for display. Max length is 255
+                                characters.
                               maxLength: 255
                             email:
                               type: string
@@ -180,24 +181,24 @@ post:
                               type: string
                               example: jdoe
                               description: >-
-                                The username of the user. Used to associate the
-                                user with a Jira user if there are multiple
-                                users for a given email. Max length is 255
-                                characters.
+                                Deprecated. The username of the user. Used to
+                                associate the user with a Jira user if there are
+                                multiple users for a given email. Max length is
+                                255 characters.
                               maxLength: 255
                             url:
                               type: string
                               example: https://atlassian.com/account/jane_doe
                               description: >-
-                                The URL of the profile for this user. Max length
-                                is 2000 characters.
+                                Deprecated. The URL of the profile for this
+                                user. Max length is 2000 characters.
                               maxLength: 2000
                             avatar:
                               type: string
                               example: https://atlassian.com/account/jane_doe/avatar/32
                               description: >-
-                                The URL of the avatar for this user. Max length
-                                is 2000 characters.
+                                Deprecated. The URL of the avatar for this user.
+                                Max length is 2000 characters.
                               maxLength: 2000
                           description: Describes the author of a particular entity
                         fileCount:
@@ -216,6 +217,7 @@ post:
                             The URL of this commit. Max length is 2000
                             characters.
                           maxLength: 2000
+                          format: url
                         files:
                           type: array
                           description: >-
@@ -250,6 +252,7 @@ post:
                                   The URL of this file. Max length is 2000
                                   characters.
                                 maxLength: 2000
+                                format: url
                               changeType:
                                 type: string
                                 example: MODIFIED
@@ -324,11 +327,10 @@ post:
                           example: '["ISSUE-1","TEST-2"]'
                           description: >-
                             List of issues keys that this entity is associated
-                            with. They must be valid Jira issue keys. Minimum
-                            number of issue keys is 1. Maximum number of issue
-                            keys is 100.
+                            with. They must be valid Jira issue keys.
                           minItems: 1
-                          maxItems: 100
+                          maxItems: 500
+                          pattern: ^\p{L}[\p{L}\p{Digit}_]{1,255}-\p{Digit}{1,255}$
                           items:
                             type: string
                         updateSequenceId:
@@ -385,10 +387,10 @@ post:
                               description: >-
                                 List of issues keys that this entity is
                                 associated with. They must be valid Jira issue
-                                keys. Minimum number of issue keys is 1. Maximum
-                                number of issue keys is 100.
+                                keys.
                               minItems: 1
-                              maxItems: 100
+                              maxItems: 500
+                              pattern: ^\p{L}[\p{L}\p{Digit}_]{1,255}-\p{Digit}{1,255}$
                               items:
                                 type: string
                             updateSequenceId:
@@ -425,21 +427,20 @@ post:
                               example: README.md edited online with Bitbucket
                               description: >-
                                 The commit message. Max length is 1024
-                                characters.
+                                characters. If anything longer is supplied, it
+                                will be truncated down to 1024 characters.
                               maxLength: 1024
                             author:
                               title: Author
                               type: object
-                              required:
-                                - name
-                                - email
                               properties:
                                 name:
                                   type: string
                                   example: Jane Doe
                                   description: >-
-                                    The name of this user in a format suitable
-                                    for display. Max length is 255 characters.
+                                    Deprecated. The name of this user in a
+                                    format suitable for display. Max length is
+                                    255 characters.
                                   maxLength: 255
                                 email:
                                   type: string
@@ -453,25 +454,25 @@ post:
                                   type: string
                                   example: jdoe
                                   description: >-
-                                    The username of the user. Used to associate
-                                    the user with a Jira user if there are
-                                    multiple users for a given email. Max length
-                                    is 255 characters.
+                                    Deprecated. The username of the user. Used
+                                    to associate the user with a Jira user if
+                                    there are multiple users for a given email.
+                                    Max length is 255 characters.
                                   maxLength: 255
                                 url:
                                   type: string
                                   example: https://atlassian.com/account/jane_doe
                                   description: >-
-                                    The URL of the profile for this user. Max
-                                    length is 2000 characters.
+                                    Deprecated. The URL of the profile for this
+                                    user. Max length is 2000 characters.
                                   maxLength: 2000
                                 avatar:
                                   type: string
                                   example: >-
                                     https://atlassian.com/account/jane_doe/avatar/32
                                   description: >-
-                                    The URL of the avatar for this user. Max
-                                    length is 2000 characters.
+                                    Deprecated. The URL of the avatar for this
+                                    user. Max length is 2000 characters.
                                   maxLength: 2000
                               description: Describes the author of a particular entity
                             fileCount:
@@ -490,6 +491,7 @@ post:
                                 The URL of this commit. Max length is 2000
                                 characters.
                               maxLength: 2000
+                              format: url
                             files:
                               type: array
                               description: >-
@@ -524,6 +526,7 @@ post:
                                       The URL of this file. Max length is 2000
                                       characters.
                                     maxLength: 2000
+                                    format: url
                                   changeType:
                                     type: string
                                     example: MODIFIED
@@ -619,11 +622,10 @@ post:
                           example: '["ISSUE-1","TEST-2"]'
                           description: >-
                             List of issues keys that this entity is associated
-                            with. They must be valid Jira issue keys. Minimum
-                            number of issue keys is 1. Maximum number of issue
-                            keys is 100.
+                            with. They must be valid Jira issue keys.
                           minItems: 1
-                          maxItems: 100
+                          maxItems: 500
+                          pattern: ^\p{L}[\p{L}\p{Digit}_]{1,255}-\p{Digit}{1,255}$
                           items:
                             type: string
                         updateSequenceId:
@@ -665,16 +667,14 @@ post:
                         author:
                           title: Author
                           type: object
-                          required:
-                            - name
-                            - email
                           properties:
                             name:
                               type: string
                               example: Jane Doe
                               description: >-
-                                The name of this user in a format suitable for
-                                display. Max length is 255 characters.
+                                Deprecated. The name of this user in a format
+                                suitable for display. Max length is 255
+                                characters.
                               maxLength: 255
                             email:
                               type: string
@@ -688,24 +688,24 @@ post:
                               type: string
                               example: jdoe
                               description: >-
-                                The username of the user. Used to associate the
-                                user with a Jira user if there are multiple
-                                users for a given email. Max length is 255
-                                characters.
+                                Deprecated. The username of the user. Used to
+                                associate the user with a Jira user if there are
+                                multiple users for a given email. Max length is
+                                255 characters.
                               maxLength: 255
                             url:
                               type: string
                               example: https://atlassian.com/account/jane_doe
                               description: >-
-                                The URL of the profile for this user. Max length
-                                is 2000 characters.
+                                Deprecated. The URL of the profile for this
+                                user. Max length is 2000 characters.
                               maxLength: 2000
                             avatar:
                               type: string
                               example: https://atlassian.com/account/jane_doe/avatar/32
                               description: >-
-                                The URL of the avatar for this user. Max length
-                                is 2000 characters.
+                                Deprecated. The URL of the avatar for this user.
+                                Max length is 2000 characters.
                               maxLength: 2000
                           description: Describes the author of a particular entity
                         commentCount:
@@ -729,6 +729,7 @@ post:
                             used to match this PR against the branch. Max length
                             is 2000 characters.
                           maxLength: 2000
+                          format: url
                         lastUpdate:
                           type: string
                           example: '2016-10-31T23:27:25+00:00'
@@ -750,22 +751,20 @@ post:
                             The url of the destination branch of this PR. Max
                             length is 2000 characters.
                           maxLength: 2000
+                          format: url
                         reviewers:
                           type: array
                           description: The list of reviewers of this pull request
                           items:
                             title: Reviewer
                             type: object
-                            required:
-                              - name
-                              - email
                             properties:
                               name:
                                 type: string
                                 example: Jane Doe
                                 description: >-
-                                  The name of this reviewer. Max length is 255
-                                  characters.
+                                  Deprecated. The name of this reviewer. Max
+                                  length is 255 characters.
                                 maxLength: 255
                               approvalStatus:
                                 type: string
@@ -780,17 +779,19 @@ post:
                                 type: string
                                 example: https://atlassian.com/account/jane_doe
                                 description: >-
-                                  The URL of the profile for this reviewer. Max
-                                  length is 2000 characters.
+                                  Deprecated. The URL of the profile for this
+                                  reviewer. Max length is 2000 characters.
                                 maxLength: 2000
+                                format: url
                               avatar:
                                 type: string
                                 example: >-
                                   https://atlassian.com/account/jane_doe/avatar/32
                                 description: >-
-                                  The URL of the avatar for this reviewer. Max
-                                  length is 2000 characters.
+                                  Deprecated. The URL of the avatar for this
+                                  reviewer. Max length is 2000 characters.
                                 maxLength: 2000
+                                format: url
                               email:
                                 type: string
                                 example: jane_doe@example.com
@@ -814,6 +815,7 @@ post:
                             The URL of this pull request. Max length is 2000
                             characters.
                           maxLength: 2000
+                          format: url
                         displayId:
                           type: string
                           example: Pull request 2
@@ -832,6 +834,7 @@ post:
                       The URL of the avatar for this repository. Max length is
                       2000 characters.
                     maxLength: 2000
+                    format: url
                   avatarDescription:
                     type: string
                     example: Avatar description

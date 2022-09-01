@@ -312,12 +312,12 @@ paths:
   /deployments/0.1/pipelines/{pipelineId}/environments/{environmentId}/deployments/{deploymentSequenceNumber}/gating-status:
     $ref: >-
       paths/deployments_0.1_pipelines_{pipelineId}_environments_{environmentId}_deployments_{deploymentSequenceNumber}_gating-status.yaml
-  /builds/0.1/bulk:
-    $ref: paths/builds_0.1_bulk.yaml
-  /builds/0.1/bulkByProperties:
-    $ref: paths/builds_0.1_bulkByProperties.yaml
-  /builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}:
-    $ref: paths/builds_0.1_pipelines_{pipelineId}_builds_{buildNumber}.yaml
+  /rest/builds/0.1/bulk:
+    $ref: paths/rest_builds_0.1_bulk.yaml
+  /rest/builds/0.1/bulkByProperties:
+    $ref: paths/rest_builds_0.1_bulkByProperties.yaml
+  /rest/builds/0.1/pipelines/{pipelineId}/builds/{buildNumber}:
+    $ref: paths/rest_builds_0.1_pipelines_{pipelineId}_builds_{buildNumber}.yaml
   /remotelinks/1.0/bulk:
     $ref: paths/remotelinks_1.0_bulk.yaml
   /remotelinks/1.0/bulkByProperties:
